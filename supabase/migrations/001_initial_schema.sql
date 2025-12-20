@@ -12,12 +12,12 @@ CREATE TYPE verification_status AS ENUM ('pending', 'approved', 'rejected');
 
 -- VIPs Table
 CREATE TABLE vips (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255),
     tier vip_tier NOT NULL DEFAULT 'silver',
     reg_type registration_type NOT NULL DEFAULT 'email_invite',
-    invite_token UUID UNIQUE NOT NULL DEFAULT uuid_generate_v4(),
+    invite_token UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
     shipping_address JSONB,
     is_active BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -26,7 +26,7 @@ CREATE TABLE vips (
 
 -- Verification Codes Table (for QR registration)
 CREATE TABLE verification_codes (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     vip_id UUID NOT NULL REFERENCES vips(id) ON DELETE CASCADE,
     code CHAR(6) NOT NULL,
     status verification_status NOT NULL DEFAULT 'pending',
@@ -37,7 +37,7 @@ CREATE TABLE verification_codes (
 
 -- Categories Table
 CREATE TABLE categories (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(100) NOT NULL,
     slug VARCHAR(100) UNIQUE NOT NULL,
     description TEXT,
@@ -49,7 +49,7 @@ CREATE TABLE categories (
 
 -- Products Table
 CREATE TABLE products (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     description TEXT,
     category_id UUID REFERENCES categories(id) ON DELETE SET NULL,
@@ -62,7 +62,7 @@ CREATE TABLE products (
 
 -- Inventory Table
 CREATE TABLE inventory (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
     size VARCHAR(20) NOT NULL,
     quantity INTEGER NOT NULL DEFAULT 0 CHECK (quantity >= 0),
@@ -73,7 +73,7 @@ CREATE TABLE inventory (
 
 -- Orders Table
 CREATE TABLE orders (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     vip_id UUID NOT NULL REFERENCES vips(id) ON DELETE RESTRICT,
     status order_status NOT NULL DEFAULT 'pending',
     shipping_address JSONB NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE orders (
 
 -- Order Items Table
 CREATE TABLE order_items (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE RESTRICT,
     size VARCHAR(20) NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE order_items (
 
 -- Admins Table (for admin authentication)
 CREATE TABLE admins (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     name VARCHAR(255),
