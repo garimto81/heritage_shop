@@ -41,11 +41,12 @@ ggp_heritage_mall/
 │   │   ├── products/           # 상품 컴포넌트
 │   │   └── ui/                 # 공통 UI (shadcn/ui 스타일)
 │   ├── lib/
-│   │   ├── supabase/           # Supabase 클라이언트 (4개)
+│   │   ├── supabase/           # Supabase 클라이언트 (3개)
 │   │   ├── api/                # API 호출 함수
 │   │   └── auth/               # VIP/Admin 세션 관리
 │   ├── stores/                 # Zustand 상태 관리
-│   └── types/                  # TypeScript 타입
+│   ├── types/                  # TypeScript 타입
+│   └── proxy.ts                # Next.js 16 Proxy (인증 처리)
 ├── supabase/migrations/        # DB 마이그레이션
 └── docs/                       # 프로젝트 문서
 ```
@@ -56,13 +57,17 @@ ggp_heritage_mall/
 - `page.tsx`: Server Component (데이터 페칭)
 - `*-client.tsx`: Client Component (인터랙션)
 
-**Supabase 클라이언트**
+**Supabase 클라이언트** (`lib/supabase/`)
 | 파일 | 용도 |
 |------|------|
 | `client.ts` | 브라우저 (anon key) |
 | `server.ts` | RSC, Server Actions |
-| `middleware.ts` | Edge 세션 관리 |
 | `admin.ts` | 관리자 작업 (service_role, RLS 우회) |
+
+**Proxy** (`src/proxy.ts`) - Next.js 16
+- Admin 경로: `/admin/*` → Admin 세션 필요
+- VIP 경로: `/products/*`, `/checkout/*`, `/orders/*` → VIP 세션 필요
+- 홈에서 VIP 세션 있으면 `/products`로 리다이렉트
 
 **듀얼 인증 시스템**
 - VIP: JWT 쿠키 (`lib/auth/vip-session.ts`)

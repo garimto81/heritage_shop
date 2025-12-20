@@ -9,15 +9,17 @@ src/
 │   ├── page.tsx                  # 홈페이지
 │   └── globals.css               # Tailwind CSS + 디자인 시스템 (골드/다크 테마)
 ├── lib/
-│   ├── supabase/                 # Supabase 클라이언트 (4개)
+│   ├── supabase/                 # Supabase 클라이언트 (3개)
 │   │   ├── client.ts             # 브라우저용
 │   │   ├── server.ts             # Server Components / Server Actions
-│   │   ├── middleware.ts         # Edge 세션 관리
 │   │   └── admin.ts              # 서버 전용 (service role)
+│   ├── auth/                     # 인증 세션 관리
+│   │   ├── vip-session.ts        # VIP 세션 (JWT 쿠키)
+│   │   └── admin-session.ts      # Admin 세션
 │   └── utils.ts                  # cn() 유틸리티 (clsx + tailwind-merge)
 ├── types/
 │   └── database.ts               # Supabase 스키마 TypeScript 타입
-└── middleware.ts                 # Next.js 미들웨어 (루트)
+└── proxy.ts                      # Next.js 16 Proxy (인증 처리)
 ```
 
 ## Key Patterns
@@ -44,8 +46,23 @@ export function ProductList({ products }) {
 |-----------|------|------|
 | `createBrowserClient` | 브라우저 | `client.ts` |
 | `createServerClient` | RSC, Server Actions | `server.ts` |
-| `createServerClient` (edge) | 미들웨어 세션 | `middleware.ts` |
 | `createClient` (admin) | 서버 전용 관리자 | `admin.ts` |
+
+### Proxy (Next.js 16)
+
+Next.js 16에서 `middleware.ts`가 `proxy.ts`로 변경되었습니다.
+
+```typescript
+// src/proxy.ts
+export function proxy(request: NextRequest) {
+  // 1. /invite/* - 항상 허용
+  // 2. /admin/* - Admin 세션 필요 (없으면 → /admin/auth/login)
+  // 3. /products, /checkout, /orders - VIP 세션 필요 (없으면 → /)
+  // 4. / (홈) + VIP 세션 있음 → /products로 리다이렉트
+}
+```
+
+참고: [Next.js 16 Proxy API](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)
 
 ### Design System
 

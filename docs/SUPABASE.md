@@ -23,6 +23,10 @@ RESEND_API_KEY=re_...
 
 ## Clients
 
+> **Note**: Next.js 16에서 middleware가 proxy로 변경되었습니다.
+> - `src/lib/supabase/middleware.ts` 삭제됨
+> - 세션 검증은 `src/proxy.ts`에서 직접 처리
+
 ### Browser Client (`src/lib/supabase/client.ts`)
 
 ```typescript
@@ -37,10 +41,6 @@ const supabaseKey =
 ### Server Client (`src/lib/supabase/server.ts`)
 
 Server Components, Server Actions에서 사용. `cookies()` API로 세션 관리.
-
-### Middleware Client (`src/lib/supabase/middleware.ts`)
-
-Edge 레이어에서 세션 리프레시.
 
 ### Admin Client (`src/lib/supabase/admin.ts`)
 
