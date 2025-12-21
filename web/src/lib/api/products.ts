@@ -49,7 +49,20 @@ export async function getProducts(): Promise<ProductWithInventory[]> {
   })) as ProductWithInventory[];
 }
 
+/**
+ * UUID v4 형식 검증
+ */
+function isValidUUID(str: string): boolean {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(str);
+}
+
 export async function getProductById(id: string): Promise<ProductWithInventory | null> {
+  // UUID 형식이 아니면 조기 반환 (이미지 경로 등 잘못된 요청 방지)
+  if (!isValidUUID(id)) {
+    return null;
+  }
+
   const supabase = await createClient();
 
   const { data, error } = await supabase
