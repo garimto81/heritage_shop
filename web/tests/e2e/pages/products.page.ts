@@ -55,6 +55,11 @@ export class ProductsPage {
   }
 
   async getSelectedCount(): Promise<number> {
+    // Zustand hydration을 기다리기 위해 ActionBar가 visible인지 확인
+    // ActionBar는 항상 렌더링되지만 내용이 업데이트되는 데 시간이 걸릴 수 있음
+    await this.actionBar.waitFor({ state: "visible", timeout: 5000 });
+    // 약간의 지연을 주어 zustand hydration 완료 보장
+    await this.page.waitForTimeout(500);
     const text = await this.selectedCount.textContent();
     const match = text?.match(/(\d+)/);
     return match ? parseInt(match[1]) : 0;

@@ -49,6 +49,30 @@ INSERT INTO products (id, name, description, category_id, tier_required, images)
     'caaaaaaa-0000-0000-0000-000000000003',
     'silver',
     ARRAY['products/earbuds-1.jpg', 'products/earbuds-2.jpg']
+  ),
+  (
+    'faaaaaaa-0000-0000-0000-000000000006',
+    'Heritage Tote Bag',
+    'Premium canvas tote bag with leather handles.',
+    'caaaaaaa-0000-0000-0000-000000000002',
+    'silver',
+    ARRAY['products/tote-1.jpg', 'products/tote-2.jpg']
+  ),
+  (
+    'faaaaaaa-0000-0000-0000-000000000007',
+    'Signature Sunglasses',
+    'Classic aviator sunglasses with gold-plated frames.',
+    'caaaaaaa-0000-0000-0000-000000000002',
+    'silver',
+    ARRAY['products/sunglasses-1.jpg', 'products/sunglasses-2.jpg']
+  ),
+  (
+    'faaaaaaa-0000-0000-0000-000000000008',
+    'Luxury Silk Scarf',
+    'Hand-printed Italian silk scarf with exclusive pattern.',
+    'caaaaaaa-0000-0000-0000-000000000001',
+    'silver',
+    ARRAY['products/scarf-1.jpg', 'products/scarf-2.jpg']
   );
 
 -- Inventory for Products
@@ -68,7 +92,13 @@ INSERT INTO inventory (product_id, size, quantity) VALUES
   -- Card Holder (one size)
   ('faaaaaaa-0000-0000-0000-000000000004', 'ONE SIZE', 50),
   -- Earbuds (one size)
-  ('faaaaaaa-0000-0000-0000-000000000005', 'ONE SIZE', 30);
+  ('faaaaaaa-0000-0000-0000-000000000005', 'ONE SIZE', 30),
+  -- Tote Bag (one size)
+  ('faaaaaaa-0000-0000-0000-000000000006', 'ONE SIZE', 25),
+  -- Sunglasses (one size)
+  ('faaaaaaa-0000-0000-0000-000000000007', 'ONE SIZE', 20),
+  -- Silk Scarf (one size)
+  ('faaaaaaa-0000-0000-0000-000000000008', 'ONE SIZE', 15);
 
 -- Sample VIP Users (for testing)
 -- UUID format: bXXXXXXX for VIP id, eXXXXXXX for invite_token

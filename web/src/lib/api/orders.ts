@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export interface OrderItem {
   product_id: string;
@@ -50,7 +50,7 @@ export interface InventoryCheckResult {
 export async function validateInventory(
   items: OrderItem[]
 ): Promise<InventoryCheckResult> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const insufficientItems: InventoryCheckResult["details"] = [];
 
@@ -99,7 +99,7 @@ export async function validateInventory(
  * PostgreSQL 저장 프로시저를 사용하여 원자적 트랜잭션 처리
  */
 export async function createOrder(input: CreateOrderInput): Promise<Order> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // 1. 재고 검증 (사전 체크)
   const inventoryCheck = await validateInventory(input.items);
@@ -153,7 +153,7 @@ export async function createOrder(input: CreateOrderInput): Promise<Order> {
  * 주문 취소 (재고 복원)
  */
 export async function cancelOrder(orderId: string): Promise<void> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   // 1. 재고 복원
   const { error: restoreError } = await supabase.rpc(
@@ -178,7 +178,7 @@ export async function cancelOrder(orderId: string): Promise<void> {
 }
 
 export async function getOrders(): Promise<Order[]> {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const { data, error } = await supabase
     .from("orders")
