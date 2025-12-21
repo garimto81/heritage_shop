@@ -39,8 +39,7 @@ test.describe("VIP 초대 링크", () => {
     }
   });
 
-  test.skip("존재하지 않는 토큰은 에러 페이지 표시", async ({ page }) => {
-    // TODO: /invite/invalid 에러 페이지 구현 필요
+  test("존재하지 않는 토큰은 에러 페이지 표시", async ({ page }) => {
     const invitePage = new InvitePage(page);
     await invitePage.goto(TEST_VIPS.invalid.invite_token);
 
@@ -48,8 +47,7 @@ test.describe("VIP 초대 링크", () => {
     await invitePage.expectInvalidInvite();
   });
 
-  test.skip("비활성화된 VIP 토큰은 에러 페이지 표시", async ({ page }) => {
-    // TODO: /invite/invalid 에러 페이지 구현 필요
+  test("비활성화된 VIP 토큰은 에러 페이지 표시", async ({ page }) => {
     const invitePage = new InvitePage(page);
     await invitePage.goto(TEST_VIPS.inactive.invite_token);
 
