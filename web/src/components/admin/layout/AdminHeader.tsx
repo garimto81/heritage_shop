@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, GitCommit } from "lucide-react";
 
 interface AdminHeaderProps {
   adminName: string;
@@ -8,6 +8,9 @@ interface AdminHeaderProps {
 }
 
 export function AdminHeader({ adminName, onMenuClick }: AdminHeaderProps) {
+  const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH || "dev";
+  const commitMessage = process.env.NEXT_PUBLIC_COMMIT_MESSAGE || "";
+
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-[#2A2A2A] bg-[#0A0A0A]/95 backdrop-blur-md px-4 lg:px-8">
       {/* 모바일 메뉴 버튼 */}
@@ -19,8 +22,12 @@ export function AdminHeader({ adminName, onMenuClick }: AdminHeaderProps) {
         <Menu className="h-6 w-6" />
       </button>
 
-      {/* 데스크톱 빈 공간 */}
-      <div className="hidden lg:block" />
+      {/* 버전 정보 */}
+      <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#1A1A1A] border border-[#2A2A2A]">
+        <GitCommit className="h-4 w-4 text-[var(--color-gold)]" />
+        <span className="font-mono text-xs text-[var(--color-gold)]">{commitHash}</span>
+        <span className="text-xs text-neutral-500 max-w-[300px] truncate">{commitMessage}</span>
+      </div>
 
       {/* 관리자 정보 */}
       <div className="flex items-center gap-3">
