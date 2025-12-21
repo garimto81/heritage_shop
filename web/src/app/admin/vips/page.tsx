@@ -1,22 +1,12 @@
 import { VipsClient } from "./vips-client";
+import { getVipList } from "@/lib/api/admin-vips";
 
 export const metadata = {
   title: "VIP Management - GGP Heritage Mall Admin",
 };
 
-async function getVipList() {
-  // Server-side data fetching
-  // In production, this would use server-side Supabase client
-  // For now, return mock data for initial render
-  return {
-    vips: [],
-    total: 0,
-    page: 1,
-    limit: 20,
-  };
-}
-
 export default async function VipsPage() {
-  const initialData = await getVipList();
+  // 서버 사이드에서 실제 VIP 데이터 가져오기
+  const initialData = await getVipList({ page: 1, limit: 20 });
   return <VipsClient initialData={initialData} />;
 }

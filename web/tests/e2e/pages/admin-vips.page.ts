@@ -17,8 +17,8 @@ export class AdminVipsPage {
   constructor(page: Page) {
     this.page = page;
     this.pageTitle = page.locator("h1");
-    this.vipsTable = page.locator("table, [data-testid='vips-table']");
-    this.vipRows = page.locator("table tbody tr, [data-testid='vip-row']");
+    this.vipsTable = page.locator("table").first();
+    this.vipRows = page.locator("table tbody tr");
     this.searchInput = page.locator(
       "input[placeholder*='search' i], input[placeholder*='검색'], [data-testid='search-input']"
     );
@@ -28,9 +28,7 @@ export class AdminVipsPage {
     this.statusFilter = page.locator(
       "select[name='status'], [data-testid='status-filter']"
     );
-    this.createVipButton = page.locator(
-      "a[href='/admin/vips/new'], button:has-text('Create'), button:has-text('Add'), button:has-text('New')"
-    );
+    this.createVipButton = page.locator("a[href='/admin/vips/new']").first();
     this.pagination = page.locator("[data-testid='pagination']");
   }
 
@@ -73,6 +71,9 @@ export class AdminVipsPage {
   }
 
   async getVipRowCount(): Promise<number> {
+    // 테이블 또는 빈 메시지가 나타날 때까지 대기
+    const tableOrEmpty = this.page.locator("table tbody tr").or(this.page.getByText("No VIPs found"));
+    await tableOrEmpty.first().waitFor({ timeout: 10000 }).catch(() => {});
     await this.page.waitForTimeout(500);
     return await this.vipRows.count();
   }
@@ -91,7 +92,7 @@ export class AdminVipsPage {
   async clickEditVip(index: number) {
     const row = this.vipRows.nth(index);
     const editButton = row.locator(
-      "a[href*='edit'], button:has-text('Edit'), button:has-text('수정'), [data-testid='edit-btn']"
+      "button[aria-label='Edit VIP'], a[href*='edit'], button:has-text('Edit'), [data-testid='edit-btn']"
     );
     await editButton.click();
   }

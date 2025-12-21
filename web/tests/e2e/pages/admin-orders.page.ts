@@ -15,8 +15,8 @@ export class AdminOrdersPage {
   constructor(page: Page) {
     this.page = page;
     this.pageTitle = page.locator("h1");
-    this.ordersTable = page.locator("table, [data-testid='orders-table']");
-    this.orderRows = page.locator("table tbody tr, [data-testid='order-row']");
+    this.ordersTable = page.locator("table").first();
+    this.orderRows = page.locator("table tbody tr");
     this.statusFilter = page.locator(
       "select[name='status'], [data-testid='status-filter']"
     );
@@ -34,28 +34,15 @@ export class AdminOrdersPage {
   async filterByStatus(
     status: "all" | "pending" | "processing" | "shipped" | "delivered" | "cancelled"
   ) {
-    // 드롭다운 또는 버튼 그룹 처리
-    const select = this.statusFilter;
-    if (await select.isVisible()) {
-      await select.selectOption(status);
+    // URL 파라미터로 직접 이동 (가장 안정적인 방법)
+    const url = new URL(this.page.url());
+    if (status === "all") {
+      url.searchParams.delete("status");
     } else {
-      // 버튼 그룹인 경우
-      const statusButton = this.page.locator(`button`, {
-        hasText: new RegExp(`^${status}$`, "i"),
-      });
-      if (await statusButton.isVisible()) {
-        await statusButton.click();
-      } else {
-        // URL 파라미터로 직접 이동
-        const url = new URL(this.page.url());
-        if (status === "all") {
-          url.searchParams.delete("status");
-        } else {
-          url.searchParams.set("status", status);
-        }
-        await this.page.goto(url.toString());
-      }
+      url.searchParams.set("status", status);
     }
+    await this.page.goto(url.toString());
+    await this.page.waitForLoadState("networkidle");
   }
 
   async searchByOrderId(orderId: string) {
@@ -64,6 +51,9 @@ export class AdminOrdersPage {
   }
 
   async getOrderRowCount(): Promise<number> {
+    // 테이블 또는 빈 메시지가 나타날 때까지 대기
+    const tableOrEmpty = this.page.locator("table tbody tr").or(this.page.getByText("No orders"));
+    await tableOrEmpty.first().waitFor({ timeout: 10000 }).catch(() => {});
     await this.page.waitForTimeout(500);
     return await this.orderRows.count();
   }
