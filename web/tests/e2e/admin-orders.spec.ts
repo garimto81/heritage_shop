@@ -83,8 +83,8 @@ test.describe("관리자 주문 관리", () => {
     // 상세 페이지로 이동 확인
     await expect(page).toHaveURL(/\/admin\/orders\/[a-f0-9-]+$/);
 
-    // 주문 상세 정보 표시 확인
-    await expect(page.locator("text=Order Details").or(page.locator("text=주문 상세"))).toBeVisible();
+    // 주문 상세 정보 표시 확인 (h1 태그로 한정)
+    await expect(page.locator("h1:has-text('Order Details')").or(page.locator("h1:has-text('주문 상세')"))).toBeVisible();
   });
 
   test("주문 상태 업데이트", async ({ page }) => {

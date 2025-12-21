@@ -1,22 +1,12 @@
 import { OrdersClient } from "./orders-client";
+import { getOrderList } from "@/lib/api/admin-orders";
 
 export const metadata = {
   title: "Order Management - GGP Heritage Mall Admin",
 };
 
-async function getOrderList() {
-  // Server-side data fetching
-  // In production, this would use server-side Supabase client
-  // For now, return mock data for initial render
-  return {
-    orders: [],
-    total: 0,
-    page: 1,
-    limit: 20,
-  };
-}
-
 export default async function OrdersPage() {
-  const initialData = await getOrderList();
+  // 서버 사이드에서 실제 주문 데이터 가져오기
+  const initialData = await getOrderList({ page: 1, limit: 20 });
   return <OrdersClient initialData={initialData} />;
 }

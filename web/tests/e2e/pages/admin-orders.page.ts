@@ -60,11 +60,12 @@ export class AdminOrdersPage {
 
   async clickOrderRow(index: number) {
     const row = this.orderRows.nth(index);
-    // 행의 링크 또는 행 자체 클릭
-    const link = row.locator("a").first();
-    if (await link.isVisible()) {
-      await link.click();
+    // View 버튼 또는 링크 클릭
+    const viewButton = row.locator("a:has-text('View'), button:has-text('View'), a[href*='/admin/orders/']");
+    if (await viewButton.first().isVisible()) {
+      await viewButton.first().click();
     } else {
+      // 링크가 없으면 행 자체 클릭
       await row.click();
     }
   }

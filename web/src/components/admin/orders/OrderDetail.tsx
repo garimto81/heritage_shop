@@ -8,6 +8,13 @@ import { OrderStatusBadge } from "@/components/admin/ui/OrderStatusBadge";
 import type { AdminOrderDetail, OrderStatus } from "@/types/admin";
 import { cn } from "@/lib/utils";
 
+// 유효한 이미지 URL인지 확인
+function isValidImageUrl(url: string | undefined): boolean {
+  if (!url) return false;
+  // 절대 URL이거나 /로 시작하는 경로만 허용
+  return url.startsWith("http://") || url.startsWith("https://") || url.startsWith("/");
+}
+
 interface OrderDetailProps {
   order: AdminOrderDetail;
   onStatusChange: (status: OrderStatus) => void;
@@ -117,10 +124,10 @@ export function OrderDetail({ order, onStatusChange }: OrderDetailProps) {
                 <tr key={idx}>
                   <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
-                      {item.image && (
+                      {isValidImageUrl(item.image) && (
                         <div className="relative h-12 w-12 overflow-hidden rounded-lg">
                           <Image
-                            src={item.image}
+                            src={item.image!}
                             alt={item.product_name}
                             fill
                             className="object-cover"
