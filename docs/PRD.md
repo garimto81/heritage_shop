@@ -1,8 +1,8 @@
 # GGP Heritage Mall - Product Requirements Document
 
-**Version**: 1.0.0
-**Date**: 2025-12-20
-**Status**: Draft
+**Version**: 1.1.0
+**Date**: 2025-12-21
+**Status**: Completed
 **Author**: Product Team
 
 ---
@@ -12,6 +12,15 @@
 ### 1.1 프로젝트 설명
 
 GGP Heritage Mall은 VIP 고객만을 위한 프리미엄 이커머스 플랫폼입니다. 초대 기반(invite-only) 모델로 운영되며, 각 VIP는 고유한 초대 링크를 통해 접속하여 티어별로 차등화된 쇼핑 경험을 제공받습니다.
+
+> **비즈니스 모델: VIP Complimentary (무료 증정)**
+>
+> 이 플랫폼은 일반적인 판매 모델이 아닌 **VIP 무료 증정** 모델입니다.
+> - 상품에 가격이 없으며, 결제 시스템이 없습니다
+> - VIP 티어별로 선택 가능한 상품 수만 제한됩니다
+>   - Silver VIP: 최대 3개 상품
+>   - Gold VIP: 최대 5개 상품
+> - 배송비 무료
 
 ### 1.2 비즈니스 목표
 
@@ -440,9 +449,16 @@ interface CartItem {
 
 ---
 
-### 2.5 결제 [부분 완료 ⚠️]
+### 2.5 주문 시스템 [완료 ✅]
 
 **우선순위**: P0
+
+> **비즈니스 모델**: VIP Complimentary (무료 증정)
+>
+> 이 쇼핑몰은 VIP 고객에게 상품을 **무료 증정**하는 모델입니다.
+> 결제 시스템이 없으며, 티어별 수량 제한만 적용됩니다.
+> - Silver VIP: 최대 3개 상품
+> - Gold VIP: 최대 5개 상품
 
 #### 2.5.1 체크아웃 페이지 [완료 ✅]
 
@@ -452,10 +468,13 @@ interface CartItem {
 - ✅ 배송 주소 입력 폼
 - ✅ 주문 요약 (OrderSummary 컴포넌트)
 - ✅ VIP 세션에서 기본 배송지 불러오기 (Mock 데이터)
+- ✅ "VIP Complimentary" 표시 (무료 증정)
+- ✅ "Free Shipping" 표시 (무료 배송)
 
 **구현**
 - `web/src/app/checkout/page.tsx`
 - `web/src/components/checkout/ShippingForm.tsx`
+- `web/src/components/checkout/OrderSummary.tsx`
 
 #### 2.5.2 주문 생성 [완료 ✅]
 
@@ -491,17 +510,26 @@ INSERT INTO order_items (order_id, product_id, size, quantity)
 VALUES ...;
 ```
 
-#### 2.5.3 결제 게이트웨이 [미구현 🔴]
+#### 2.5.3 재고 차감 [완료 ✅]
 
-**우선순위**: P1
+**구현**
+- ✅ PostgreSQL 함수 `create_order_with_inventory` - 원자적 트랜잭션
+- ✅ 재고 검증 `validateInventory()` - 주문 전 사전 체크
+- ✅ 재고 복원 `restore_inventory_for_order` - 주문 취소 시
 
-**요구사항**
-- Stripe / PayPal 연동
-- 주문 생성 → 결제 → 주문 상태 업데이트 (`pending` → `processing`)
+**주문 플로우**
+```
+상품 선택 → 장바구니 → 배송지 입력 → 주문 완료 (재고 차감)
+                                        ↓
+                              ❌ 결제 단계 없음 (무료 증정)
+```
 
-**현재 상태**
-- 주문만 생성되고 실제 결제는 없음
-- `orders.status = 'pending'`으로 생성
+#### 2.5.4 결제 시스템 [해당 없음 ⬜]
+
+> **Note**: VIP Complimentary 모델로 결제 시스템이 필요하지 않습니다.
+> - 상품에 가격 필드 없음
+> - 결제 게이트웨이 연동 불필요
+> - 향후 유료 판매 모델로 전환 시 별도 구현 필요
 
 ---
 
@@ -1269,65 +1297,67 @@ USING (
 
 ## 7. 마일스톤
 
-### Phase 1: 관리자 VIP 관리 기능 (P0) - 2주
+### Phase 1: 관리자 VIP 관리 기능 (P0) [완료 ✅]
 
 **Week 1**
-- [ ] 관리자 인증 시스템
-  - [ ] `/admin/auth/login` 페이지
-  - [ ] `POST /api/admin/auth/login` API
-  - [ ] 세션 미들웨어 (권한 검증)
-- [ ] VIP 목록 화면
-  - [ ] `GET /api/admin/vips` API
-  - [ ] `/admin/vips` 페이지 (테이블, 필터, 검색)
-  - [ ] 페이지네이션
+- [x] 관리자 인증 시스템
+  - [x] `/admin/auth/login` 페이지
+  - [x] `POST /api/admin/auth/login` API
+  - [x] 세션 미들웨어 (권한 검증)
+- [x] VIP 목록 화면
+  - [x] `GET /api/admin/vips` API
+  - [x] `/admin/vips` 페이지 (테이블, 필터, 검색)
+  - [x] 페이지네이션
 
 **Week 2**
-- [ ] VIP 생성 기능
-  - [ ] `POST /api/admin/vips` API
-  - [ ] `/admin/vips/new` 페이지
-  - [ ] 초대 링크 모달 (복사, 이메일 전송)
-- [ ] VIP 수정 기능
-  - [ ] `PUT /api/admin/vips/[id]` API
-  - [ ] `/admin/vips/[id]/edit` 페이지
-  - [ ] 토큰 재발급 API
-- [ ] VIP 삭제 기능
-  - [ ] `DELETE /api/admin/vips/[id]` API
-  - [ ] Soft/Hard Delete 로직
-  - [ ] 주문 존재 검증
+- [x] VIP 생성 기능
+  - [x] `POST /api/admin/vips` API
+  - [x] `/admin/vips/new` 페이지
+  - [x] 초대 링크 모달 (복사)
+- [x] VIP 수정 기능
+  - [x] `PUT /api/admin/vips/[id]` API
+  - [x] `/admin/vips/[id]/edit` 페이지
+  - [x] 토큰 재발급 API
+- [x] VIP 삭제 기능
+  - [x] `DELETE /api/admin/vips/[id]` API
+  - [x] Soft/Hard Delete 로직
+  - [x] 주문 존재 검증
 
 ---
 
-### Phase 2: 주문 관리 및 결제 (P1) - 2주
+### Phase 2: 주문 관리 (P1) [완료 ✅]
 
 **Week 3**
-- [ ] 주문 목록 화면
-  - [ ] `GET /api/admin/orders` API
-  - [ ] `/admin/orders` 페이지
-  - [ ] 주문 상태 필터
-- [ ] 주문 상세 화면
-  - [ ] `GET /api/admin/orders/[id]` API
-  - [ ] `/admin/orders/[id]` 페이지
-  - [ ] 배송 정보 표시
+- [x] 주문 목록 화면
+  - [x] `GET /api/admin/orders` API
+  - [x] `/admin/orders` 페이지
+  - [x] 주문 상태 필터
+- [x] 주문 상세 화면
+  - [x] `GET /api/admin/orders/[id]` API
+  - [x] `/admin/orders/[id]` 페이지
+  - [x] 배송 정보 표시
 
 **Week 4**
-- [ ] 결제 게이트웨이 연동
-  - [ ] Stripe SDK 통합
-  - [ ] 결제 완료 후 주문 상태 업데이트
-- [ ] 재고 차감 로직
-  - [ ] 주문 생성 시 트랜잭션
-  - [ ] 재고 부족 시 에러 처리
+- [x] 재고 차감 로직
+  - [x] 주문 생성 시 트랜잭션 (`create_order_with_inventory`)
+  - [x] 재고 부족 시 에러 처리
+  - [x] 주문 취소 시 재고 복원 (`restore_inventory_for_order`)
+
+> **Note**: 결제 게이트웨이는 VIP Complimentary 모델로 해당 없음
 
 ---
 
-### Phase 3: 대시보드 및 분석 (P2) - 1주
+### Phase 3: 대시보드 및 분석 (P2) [완료 ✅]
 
 **Week 5**
-- [ ] 관리자 대시보드
-  - [ ] 총 VIP 수, 활성 VIP
-  - [ ] 총 주문 수, 매출 (계산 필요)
-  - [ ] 티어별 분포 차트
-- [ ] VIP 상세 페이지
-  - [ ] `/admin/vips/[id]` (기본 정보 + 주문 이력)
+- [x] 관리자 대시보드
+  - [x] 총 VIP 수, 활성 VIP
+  - [x] 총 주문 수
+  - [x] 최근 VIP / 최근 주문 표시
+- [x] VIP 상세 페이지
+  - [x] `/admin/vips/[id]` (기본 정보 + 주문 이력)
+
+> **Note**: 매출 통계는 VIP Complimentary 모델로 해당 없음
 
 ---
 
@@ -1491,6 +1521,7 @@ USING (
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
 | 1.0.0 | 2025-12-20 | 초기 PRD 작성 (관리자 VIP 관리 중심) |
+| 1.1.0 | 2025-12-21 | 비즈니스 모델 명확화 (VIP Complimentary), 결제 시스템 해당 없음 반영, 마일스톤 완료 상태 업데이트 |
 
 ---
 
