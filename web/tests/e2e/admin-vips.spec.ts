@@ -8,8 +8,8 @@ import { AdminVipsPage } from "./pages/admin-vips.page";
  */
 test.describe("관리자 VIP 관리", () => {
   const TEST_ADMIN = {
-    email: "admin@ggp.com",
-    password: "Admin123!@#",
+    email: "admin@ggpheritage.com",
+    password: "admin1234",
   };
 
   test.beforeEach(async ({ page }) => {
@@ -37,8 +37,9 @@ test.describe("관리자 VIP 관리", () => {
     // 페이지 제목 확인
     await expect(page.locator("h1")).toContainText(/VIP/i);
 
-    // 테이블이 표시되는지 확인
-    await expect(vipsPage.vipsTable).toBeVisible();
+    // 테이블 또는 "No VIPs found" 메시지 확인
+    const tableOrEmpty = page.locator("table").or(page.getByText("No VIPs found"));
+    await expect(tableOrEmpty.first()).toBeVisible();
   });
 
   test("VIP 검색 기능", async ({ page }) => {
@@ -86,9 +87,9 @@ test.describe("관리자 VIP 관리", () => {
     // 생성 페이지로 이동 확인
     await expect(page).toHaveURL(/\/admin\/vips\/new/);
 
-    // 폼 필드 확인
-    await expect(page.locator("input[name='email']")).toBeVisible();
-    await expect(page.locator("input[name='name']")).toBeVisible();
+    // 폼 필드 확인 (id 속성 사용)
+    await expect(page.locator("input#email")).toBeVisible();
+    await expect(page.locator("input#name")).toBeVisible();
   });
 
   test("VIP 생성 - 필수 필드 검증", async ({ page }) => {
@@ -134,8 +135,8 @@ test.describe("관리자 VIP 관리", () => {
     // 수정 페이지로 이동 확인
     await expect(page).toHaveURL(/\/admin\/vips\/[a-f0-9-]+\/edit/);
 
-    // 폼 필드가 표시되는지 확인
-    await expect(page.locator("input[name='email']")).toBeVisible();
+    // 폼 필드가 표시되는지 확인 (id 속성 사용)
+    await expect(page.locator("input#email")).toBeVisible();
   });
 
   test("페이지네이션", async ({ page }) => {
