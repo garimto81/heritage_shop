@@ -1,6 +1,5 @@
 import { getAdminSession } from "@/lib/auth/admin-session";
-import { AdminSidebar } from "@/components/admin/layout/AdminSidebar";
-import { AdminHeader } from "@/components/admin/layout/AdminHeader";
+import { AdminLayoutClient } from "@/components/admin/layout/AdminLayoutClient";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getAdminSession();
@@ -11,12 +10,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-background)]">
-      <AdminSidebar />
-      <div className="ml-60">
-        <AdminHeader adminName={session.name || session.email} />
-        <main className="p-8">{children}</main>
-      </div>
-    </div>
+    <AdminLayoutClient adminName={session.name || session.email}>
+      {children}
+    </AdminLayoutClient>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Users, ShoppingBag, TrendingUp, Crown } from "lucide-react";
+import { Users, ShoppingBag, Crown, AlertCircle } from "lucide-react";
 import { StatsCard } from "@/components/admin/dashboard/StatsCard";
 import { RecentOrders } from "@/components/admin/dashboard/RecentOrders";
 import { RecentVips } from "@/components/admin/dashboard/RecentVips";
+import { DashboardSkeleton } from "@/components/admin/shared/Skeleton";
 
 interface DashboardData {
   stats: {
@@ -35,6 +36,7 @@ interface DashboardData {
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchDashboard() {
@@ -43,8 +45,9 @@ export default function DashboardPage() {
         if (!response.ok) throw new Error("Failed to fetch dashboard data");
         const result = await response.json();
         setData(result);
-      } catch (error) {
-        console.error("Dashboard fetch error:", error);
+      } catch (err) {
+        console.error("Dashboard fetch error:", err);
+        setError("데이터를 불러오는데 실패했습니다");
       } finally {
         setLoading(false);
       }
@@ -54,31 +57,36 @@ export default function DashboardPage() {
   }, []);
 
   if (loading) {
-    return (
-      <div className="flex h-96 items-center justify-center">
-        <div className="text-neutral-400">Loading...</div>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
-  if (!data) {
+  if (error || !data) {
     return (
       <div className="flex h-96 items-center justify-center">
-        <div className="text-red-400">Failed to load dashboard</div>
+        <div className="text-center">
+          <AlertCircle className="h-12 w-12 mx-auto text-red-400 mb-4" />
+          <p className="text-red-400 font-medium">{error || "Failed to load dashboard"}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 text-sm bg-[#1A1A1A] text-white rounded-lg hover:bg-[#2A2A2A] transition-colors"
+          >
+            다시 시도
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-white">Dashboard</h1>
-        <p className="mt-2 text-neutral-400">
+        <h1 className="text-2xl lg:text-3xl font-bold text-white">Dashboard</h1>
+        <p className="mt-1 lg:mt-2 text-sm lg:text-base text-neutral-400">
           Welcome to GGP Heritage Mall Admin
         </p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 lg:gap-6 grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Total VIPs"
           value={data.stats.totalVips}
@@ -107,7 +115,7 @@ export default function DashboardPage() {
         />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 lg:gap-6 lg:grid-cols-2">
         <RecentOrders orders={data.recentOrders} />
         <RecentVips vips={data.recentVips} />
       </div>
