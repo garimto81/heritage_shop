@@ -43,8 +43,9 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
         className={cn(
           "fixed left-0 top-0 z-50 h-screen w-64 bg-[#0F0F0F] border-r border-[#2A2A2A]",
           "transform transition-transform duration-300 ease-in-out",
-          "lg:translate-x-0 lg:z-40",
-          isOpen ? "translate-x-0" : "-translate-x-full"
+          // 모바일: isOpen에 따라 표시/숨김, 데스크톱: 항상 표시
+          isOpen ? "translate-x-0" : "-translate-x-full",
+          "lg:!translate-x-0 lg:z-40"
         )}
       >
         {/* 로고 & 닫기 버튼 */}
