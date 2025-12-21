@@ -16,13 +16,13 @@ export function AdminLayoutClient({ children, adminName }: AdminLayoutClientProp
     <div className="min-h-screen bg-[#0A0A0A]">
       <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* 메인 컨텐츠 영역 */}
-      <div className="lg:ml-64 min-h-screen flex flex-col">
+      {/* 메인 컨텐츠 영역 - 사이드바 너비만큼 여백 확보 */}
+      <div className="lg:ml-64 min-h-screen flex flex-col w-full lg:w-[calc(100%-16rem)] overflow-x-hidden">
         <AdminHeader
           adminName={adminName}
           onMenuClick={() => setSidebarOpen(true)}
         />
-        <main className="flex-1 p-4 lg:p-8">
+        <main className="flex-1 p-4 lg:p-8 max-w-full overflow-x-auto">
           {children}
         </main>
       </div>
