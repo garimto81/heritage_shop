@@ -139,7 +139,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-[var(--color-background)]">
       <CheckoutHeader currentStep={2} />
 
-      <main className="pt-[100px] min-h-screen flex">
+      <main className="min-h-screen flex">
         <ShippingForm
           initialData={mockSavedAddress}
           onChange={handleShippingChange}

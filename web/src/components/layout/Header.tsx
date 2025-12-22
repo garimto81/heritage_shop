@@ -26,7 +26,7 @@ export function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] px-[60px] py-5 flex justify-between items-center bg-[rgba(10,10,10,0.95)] border-b border-[#2A2A2A] backdrop-blur-[10px]">
+    <header className="sticky top-0 z-[100] px-[60px] py-5 flex justify-between items-center bg-[rgba(10,10,10,0.95)] border-b border-[#2A2A2A] backdrop-blur-[10px]">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-3">
         <div className="w-10 h-10 bg-gradient-to-br from-[var(--color-gold)] to-[var(--color-gold-dark)] rounded-lg flex items-center justify-center font-heading font-bold text-[18px] text-[var(--color-background)]">
