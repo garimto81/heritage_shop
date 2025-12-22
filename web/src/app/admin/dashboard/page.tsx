@@ -79,11 +79,18 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6 lg:space-y-8">
-      <div>
-        <h1 className="text-2xl lg:text-3xl font-bold text-white">Dashboard</h1>
-        <p className="mt-1 lg:mt-2 text-sm lg:text-base text-neutral-400">
-          Welcome to GGP Heritage Mall Admin
-        </p>
+      {/* 페이지 헤더 */}
+      <div className="relative overflow-hidden rounded-2xl border border-[#2A2A2A] bg-gradient-to-r from-[#0F0F0F] to-[#1A1A1A] p-6 lg:p-8">
+        {/* 배경 장식 */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-gold)] opacity-[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-blue-500 opacity-[0.03] rounded-full blur-3xl translate-y-1/2 -translate-x-1/4" />
+
+        <div className="relative">
+          <h1 className="text-2xl lg:text-3xl font-bold text-white">Dashboard</h1>
+          <p className="mt-2 text-sm lg:text-base text-neutral-400">
+            Welcome to GGP Heritage Mall Admin
+          </p>
+        </div>
       </div>
 
       <div className="grid gap-4 lg:gap-6 grid-cols-2 lg:grid-cols-4">
