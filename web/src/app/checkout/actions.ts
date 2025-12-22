@@ -79,14 +79,14 @@ export async function createOrderAction(
     }
 
     // 주문 생성 (내부에서 재고 검증 및 차감 처리)
-    await createOrder({
+    const order = await createOrder({
       vip_id: session.id,
       items: input.items,
       shipping_address: input.shipping_address,
       notes: input.notes,
     });
 
-    redirect("/checkout/complete");
+    redirect(`/checkout/complete?orderId=${order.id}`);
   } catch (error) {
     // Next.js의 redirect()는 특별한 에러를 throw함 - 다시 throw해야 함
     if (
