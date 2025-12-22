@@ -112,7 +112,7 @@ export function ProductsClient({
       <Header />
 
       {/* Main Content */}
-      <main className="pt-[100px] pb-[120px]">
+      <main className="pt-[120px] pb-[120px]">
         {/* Page Header */}
         <div className="py-[60px] text-center bg-[var(--color-surface)] border-b border-[#2A2A2A]">
           <h1 className="font-heading text-[48px] font-normal mb-4">

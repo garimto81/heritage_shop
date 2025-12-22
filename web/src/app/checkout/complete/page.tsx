@@ -70,7 +70,7 @@ function OrderCompleteContent() {
     <div className="min-h-screen bg-[var(--color-background)]">
       <Header />
 
-      <main className="pt-28 pb-16 px-4">
+      <main className="pt-[120px] pb-16 px-4">
         <div className="max-w-2xl mx-auto">
           {/* 성공 아이콘 및 메시지 */}
           <motion.div
