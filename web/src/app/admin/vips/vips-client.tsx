@@ -167,7 +167,7 @@ export function VipsClient({ initialData }: VipsClientProps) {
   );
 
   const handleCopyLink = useCallback((token: string) => {
-    const inviteUrl = `${window.location.origin}/register?token=${token}`;
+    const inviteUrl = `${window.location.origin}/invite/${token}`;
     navigator.clipboard.writeText(inviteUrl);
     alert("Invite link copied to clipboard!");
   }, []);
