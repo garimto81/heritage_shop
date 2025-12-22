@@ -58,3 +58,6 @@ export function proxy(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+// Next.js 미들웨어로 등록
+export { proxy as middleware };
