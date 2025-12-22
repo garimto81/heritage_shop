@@ -13,16 +13,17 @@ export function AdminLayoutClient({ children, adminName }: AdminLayoutClientProp
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="min-h-screen bg-[#0A0A0A] flex">
       <AdminSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      {/* 메인 컨텐츠 영역 - 사이드바 너비만큼 여백 확보 */}
-      <div className="lg:ml-64 min-h-screen flex flex-col w-full lg:w-[calc(100%-16rem)] overflow-x-hidden">
+      {/* 메인 컨텐츠 영역 - 사이드바 너비만큼 여백 확보 (lg:ml-64 = 16rem = 256px) */}
+      <div className="flex-1 min-h-screen flex flex-col" style={{ marginLeft: 'var(--sidebar-width, 0)' }}>
+        <style>{`@media (min-width: 1024px) { :root { --sidebar-width: 16rem; } }`}</style>
         <AdminHeader
           adminName={adminName}
           onMenuClick={() => setSidebarOpen(true)}
         />
-        <main className="flex-1 p-4 lg:p-8 max-w-full overflow-x-auto">
+        <main className="flex-1 p-4 lg:p-8 overflow-x-auto">
           {children}
         </main>
       </div>
