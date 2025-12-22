@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShoppingBag } from "lucide-react";
+import { ShoppingBag, GitCommit } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useCartStore } from "@/stores/cartStore";
 
@@ -11,6 +11,10 @@ export function Header() {
   const pathname = usePathname();
   const { items, maxItems, tierName } = useCartStore();
   const [isClient, setIsClient] = useState(false);
+
+  // 버전 정보
+  const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH || "dev";
+  const commitMessage = process.env.NEXT_PUBLIC_COMMIT_MESSAGE || "";
 
   // Handle hydration mismatch
   useEffect(() => {
@@ -38,7 +42,7 @@ export function Header() {
       </Link>
 
       {/* Navigation */}
-      <nav className="flex gap-10">
+      <nav className="hidden md:flex gap-10">
         {navLinks.map((link) => (
           <Link
             key={link.href}
@@ -54,6 +58,17 @@ export function Header() {
           </Link>
         ))}
       </nav>
+
+      {/* Version Info - Desktop only */}
+      <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-lg">
+        <GitCommit className="h-4 w-4 text-[var(--color-gold)]" />
+        <span className="font-mono text-xs text-[var(--color-gold)]">{commitHash}</span>
+        {commitMessage && (
+          <span className="text-xs text-[var(--color-text-muted)] max-w-[200px] truncate">
+            {commitMessage}
+          </span>
+        )}
+      </div>
 
       {/* Right Section */}
       <div className="flex items-center gap-6">

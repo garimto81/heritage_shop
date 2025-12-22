@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -12,8 +13,11 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
+// 버전 정보 (빌드 타임에 결정)
+const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH || "dev";
+
 export const metadata: Metadata = {
-  title: "GGP Heritage Mall - VIP Exclusive Shopping",
+  title: `GGP Heritage Mall (${commitHash})`,
   description: "Exclusive VIP shopping experience for GGP Heritage members",
 };
 
@@ -24,7 +28,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <Toaster position="top-right" />
+      </body>
     </html>
   );
 }
