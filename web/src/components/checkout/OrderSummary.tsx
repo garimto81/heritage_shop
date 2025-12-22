@@ -39,8 +39,18 @@ export function OrderSummary({
             data-testid="order-item"
             className="flex gap-4 py-4 border-b border-[#2A2A2A]"
           >
-            <div className="w-[72px] h-[72px] bg-[#151515] rounded-lg flex items-center justify-center font-heading text-[20px] text-[#2A2A2A]">
-              {String(index + 1).padStart(2, "0")}
+            <div className="w-[72px] h-[72px] bg-[#151515] rounded-lg overflow-hidden flex-shrink-0">
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center font-heading text-[20px] text-[#2A2A2A]">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+              )}
             </div>
 
             <div className="flex-1">
