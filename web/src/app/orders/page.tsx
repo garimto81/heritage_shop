@@ -73,7 +73,7 @@ export default function MyOrdersPage() {
     return (
       <div className="min-h-screen bg-[var(--color-background)]">
         <Header />
-        <main className="pt-24 pb-16 px-4">
+        <main className="pt-[120px] pb-16 px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center text-[var(--color-text-secondary)]">Loading orders...</div>
           </div>
@@ -86,7 +86,7 @@ export default function MyOrdersPage() {
     <div className="min-h-screen bg-[var(--color-background)]">
       <Header />
 
-      <main className="pt-24 pb-16 px-4">
+      <main className="pt-[120px] pb-16 px-4">
         <div className="max-w-4xl mx-auto">
           {/* 헤더 */}
           <div className="mb-8">
