@@ -24,7 +24,7 @@ export function ActionBar({ selectedItems, maxItems, onCheckout }: ActionBarProp
       data-testid="action-bar"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="fixed bottom-0 left-0 right-0 z-50 px-[60px] py-5 bg-[rgba(26,26,26,0.95)] border-t border-[#2A2A2A] backdrop-blur-[10px]"
+      className="fixed bottom-0 left-0 right-0 z-50 px-4 lg:px-[60px] py-5 bg-[rgba(26,26,26,0.95)] border-t border-[#2A2A2A] backdrop-blur-[10px]"
     >
       <div className="flex justify-between items-center max-w-[1600px] mx-auto">
         {/* Selection Summary */}

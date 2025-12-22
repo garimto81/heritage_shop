@@ -25,7 +25,7 @@ export function CategoryFilter({
   onViewModeChange,
 }: CategoryFilterProps) {
   return (
-    <div className="flex justify-between items-center py-6 px-[60px] border-b border-[#2A2A2A]">
+    <div className="flex justify-between items-center py-6 px-4 lg:px-[60px] border-b border-[#2A2A2A]">
       {/* Category Tabs */}
       <div className="flex gap-2">
         <button

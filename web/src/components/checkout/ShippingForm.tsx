@@ -40,7 +40,7 @@ export function ShippingForm({ initialData, onChange }: ShippingFormProps) {
   const hasSavedData = initialData?.fullName && initialData?.streetAddress;
 
   return (
-    <div data-testid="shipping-form" className="flex-1 p-[60px] border-r border-[#2A2A2A]">
+    <div data-testid="shipping-form" className="flex-1 p-4 lg:p-[60px] border-r border-[#2A2A2A]">
       <div className="mb-10">
         <h1 className="font-heading text-[32px] font-normal mb-2">
           Shipping Information

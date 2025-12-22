@@ -8,7 +8,7 @@ import { Lock, Mail, Sparkles, Shield, Gift } from "lucide-react";
  */
 export function Welcome() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] px-4 relative overflow-hidden">
+    <main className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] px-4 lg:px-[60px] relative overflow-hidden">
       {/* 배경 장식 */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* 상단 좌측 그라데이션 */}

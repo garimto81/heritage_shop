@@ -134,7 +134,7 @@ export function ProductsClient({
         />
 
         {/* Products Grid */}
-        <section className="p-[60px]">
+        <section className="p-4 lg:p-[60px]">
           <div
             className={
               viewMode === "grid"
