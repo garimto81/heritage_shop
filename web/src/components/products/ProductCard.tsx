@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
+import { duration, easing } from "@/lib/motion";
 
 export interface ProductInventory {
   size: string;
@@ -78,7 +80,7 @@ export function ProductCard({
       return <Badge variant="secondary" className="bg-[var(--color-text-muted)] text-[var(--color-background)]">Sold Out</Badge>;
     }
     if (product.isLimited) {
-      return <Badge className="bg-[#E74C3C] text-white hover:bg-[#E74C3C]">Limited</Badge>;
+      return <Badge className="bg-[var(--color-error)] text-white hover:bg-[var(--color-error)]">Limited</Badge>;
     }
     if (product.isNew) {
       return <Badge className="bg-[var(--color-gold)] text-[var(--color-background)] hover:bg-[var(--color-gold)]">New</Badge>;
@@ -90,16 +92,25 @@ export function ProductCard({
     <motion.div
       data-testid="product-card"
       className={cn(
-        "group relative bg-[#151515] border border-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300",
+        "group relative bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl overflow-hidden transition-all duration-300",
         isSelected && "border-[var(--color-gold)] shadow-[0_0_0_2px_var(--color-gold)]",
         isOutOfStock && "opacity-50 pointer-events-none",
         !isOutOfStock && !disabled && "hover:border-[var(--color-gold)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
       )}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
       whileHover={!isOutOfStock && !disabled ? { y: -8 } : undefined}
-      transition={{ duration: 0.3 }}
+      transition={{
+        duration: duration.normal,
+        ease: easing.default,
+      }}
+      style={{
+        willChange: "transform, opacity",
+      }}
     >
       {/* Image */}
-      <div className="relative aspect-square bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] overflow-hidden">
+      <div className="relative aspect-square bg-gradient-to-br from-[var(--color-surface-dark)] to-[var(--color-border)] overflow-hidden">
         {/* Badge */}
         <div className="absolute top-4 left-4 z-10">
           {getBadge()}
@@ -129,21 +140,32 @@ export function ProductCard({
           </button>
         )}
 
-        {/* Product Image */}
-        {product.images[0] ? (
-          <img
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)]">
-            No Image
-          </div>
-        )}
+        {/* Product Image - 클릭 시 상세 페이지로 이동 */}
+        <Link href={`/products/${product.id}`} className="block w-full h-full">
+          {product.images[0] ? (
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)]">
+              No Image
+            </div>
+          )}
+        </Link>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+        {/* View Detail Button - 호버 시 표시 */}
+        <Link
+          href={`/products/${product.id}`}
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[var(--color-gold)] text-[var(--color-background)] px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-[var(--color-gold-dark)]"
+        >
+          View Details
+          <ExternalLink className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
       {/* Info */}
@@ -175,10 +197,10 @@ export function ProductCard({
                 className={cn(
                   "w-8 h-8 rounded border text-[11px] font-medium flex items-center justify-center transition-all duration-300",
                   inv.quantity === 0
-                    ? "border-[#2A2A2A] text-[var(--color-text-muted)] cursor-not-allowed opacity-50"
+                    ? "border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed opacity-50"
                     : selectedSize === inv.size && isSelected
                     ? "bg-[var(--color-gold)] border-[var(--color-gold)] text-[var(--color-background)]"
-                    : "border-[#2A2A2A] text-[var(--color-text-secondary)] hover:border-[var(--color-text-primary)] hover:text-[var(--color-text-primary)]"
+                    : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-text-primary)] hover:text-[var(--color-text-primary)]"
                 )}
               >
                 {inv.size}
@@ -193,8 +215,8 @@ export function ProductCard({
               isOutOfStock
                 ? "text-[var(--color-text-muted)]"
                 : isLowStock
-                ? "text-[#E74C3C]"
-                : "text-[#2ECC71]"
+                ? "text-[var(--color-error)]"
+                : "text-[var(--color-success)]"
             )}
           >
             {getStockText()}

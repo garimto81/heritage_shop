@@ -50,10 +50,11 @@ export async function getProducts(): Promise<ProductWithInventory[]> {
 }
 
 /**
- * UUID v4 형식 검증
+ * UUID 형식 검증 (v1-v5 및 테스트용 UUID 허용)
  */
 function isValidUUID(str: string): boolean {
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  // 일반적인 UUID 형식 (8-4-4-4-12)
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   return uuidRegex.test(str);
 }
 
