@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
+/* ============================================
+   Color System - HEX 폴백 (모든 브라우저)
+   ============================================ */
 :root {
+  /* 기본 색상 (HEX 폴백) */
   --color-background: #0a0a0a;
   --color-surface: #151515;
   --color-gold: #d4af37;
@@ -8,7 +12,54 @@
   --color-text-primary: #ffffff;
   --color-text-secondary: #a0a0a0;
   --color-text-muted: #666666;
+
+  /* 확장 색상 */
+  --color-border: #2a2a2a;
+  --color-border-hover: #3a3a3a;
+  --color-surface-dark: #1a1a1a;
+  --color-surface-darker: #0f0f0f;
+  --color-error: #e74c3c;
+  --color-success: #2ecc71;
+  --color-silver: #c0c0c0;
+
+  /* 폰트 */
   --font-heading: var(--font-playfair), serif;
+}
+
+/* ============================================
+   OKLCH Color System (모던 브라우저)
+   ============================================ */
+@supports (color: oklch(0 0 0)) {
+  :root {
+    --color-background: oklch(0.10 0 0);
+    --color-surface: oklch(0.15 0 0);
+    --color-gold: oklch(0.76 0.145 85);
+    --color-gold-dark: oklch(0.68 0.130 85);
+    --color-text-primary: oklch(1 0 0);
+    --color-text-secondary: oklch(0.70 0 0);
+    --color-text-muted: oklch(0.50 0 0);
+
+    --color-border: oklch(0.23 0 0);
+    --color-border-hover: oklch(0.30 0 0);
+    --color-surface-dark: oklch(0.17 0 0);
+    --color-surface-darker: oklch(0.12 0 0);
+    --color-error: oklch(0.63 0.22 28);
+    --color-success: oklch(0.78 0.18 145);
+    --color-silver: oklch(0.79 0 0);
+  }
+}
+
+/* ============================================
+   P3 Color Gamut (더 선명한 색상)
+   ============================================ */
+@media (color-gamut: p3) {
+  @supports (color: oklch(0 0 0)) {
+    :root {
+      --color-gold: oklch(0.76 0.18 85);
+      --color-gold-dark: oklch(0.68 0.16 85);
+      --color-success: oklch(0.78 0.22 145);
+    }
+  }
 }
 
 * {
@@ -56,4 +107,90 @@ body {
 ::selection {
   background-color: var(--color-gold);
   color: var(--color-background);
+}
+
+/* ============================================
+   Animation Keyframes
+   ============================================ */
+
+/* Skeleton shimmer effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite;
+  will-change: transform;
+}
+
+/* GPU 가속 */
+.gpu-accelerated {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* ============================================
+   Fade In Animation
+   ============================================ */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* ============================================
+   Glow Effect (골드)
+   ============================================ */
+.glow-gold {
+  box-shadow: 0 0 20px var(--color-gold), 0 0 40px rgba(212, 175, 55, 0.3);
+}
+
+.glow-gold-subtle {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================
+   Glass Effect (글래스모피즘)
+   ============================================ */
+.glass {
+  background: rgba(15, 15, 15, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================
+   Gradient Text
+   ============================================ */
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold) 0%, #E5C158 50%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   Card Hover Effects
+   ============================================ */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
