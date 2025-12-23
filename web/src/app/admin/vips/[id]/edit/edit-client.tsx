@@ -18,7 +18,7 @@ export function EditVipClient({ vip }: EditVipClientProps) {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleSuccess = useCallback(
-    (updatedVip: AdminVip) => {
+    (_updatedVip: AdminVip) => {
       router.push("/admin/vips");
       router.refresh();
     },

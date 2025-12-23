@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { VipDetail } from "@/components/admin/vips/VipDetail";
@@ -9,7 +9,6 @@ import type { AdminVip, AdminOrder } from "@/types/admin";
 
 export default function VipDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const id = params.id as string;
 
   const [vip, setVip] = useState<AdminVip | null>(null);

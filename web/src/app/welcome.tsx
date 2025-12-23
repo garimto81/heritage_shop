@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Lock, Mail, Sparkles, Shield, Gift } from "lucide-react";
-import { fadeInUpVariants, luxuryEasing, luxuryDuration } from "@/lib/motion";
+import { luxuryEasing, luxuryDuration } from "@/lib/motion";
 
 /**
  * 환영 페이지 컴포넌트 - GGP Fashion 스타일

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
@@ -41,8 +40,6 @@ export function ProductCard({
   onDeselect,
   disabled = false,
 }: ProductCardProps) {
-  const [hoveredSize, setHoveredSize] = useState<string | null>(null);
-
   const totalStock = product.inventory.reduce((sum, inv) => sum + inv.quantity, 0);
   const isOutOfStock = totalStock === 0;
   const isLowStock = totalStock > 0 && totalStock <= 5;
