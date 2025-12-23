@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, ExternalLink } from "lucide-react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { duration, easing } from "@/lib/motion";
+import { luxuryEasing, luxuryDuration } from "@/lib/motion";
 
 export interface ProductInventory {
   size: string;
@@ -47,7 +47,9 @@ export function ProductCard({
   const isOutOfStock = totalStock === 0;
   const isLowStock = totalStock > 0 && totalStock <= 5;
 
-  const handleSelectClick = () => {
+  const handleSelectClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (isOutOfStock || disabled) return;
 
     if (isSelected) {
@@ -60,19 +62,15 @@ export function ProductCard({
     }
   };
 
-  const handleSizeClick = (size: string, quantity: number) => {
+  const handleSizeClick = (e: React.MouseEvent, size: string, quantity: number) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (quantity === 0 || disabled) return;
 
     if (isSelected && selectedSize === size) {
       return;
     }
     onSelect(product.id, size);
-  };
-
-  const getStockText = () => {
-    if (isOutOfStock) return "Out of Stock";
-    if (isLowStock) return `Only ${totalStock} left`;
-    return `In Stock: ${totalStock}`;
   };
 
   const getBadge = () => {
@@ -92,136 +90,113 @@ export function ProductCard({
     <motion.div
       data-testid="product-card"
       className={cn(
-        "group relative bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl overflow-hidden transition-all duration-300",
-        isSelected && "border-[var(--color-gold)] shadow-[0_0_0_2px_var(--color-gold)]",
-        isOutOfStock && "opacity-50 pointer-events-none",
-        !isOutOfStock && !disabled && "hover:border-[var(--color-gold)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+        "group relative cursor-pointer",
+        isOutOfStock && "opacity-50 pointer-events-none"
       )}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      whileHover={!isOutOfStock && !disabled ? { y: -8 } : undefined}
       transition={{
-        duration: duration.normal,
-        ease: easing.default,
-      }}
-      style={{
-        willChange: "transform, opacity",
+        duration: luxuryDuration.slow,
+        ease: luxuryEasing.elegant,
       }}
     >
-      {/* Image */}
-      <div className="relative aspect-square bg-gradient-to-br from-[var(--color-surface-dark)] to-[var(--color-border)] overflow-hidden">
-        {/* Badge */}
-        <div className="absolute top-4 left-4 z-10">
-          {getBadge()}
-        </div>
+      {/* Image Container - GGP Fashion 3:4 비율 */}
+      <Link href={`/products/${product.id}`} className="block">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-sm bg-gray-900 mb-4">
+          {/* Badge */}
+          <div className="absolute top-4 left-4 z-10">
+            {getBadge()}
+          </div>
 
-        {/* Select Button */}
-        {!isOutOfStock && (
-          <button
-            data-testid="product-select-btn"
-            onClick={handleSelectClick}
-            disabled={disabled && !isSelected}
-            className={cn(
-              "absolute top-4 right-4 z-10 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
-              isSelected
-                ? "bg-[var(--color-gold)] border-[var(--color-gold)]"
-                : "bg-black/50 border-[var(--color-text-secondary)] hover:border-[var(--color-gold)]",
-              disabled && !isSelected && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            <Check
+          {/* Select Button */}
+          {!isOutOfStock && (
+            <button
+              data-testid="product-select-btn"
+              onClick={handleSelectClick}
+              disabled={disabled && !isSelected}
               className={cn(
-                "w-4 h-4 transition-colors",
-                isSelected ? "text-[var(--color-background)]" : "text-transparent"
+                "absolute top-4 right-4 z-20 w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all duration-300",
+                isSelected
+                  ? "bg-[var(--color-gold)] border-[var(--color-gold)]"
+                  : "bg-black/50 border-white/50 hover:border-[var(--color-gold)]",
+                disabled && !isSelected && "opacity-50 cursor-not-allowed"
               )}
-              strokeWidth={3}
-            />
-          </button>
-        )}
+            >
+              <Check
+                className={cn(
+                  "w-4 h-4 transition-colors",
+                  isSelected ? "text-[var(--color-background)]" : "text-transparent"
+                )}
+                strokeWidth={3}
+              />
+            </button>
+          )}
 
-        {/* Product Image - 클릭 시 상세 페이지로 이동 */}
-        <Link href={`/products/${product.id}`} className="block w-full h-full">
+          {/* Product Image - GGP Fashion 스타일 호버 */}
           {product.images[0] ? (
             <img
               src={product.images[0]}
               alt={product.name}
-              className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-105"
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center text-[var(--color-text-muted)]">
               No Image
             </div>
           )}
-        </Link>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 pointer-events-none" />
-
-        {/* View Detail Button - 호버 시 표시 */}
-        <Link
-          href={`/products/${product.id}`}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-[var(--color-gold)] text-[var(--color-background)] px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2 hover:bg-[var(--color-gold-dark)]"
-        >
-          View Details
-          <ExternalLink className="w-3.5 h-3.5" />
-        </Link>
-      </div>
-
-      {/* Info */}
-      <div className="p-6">
-        <div className="text-[11px] font-medium tracking-[2px] text-[var(--color-gold)] uppercase mb-2">
-          {product.category}
-        </div>
-        <h3 className="font-heading text-[22px] font-medium mb-2">
-          {product.name}
-        </h3>
-        {product.description && (
-          <p className="text-[13px] text-[var(--color-text-secondary)] leading-relaxed mb-4">
-            {product.description}
-          </p>
-        )}
-
-        {/* Meta: Sizes & Stock */}
-        <div className="flex justify-between items-center">
-          {/* Sizes */}
-          <div className="flex gap-2">
-            {product.inventory.map((inv) => (
-              <button
-                key={inv.size}
-                data-testid={`size-btn-${inv.size}`}
-                onClick={() => handleSizeClick(inv.size, inv.quantity)}
-                onMouseEnter={() => setHoveredSize(inv.size)}
-                onMouseLeave={() => setHoveredSize(null)}
-                disabled={inv.quantity === 0}
-                className={cn(
-                  "w-8 h-8 rounded border text-[11px] font-medium flex items-center justify-center transition-all duration-300",
-                  inv.quantity === 0
-                    ? "border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed opacity-50"
-                    : selectedSize === inv.size && isSelected
-                    ? "bg-[var(--color-gold)] border-[var(--color-gold)] text-[var(--color-background)]"
-                    : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-text-primary)] hover:text-[var(--color-text-primary)]"
-                )}
-              >
-                {inv.size}
-              </button>
-            ))}
+          {/* GGP Fashion 스타일 호버 오버레이 */}
+          <div className="gallery-overlay pointer-events-none">
+            <span className="gallery-btn pointer-events-auto">View Detail</span>
           </div>
 
-          {/* Stock Indicator */}
-          <span
+          {/* Selected 표시 */}
+          {isSelected && (
+            <div className="absolute inset-0 border-2 border-[var(--color-gold)] pointer-events-none" />
+          )}
+        </div>
+      </Link>
+
+      {/* Info - GGP Fashion 미니멀 스타일 */}
+      <div className="space-y-1">
+        <h3 className="font-heading text-xl font-normal">
+          {product.name}
+        </h3>
+        <p className="text-xs text-gray-500 tracking-wider uppercase">
+          {product.category}
+        </p>
+      </div>
+
+      {/* Sizes - 하단에 배치 */}
+      <div className="mt-4 flex gap-2">
+        {product.inventory.map((inv) => (
+          <button
+            key={inv.size}
+            data-testid={`size-btn-${inv.size}`}
+            onClick={(e) => handleSizeClick(e, inv.size, inv.quantity)}
+            onMouseEnter={() => setHoveredSize(inv.size)}
+            onMouseLeave={() => setHoveredSize(null)}
+            disabled={inv.quantity === 0}
             className={cn(
-              "text-[12px]",
-              isOutOfStock
-                ? "text-[var(--color-text-muted)]"
-                : isLowStock
-                ? "text-[var(--color-error)]"
-                : "text-[var(--color-success)]"
+              "w-8 h-8 rounded border text-[11px] font-medium flex items-center justify-center transition-all duration-300",
+              inv.quantity === 0
+                ? "border-[var(--color-border)] text-[var(--color-text-muted)] cursor-not-allowed opacity-50"
+                : selectedSize === inv.size && isSelected
+                ? "bg-[var(--color-gold)] border-[var(--color-gold)] text-[var(--color-background)]"
+                : "border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-white hover:text-white"
             )}
           >
-            {getStockText()}
+            {inv.size}
+          </button>
+        ))}
+
+        {/* Stock indicator */}
+        {isLowStock && !isOutOfStock && (
+          <span className="text-[11px] text-[var(--color-error)] self-center ml-auto">
+            Only {totalStock} left
           </span>
-        </div>
+        )}
       </div>
     </motion.div>
   );

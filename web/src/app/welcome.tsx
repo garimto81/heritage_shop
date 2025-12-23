@@ -1,72 +1,131 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Lock, Mail, Sparkles, Shield, Gift } from "lucide-react";
+import { fadeInUpVariants, luxuryEasing, luxuryDuration } from "@/lib/motion";
 
 /**
- * 환영 페이지 컴포넌트
+ * 환영 페이지 컴포넌트 - GGP Fashion 스타일
  * VIP 세션이 없는 사용자에게 표시됩니다.
  */
 export function Welcome() {
-  return (
-    <main className="min-h-screen flex flex-col items-center justify-center bg-[var(--color-background)] px-4 lg:px-[60px] relative overflow-hidden">
-      {/* 배경 장식 */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* 상단 좌측 그라데이션 */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-[var(--color-gold)] opacity-[0.03] rounded-full blur-3xl" />
-        {/* 하단 우측 그라데이션 */}
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-[var(--color-gold)] opacity-[0.05] rounded-full blur-3xl" />
-        {/* 중앙 미묘한 빛 */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--color-gold)] opacity-[0.02] rounded-full blur-3xl" />
-        {/* 상단 라인 */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/20 to-transparent" />
-      </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
 
-      <div className="text-center space-y-10 max-w-xl relative z-10">
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: luxuryDuration.slow,
+        ease: luxuryEasing.elegant,
+      },
+    },
+  };
+
+  const iconVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: luxuryDuration.normal,
+        ease: luxuryEasing.elegant,
+      },
+    },
+  };
+
+  return (
+    <main className="min-h-screen bg-[var(--color-background)]">
+      {/* GGP Fashion 스타일 헤더 */}
+      <motion.header
+        className="flex justify-between items-end px-6 py-12 md:px-12 border-b border-white/10"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: luxuryDuration.slow, ease: luxuryEasing.elegant }}
+      >
+        <div>
+          <p className="text-xs tracking-[0.3em] text-gray-400 mb-2 uppercase">
+            VIP Exclusive
+          </p>
+          <h1 className="text-4xl md:text-6xl font-heading italic">
+            The Heritage
+          </h1>
+        </div>
+        <div className="hidden md:block text-right">
+          <p className="text-xs text-gray-500">SEOUL</p>
+          <p className="text-sm font-bold mt-1">GGP HERITAGE</p>
+        </div>
+      </motion.header>
+
+      {/* 메인 콘텐츠 */}
+      <motion.div
+        className="flex flex-col items-center justify-center px-6 py-20 md:py-32"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* 로고 */}
-        <div className="relative inline-block">
-          {/* 로고 글로우 효과 */}
-          <div className="absolute inset-0 bg-[var(--color-gold)] opacity-20 rounded-2xl blur-xl scale-110 animate-pulse" />
-          <div className="relative w-28 h-28 mx-auto bg-gradient-to-br from-[var(--color-gold)] via-[#E5C158] to-[var(--color-gold-dark)] rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-gold)]/20 border border-[var(--color-gold)]/30">
+        <motion.div className="relative mb-12" variants={itemVariants}>
+          <div className="absolute inset-0 bg-[var(--color-gold)] opacity-20 rounded-2xl blur-xl scale-110" />
+          <div className="relative w-28 h-28 bg-gradient-to-br from-[var(--color-gold)] via-[#E5C158] to-[var(--color-gold-dark)] rounded-2xl flex items-center justify-center shadow-2xl shadow-[var(--color-gold)]/20 border border-[var(--color-gold)]/30">
             <span className="font-heading font-bold text-4xl text-[var(--color-background)] tracking-wide">
               GG
             </span>
           </div>
-        </div>
+        </motion.div>
 
-        {/* 제목 */}
-        <div className="space-y-4">
-          <h1 className="font-heading text-5xl md:text-6xl bg-gradient-to-r from-[var(--color-gold)] via-[#E5C158] to-[var(--color-gold)] bg-clip-text text-transparent tracking-tight">
+        {/* 타이틀 */}
+        <motion.div className="text-center space-y-4 mb-12" variants={itemVariants}>
+          <h2 className="font-heading text-5xl md:text-6xl italic bg-gradient-to-r from-[var(--color-gold)] via-[#E5C158] to-[var(--color-gold)] bg-clip-text text-transparent">
             GGP Heritage Mall
-          </h1>
-          <p className="text-xl text-[var(--color-text-secondary)] tracking-wide">
+          </h2>
+          <p className="text-lg text-gray-400 tracking-wide">
             VIP Exclusive Shopping Experience
           </p>
-        </div>
+        </motion.div>
 
         {/* 특징 아이콘 */}
-        <div className="flex justify-center gap-12">
-          <div className="flex flex-col items-center gap-2 group">
-            <div className="w-12 h-12 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center group-hover:border-[var(--color-gold)]/50 transition-colors">
-              <Shield className="w-5 h-5 text-[var(--color-gold)]" />
-            </div>
-            <span className="text-xs text-[var(--color-text-muted)]">Exclusive</span>
-          </div>
-          <div className="flex flex-col items-center gap-2 group">
-            <div className="w-12 h-12 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center group-hover:border-[var(--color-gold)]/50 transition-colors">
-              <Gift className="w-5 h-5 text-[var(--color-gold)]" />
-            </div>
-            <span className="text-xs text-[var(--color-text-muted)]">Complimentary</span>
-          </div>
-          <div className="flex flex-col items-center gap-2 group">
-            <div className="w-12 h-12 rounded-full bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center group-hover:border-[var(--color-gold)]/50 transition-colors">
-              <Sparkles className="w-5 h-5 text-[var(--color-gold)]" />
-            </div>
-            <span className="text-xs text-[var(--color-text-muted)]">Premium</span>
-          </div>
-        </div>
+        <motion.div
+          className="flex justify-center gap-12 mb-16"
+          variants={containerVariants}
+        >
+          {[
+            { icon: Shield, label: "Exclusive" },
+            { icon: Gift, label: "Complimentary" },
+            { icon: Sparkles, label: "Premium" },
+          ].map(({ icon: Icon, label }) => (
+            <motion.div
+              key={label}
+              className="flex flex-col items-center gap-3 group"
+              variants={iconVariants}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.3 }}
+            >
+              <div className="w-14 h-14 rounded-full bg-[var(--color-surface)] border border-white/10 flex items-center justify-center group-hover:border-[var(--color-gold)]/50 transition-colors duration-300">
+                <Icon className="w-6 h-6 text-[var(--color-gold)]" />
+              </div>
+              <span className="text-xs text-gray-500 tracking-wider uppercase">
+                {label}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
 
-        {/* 안내 박스 */}
-        <div className="bg-gradient-to-b from-[var(--color-surface)] to-[var(--color-surface-dark)] rounded-2xl p-8 space-y-5 border border-[var(--color-border)] shadow-xl shadow-black/20 backdrop-blur-sm">
+        {/* 안내 박스 - 글래스모피즘 */}
+        <motion.div
+          className="max-w-md w-full glass-dark rounded-2xl p-8 space-y-6"
+          variants={itemVariants}
+        >
           <div className="flex items-center justify-center gap-3 text-[var(--color-gold)]">
             <Lock className="w-5 h-5" />
             <span className="font-semibold text-lg tracking-wide">VIP 전용 서비스</span>
@@ -74,27 +133,36 @@ export function Welcome() {
 
           <div className="w-16 h-px mx-auto bg-gradient-to-r from-transparent via-[var(--color-gold)]/50 to-transparent" />
 
-          <p className="text-[var(--color-text-secondary)] leading-relaxed">
-            GGP Heritage Mall은 초대받은 VIP 고객만 이용하실 수 있습니다.
+          <p className="text-gray-400 text-center leading-relaxed">
+            GGP Heritage Mall은 초대받은 VIP 고객만
             <br />
+            이용하실 수 있습니다.
+          </p>
+          <p className="text-gray-500 text-center text-sm">
             초대 링크를 통해 입장해주세요.
           </p>
 
-          <div className="pt-4 border-t border-[var(--color-border)]">
-            <p className="text-sm text-[var(--color-text-muted)] flex items-center justify-center gap-2 hover:text-[var(--color-text-secondary)] transition-colors">
+          <div className="pt-4 border-t border-white/10">
+            <a
+              href="mailto:support@ggpheritage.com"
+              className="text-sm text-gray-500 flex items-center justify-center gap-2 hover:text-[var(--color-gold)] transition-colors duration-300"
+            >
               <Mail className="w-4 h-4" />
               support@ggpheritage.com
-            </p>
+            </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* 추가 안내 */}
-        <p className="text-sm text-[var(--color-text-muted)]">
+        <motion.p
+          className="mt-12 text-sm text-gray-600"
+          variants={itemVariants}
+        >
           이미 초대 링크를 받으셨다면 해당 링크로 접속해주세요.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      {/* 하단 장식 라인 */}
+      {/* 하단 장식 */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/10 to-transparent" />
     </main>
   );
