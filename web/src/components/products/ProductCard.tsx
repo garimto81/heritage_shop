@@ -172,8 +172,6 @@ export function ProductCard({
             key={inv.size}
             data-testid={`size-btn-${inv.size}`}
             onClick={(e) => handleSizeClick(e, inv.size, inv.quantity)}
-            onMouseEnter={() => setHoveredSize(inv.size)}
-            onMouseLeave={() => setHoveredSize(null)}
             disabled={inv.quantity === 0}
             className={cn(
               "w-8 h-8 rounded border text-[11px] font-medium flex items-center justify-center transition-all duration-300",
