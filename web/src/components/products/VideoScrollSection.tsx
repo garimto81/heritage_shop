@@ -40,6 +40,7 @@ export function VideoScrollSection({
   const [isLoading, setIsLoading] = useState(true);
   const [targetTime, setTargetTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [isHovered, setIsHovered] = useState(false); // 마우스 호버 상태
 
   // Handle looping
   const handleLooping = useCallback(
@@ -54,8 +55,10 @@ export function VideoScrollSection({
   );
 
   // Handle wheel event (desktop)
+  // #21 수정: 동영상 영역 위에서만 동영상 스크롤, 영역 밖에서는 페이지 스크롤
   const handleWheel = useCallback(
     (e: WheelEvent) => {
+      // 동영상 영역 위에서는 항상 동영상 스크롤 (페이지 스크롤 차단)
       e.preventDefault();
 
       if (isAutoPlaying) {
@@ -220,6 +223,8 @@ export function VideoScrollSection({
       {/* Video Wrapper */}
       <div
         ref={wrapperRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className={cn(
           "relative overflow-hidden rounded-sm bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] cursor-grab active:cursor-grabbing",
           aspectRatioClasses[aspectRatio]
@@ -261,9 +266,35 @@ export function VideoScrollSection({
           onCanPlay={() => setIsLoading(false)}
         />
 
+        {/* #22 수정: 동영상 위 Play/Pause 오버레이 (호버 시 표시) */}
+        <AnimatePresence>
+          {isHovered && !isLoading && (
+            <motion.button
+              onClick={toggleAutoPlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="w-16 h-16 rounded-full bg-[var(--color-gold)]/90 flex items-center justify-center shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isAutoPlaying ? (
+                  <Pause className="w-7 h-7 text-[var(--color-background)]" />
+                ) : (
+                  <Play className="w-7 h-7 text-[var(--color-background)] ml-1" />
+                )}
+              </motion.div>
+            </motion.button>
+          )}
+        </AnimatePresence>
+
         {/* Scroll Hint Overlay */}
         <AnimatePresence>
-          {!isAutoPlaying && !isLoading && (
+          {!isAutoPlaying && !isLoading && !isHovered && (
             <motion.div
               className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
               initial={{ opacity: 0, y: 10 }}
