@@ -3,11 +3,14 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/layout";
-import { ImageGallery, ProductDetail, ActionBar } from "@/components/products";
+import { ImageGallery, ProductDetail, ActionBar, VideoScrollSection } from "@/components/products";
 import { useCartStore } from "@/stores/cartStore";
 import type { ProductWithInventory } from "@/lib/api/products";
 import type { VipSession } from "@/types/vip";
 import { TIER_LIMITS, TIER_NAMES } from "@/types/vip";
+
+// GGP Fashion Supabase Storage URL
+const PRODUCT_VIDEO_URL = "https://lhgjkbngqmysxnhqwcoc.supabase.co/storage/v1/object/public/ggp_fashion/ggp_fashion/ggp_fashion_02_2.mp4";
 
 interface ProductDetailClientProps {
   product: ProductWithInventory;
@@ -48,7 +51,17 @@ export function ProductDetailClient({
       <main className="pt-8 pb-32">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
-            <ImageGallery images={product.images} productName={product.name} />
+            <div>
+              {/* Video Scroll Section */}
+              <VideoScrollSection
+                videoUrl={PRODUCT_VIDEO_URL}
+                productName={product.name}
+                aspectRatio="portrait"
+              />
+
+              {/* Image Gallery */}
+              <ImageGallery images={product.images} productName={product.name} />
+            </div>
             <ProductDetail product={product} />
           </div>
         </div>
