@@ -12,6 +12,7 @@ interface VideoScrollSectionProps {
   autoPlayOnMount?: boolean;
   wheelSensitivity?: number;
   touchSensitivity?: number;
+  scrollThreshold?: number; // 스크롤 전달 임계값 (0~1, 시작/끝 근처에서 페이지 스크롤 허용)
 }
 
 const aspectRatioClasses = {
@@ -27,6 +28,7 @@ export function VideoScrollSection({
   autoPlayOnMount = true,
   wheelSensitivity = 0.002,
   touchSensitivity = 0.005,
+  scrollThreshold = 0.05, // 5% 근처에서 페이지 스크롤 허용
 }: VideoScrollSectionProps) {
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -40,6 +42,7 @@ export function VideoScrollSection({
   const [isLoading, setIsLoading] = useState(true);
   const [targetTime, setTargetTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
+  const [isHovered, setIsHovered] = useState(false); // 마우스 호버 상태
 
   // Handle looping
   const handleLooping = useCallback(
@@ -54,8 +57,21 @@ export function VideoScrollSection({
   );
 
   // Handle wheel event (desktop)
+  // #21 수정: 동영상 시작/끝 근처에서 페이지 스크롤 허용
   const handleWheel = useCallback(
     (e: WheelEvent) => {
+      if (videoDuration === 0) return;
+
+      // 현재 위치가 시작 또는 끝 근처인지 확인
+      const progress = targetTime / videoDuration;
+      const atStart = progress <= scrollThreshold && e.deltaY < 0; // 시작 근처 + 위로 스크롤
+      const atEnd = progress >= (1 - scrollThreshold) && e.deltaY > 0; // 끝 근처 + 아래로 스크롤
+
+      // 시작/끝 근처에서는 페이지 스크롤 허용
+      if (atStart || atEnd) {
+        return; // preventDefault 하지 않음 → 페이지 스크롤 허용
+      }
+
       e.preventDefault();
 
       if (isAutoPlaying) {
@@ -68,7 +84,7 @@ export function VideoScrollSection({
         return handleLooping(newTime);
       });
     },
-    [isAutoPlaying, wheelSensitivity, handleLooping]
+    [isAutoPlaying, wheelSensitivity, handleLooping, videoDuration, targetTime, scrollThreshold]
   );
 
   // Handle touch start (mobile)
@@ -220,6 +236,8 @@ export function VideoScrollSection({
       {/* Video Wrapper */}
       <div
         ref={wrapperRef}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         className={cn(
           "relative overflow-hidden rounded-sm bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] cursor-grab active:cursor-grabbing",
           aspectRatioClasses[aspectRatio]
@@ -261,9 +279,35 @@ export function VideoScrollSection({
           onCanPlay={() => setIsLoading(false)}
         />
 
+        {/* #22 수정: 동영상 위 Play/Pause 오버레이 (호버 시 표시) */}
+        <AnimatePresence>
+          {isHovered && !isLoading && (
+            <motion.button
+              onClick={toggleAutoPlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className="w-16 h-16 rounded-full bg-[var(--color-gold)]/90 flex items-center justify-center shadow-lg"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isAutoPlaying ? (
+                  <Pause className="w-7 h-7 text-[var(--color-background)]" />
+                ) : (
+                  <Play className="w-7 h-7 text-[var(--color-background)] ml-1" />
+                )}
+              </motion.div>
+            </motion.button>
+          )}
+        </AnimatePresence>
+
         {/* Scroll Hint Overlay */}
         <AnimatePresence>
-          {!isAutoPlaying && !isLoading && (
+          {!isAutoPlaying && !isLoading && !isHovered && (
             <motion.div
               className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
               initial={{ opacity: 0, y: 10 }}
