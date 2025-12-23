@@ -12,7 +12,6 @@ interface VideoScrollSectionProps {
   autoPlayOnMount?: boolean;
   wheelSensitivity?: number;
   touchSensitivity?: number;
-  scrollThreshold?: number; // 스크롤 전달 임계값 (0~1, 시작/끝 근처에서 페이지 스크롤 허용)
 }
 
 const aspectRatioClasses = {
@@ -28,7 +27,6 @@ export function VideoScrollSection({
   autoPlayOnMount = true,
   wheelSensitivity = 0.002,
   touchSensitivity = 0.005,
-  scrollThreshold = 0.05, // 5% 근처에서 페이지 스크롤 허용
 }: VideoScrollSectionProps) {
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -57,21 +55,10 @@ export function VideoScrollSection({
   );
 
   // Handle wheel event (desktop)
-  // #21 수정: 동영상 시작/끝 근처에서 페이지 스크롤 허용
+  // #21 수정: 동영상 영역 위에서만 동영상 스크롤, 영역 밖에서는 페이지 스크롤
   const handleWheel = useCallback(
     (e: WheelEvent) => {
-      if (videoDuration === 0) return;
-
-      // 현재 위치가 시작 또는 끝 근처인지 확인
-      const progress = targetTime / videoDuration;
-      const atStart = progress <= scrollThreshold && e.deltaY < 0; // 시작 근처 + 위로 스크롤
-      const atEnd = progress >= (1 - scrollThreshold) && e.deltaY > 0; // 끝 근처 + 아래로 스크롤
-
-      // 시작/끝 근처에서는 페이지 스크롤 허용
-      if (atStart || atEnd) {
-        return; // preventDefault 하지 않음 → 페이지 스크롤 허용
-      }
-
+      // 동영상 영역 위에서는 항상 동영상 스크롤 (페이지 스크롤 차단)
       e.preventDefault();
 
       if (isAutoPlaying) {
@@ -84,7 +71,7 @@ export function VideoScrollSection({
         return handleLooping(newTime);
       });
     },
-    [isAutoPlaying, wheelSensitivity, handleLooping, videoDuration, targetTime, scrollThreshold]
+    [isAutoPlaying, wheelSensitivity, handleLooping]
   );
 
   // Handle touch start (mobile)
