@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - VIP Management (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #FCFCFC;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: #FCFCFC;
+      padding-bottom: 24px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .logo-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      color: #9ca3af;
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--luxury-black);
+      border-bottom: 1px solid var(--luxury-black);
+      padding-bottom: 2px;
+    }
+
+    .admin-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 1px solid #f1f1f1;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 32px 24px;
+    }
+
+    /* Title Section */
+    .title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+    }
+
+    .title-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .title-line {
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .title-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+    }
+
+    h1 span {
+      font-style: italic;
+      font-weight: 300;
+      color: #9ca3af;
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: var(--luxury-black);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .add-btn .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      position: relative;
+      background: #fff;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: var(--shadow-pristine);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--luxury-black);
+      transform: scaleX(0);
+      transition: transform 0.7s;
+    }
+
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-card:nth-child(2)::before {
+      background: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--luxury-black);
+    }
+
+    .stat-meta {
+      font-size: 9px;
+      color: #9ca3af;
+      letter-spacing: 0.1em;
+      margin-top: 8px;
+    }
+
+    .stat-meta strong {
+      color: var(--luxury-black);
+    }
+
+    /* Filter Row */
+    .filter-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      width: 180px;
+      padding: 10px 0;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      background: transparent;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #d1d5db;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .filter-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--luxury-black);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .filter-btn .material-symbols-outlined {
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    /* Table */
+    .table-container {
+      background: #fff;
+      box-shadow: var(--shadow-pristine);
+      border: 1px solid #fafafa;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 16px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      text-align: left;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    td {
+      padding: 16px;
+      vertical-align: middle;
+      border-bottom: 1px solid #fafafa;
+    }
+
+    tr:hover {
+      background: #fafafa;
+    }
+
+    .client-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .client-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 2px solid #f1f1f1;
+      background: #ddd;
+      overflow: hidden;
+    }
+
+    .client-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .client-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+    }
+
+    .email {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border: 1px solid #e5e5e5;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .tier-badge.gold {
+      border-color: #E8DCC4;
+      color: var(--gold);
+    }
+
+    .tier-badge.silver {
+      color: #6b7280;
+    }
+
+    .tier-badge .material-symbols-outlined {
+      font-size: 11px;
+    }
+
+    .toggle {
+      width: 32px;
+      height: 16px;
+      border-radius: 8px;
+      background: #e5e5e5;
+      position: relative;
+    }
+
+    .toggle.active {
+      background: var(--luxury-black);
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #fff;
+      top: 2px;
+      left: 2px;
+    }
+
+    .toggle.active::after {
+      left: 18px;
+    }
+
+    .date {
+      font-size: 11px;
+      font-family: monospace;
+      color: #9ca3af;
+    }
+
+    .actions {
+      display: flex;
+      gap: 4px;
+      justify-content: flex-end;
+      opacity: 0;
+    }
+
+    tr:hover .actions {
+      opacity: 1;
+    }
+
+    .action-btn {
+      padding: 6px;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .action-btn:hover {
+      color: var(--luxury-black);
+    }
+
+    .action-btn.delete:hover {
+      color: #dc2626;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      border-top: 1px solid #f1f1f1;
+    }
+
+    .pagination-info {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .pagination-info strong {
+      color: var(--luxury-black);
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .page-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 500;
+      color: #9ca3af;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .page-btn.active {
+      background: var(--luxury-black);
+      color: #fff;
+    }
+
+    .page-btn .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></path>
+          </svg>
+        </div>
+        <span class="logo-text">GGP Heritage</span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">VIP List</a>
+        <a href="#">Inventory</a>
+        <a href="#">Requests</a>
+      </nav>
+      <div class="admin-avatar"></div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Title Section -->
+      <div class="title-section">
+        <div>
+          <div class="title-label">
+            <div class="title-line"></div>
+            <span class="title-text">Management Console</span>
+          </div>
+          <h1>VIP <span>List</span></h1>
+        </div>
+        <button class="add-btn">
+          <span class="material-symbols-outlined">add</span>
+          Concierge Entry
+        </button>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <p class="stat-label">Total Members</p>
+          <p class="stat-value">1,240</p>
+          <p class="stat-meta"><strong>+12%</strong> THIS MONTH</p>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Active Elite</p>
+          <p class="stat-value">1,100</p>
+          <div style="width: 40px; height: 1px; background: #e5e5e5; margin: 12px auto 0; overflow: hidden;">
+            <div style="width: 88%; height: 100%; background: var(--gold);"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <p class="stat-label">Pending Review</p>
+          <p class="stat-value">140</p>
+          <p class="stat-meta" style="font-family: 'Playfair Display', serif; font-style: italic;">Requires Attention</p>
+        </div>
+      </div>
+
+      <!-- Filter Row -->
+      <div class="filter-row">
+        <input type="text" class="search-input" placeholder="Search client dossier...">
+        <div class="filter-group">
+          <span class="filter-label">Filter</span>
+          <button class="filter-btn">
+            Tier: All <span class="material-symbols-outlined">expand_more</span>
+          </button>
+          <button class="filter-btn">
+            Status: Active <span class="material-symbols-outlined">expand_more</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Client Profile</th>
+              <th>Contact</th>
+              <th>Tier Level</th>
+              <th>Access</th>
+              <th>Induction</th>
+              <th style="text-align: right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="client-cell">
+                  <div class="client-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80" alt="">
+                  </div>
+                  <span class="client-name">Eleanor Pena</span>
+                </div>
+              </td>
+              <td><span class="email">eleanor.pena@ggp.com</span></td>
+              <td><span class="tier-badge gold"><span class="material-symbols-outlined">diamond</span> GOLD</span></td>
+              <td><div class="toggle active"></div></td>
+              <td><span class="date">2024-01-15</span></td>
+              <td>
+                <div class="actions">
+                  <button class="action-btn"><span class="material-symbols-outlined">edit_note</span></button>
+                  <button class="action-btn delete"><span class="material-symbols-outlined">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="client-cell">
+                  <div class="client-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80" alt="">
+                  </div>
+                  <span class="client-name">Wade Warren</span>
+                </div>
+              </td>
+              <td><span class="email">wade.warren@ggp.com</span></td>
+              <td><span class="tier-badge silver"><span class="material-symbols-outlined">stars</span> SILVER</span></td>
+              <td><div class="toggle active"></div></td>
+              <td><span class="date">2024-02-20</span></td>
+              <td>
+                <div class="actions">
+                  <button class="action-btn"><span class="material-symbols-outlined">edit_note</span></button>
+                  <button class="action-btn delete"><span class="material-symbols-outlined">delete</span></button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="client-cell">
+                  <div class="client-avatar">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80" alt="">
+                  </div>
+                  <span class="client-name">Jane Doe</span>
+                </div>
+              </td>
+              <td><span class="email">jane.doe@ggp.com</span></td>
+              <td><span class="tier-badge gold"><span class="material-symbols-outlined">diamond</span> GOLD</span></td>
+              <td><div class="toggle active"></div></td>
+              <td><span class="date">2024-03-05</span></td>
+              <td>
+                <div class="actions">
+                  <button class="action-btn"><span class="material-symbols-outlined">edit_note</span></button>
+                  <button class="action-btn delete"><span class="material-symbols-outlined">delete</span></button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <p class="pagination-info">Viewing <strong>1-4</strong> of <strong>1,240</strong> Entries</p>
+          <div class="pagination-controls">
+            <button class="page-btn" disabled><span class="material-symbols-outlined">west</span></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-btn" style="font-family: 'Playfair Display', serif; font-style: italic;">...</span>
+            <button class="page-btn">62</button>
+            <button class="page-btn"><span class="material-symbols-outlined">east</span></button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
