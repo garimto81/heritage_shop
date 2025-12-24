@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, MousePointer2 } from "lucide-react";
+import { Play, Pause, MousePointer2, AlertCircle, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface VideoScrollSectionProps {
@@ -38,6 +38,7 @@ export function VideoScrollSection({
   // State
   const [isAutoPlaying, setIsAutoPlaying] = useState(autoPlayOnMount);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [targetTime, setTargetTime] = useState(0);
   const [videoDuration, setVideoDuration] = useState(0);
   const [isHovered, setIsHovered] = useState(false); // 마우스 호버 상태
@@ -203,7 +204,7 @@ export function VideoScrollSection({
             "flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-colors",
             isAutoPlaying
               ? "bg-[var(--color-gold)] text-[var(--color-background)]"
-              : "bg-[#2A2A2A] text-[var(--color-text-secondary)] hover:text-white"
+              : "bg-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
           )}
         >
           {isAutoPlaying ? (
@@ -226,7 +227,7 @@ export function VideoScrollSection({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         className={cn(
-          "relative overflow-hidden rounded-sm bg-gradient-to-br from-[#1a1a1a] to-[#2a2a2a] cursor-grab active:cursor-grabbing",
+          "relative overflow-hidden rounded-sm bg-gradient-to-br from-[var(--color-surface-dark)] to-[var(--color-border)] cursor-grab active:cursor-grabbing",
           aspectRatioClasses[aspectRatio]
         )}
       >
@@ -236,7 +237,7 @@ export function VideoScrollSection({
             <motion.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a] z-10"
+              className="absolute inset-0 flex items-center justify-center bg-[var(--color-surface-dark)] z-10"
             >
               <div className="flex flex-col items-center gap-3">
                 <motion.div
@@ -253,22 +254,48 @@ export function VideoScrollSection({
         </AnimatePresence>
 
         {/* Video */}
-        <video
-          ref={videoRef}
-          src={videoUrl}
-          className="w-full h-full object-cover"
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-label={`${productName} product video`}
-          onLoadedMetadata={handleLoadedMetadata}
-          onCanPlay={() => setIsLoading(false)}
-        />
+        {!hasError && (
+          <video
+            ref={videoRef}
+            src={videoUrl}
+            className="w-full h-full object-cover"
+            muted
+            loop
+            playsInline
+            preload="auto"
+            aria-label={`${productName} product video`}
+            onLoadedMetadata={handleLoadedMetadata}
+            onCanPlay={() => setIsLoading(false)}
+            onError={() => {
+              setIsLoading(false);
+              setHasError(true);
+            }}
+          />
+        )}
+
+        {/* Error State */}
+        {hasError && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--color-surface-dark)] z-10">
+            <AlertCircle className="w-12 h-12 text-[var(--color-error)] mb-3" />
+            <span className="text-sm text-[var(--color-text-muted)] mb-4 tracking-widest uppercase">
+              Video unavailable
+            </span>
+            <button
+              onClick={() => {
+                setHasError(false);
+                setIsLoading(true);
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-[var(--color-border)] hover:bg-[var(--color-border-hover)] rounded-full text-xs font-medium text-[var(--color-text-secondary)] transition-colors"
+            >
+              <RefreshCw className="w-3 h-3" />
+              Retry
+            </button>
+          </div>
+        )}
 
         {/* #22 수정: 동영상 위 Play/Pause 오버레이 (호버 시 표시) */}
         <AnimatePresence>
-          {isHovered && !isLoading && (
+          {isHovered && !isLoading && !hasError && (
             <motion.button
               onClick={toggleAutoPlay}
               className="absolute inset-0 flex items-center justify-center bg-black/30 transition-colors hover:bg-black/40"
@@ -294,7 +321,7 @@ export function VideoScrollSection({
 
         {/* Scroll Hint Overlay */}
         <AnimatePresence>
-          {!isAutoPlaying && !isLoading && !isHovered && (
+          {!isAutoPlaying && !isLoading && !hasError && !isHovered && (
             <motion.div
               className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
               initial={{ opacity: 0, y: 10 }}
@@ -317,7 +344,7 @@ export function VideoScrollSection({
       </div>
 
       {/* Progress Bar */}
-      <div className="mt-3 h-0.5 bg-[#2A2A2A] rounded-full overflow-hidden">
+      <div className="mt-3 h-0.5 bg-[var(--color-border)] rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-[var(--color-gold)]"
           style={{ width: `${progress}%` }}
