@@ -17,7 +17,9 @@ export function Welcome() {
 
         {/* 안내 메시지 */}
         <div className="space-y-3">
-          <h1 className="text-xl font-semibold text-white">VIP 전용</h1>
+          <h1 className="text-xl font-semibold text-white">
+            VIP 전용 <span className="text-xs text-gray-600">v2-{process.env.NEXT_PUBLIC_COMMIT_HASH || "dev"}</span>
+          </h1>
           <p className="text-gray-400 text-sm leading-relaxed">
             초대 링크로만 접속 가능합니다.
           </p>
