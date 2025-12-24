@@ -45,6 +45,7 @@ export async function getOrderList(
 
   if (error) throw new Error(error.message);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const orders: AdminOrder[] = (data ?? []).map((order: any) => ({
     id: order.id,
     vip_id: order.vip_id,
@@ -114,13 +115,18 @@ export async function getOrderById(
     carrier: data.carrier,
     notes: data.notes,
     updated_at: data.updated_at,
-    items: (data.order_items ?? []).map((item: any) => ({
-      product_id: item.product_id,
-      product_name: item.products?.name || "Unknown",
-      size: item.size,
-      quantity: item.quantity,
-      image: item.products?.images?.[0] || null,
-    })),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    items: (data.order_items ?? []).map((item: any) => {
+      // products가 배열로 반환될 수 있음
+      const product = Array.isArray(item.products) ? item.products[0] : item.products;
+      return {
+        product_id: item.product_id,
+        product_name: product?.name || "Unknown Product",
+        size: item.size,
+        quantity: item.quantity,
+        image: product?.images?.[0] || null,
+      };
+    }),
   };
 }
 

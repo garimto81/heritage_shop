@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 /**
  * 관리자 VIP 관리 페이지 Page Object Model

@@ -61,6 +61,7 @@ export async function getRecentOrders(limit: number = 5) {
 
   if (error) throw new Error(error.message);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (data ?? []).map((order: any) => ({
     id: order.id,
     status: order.status,
