@@ -44,9 +44,8 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
           "fixed left-0 top-0 z-50 h-screen w-64 bg-[#0F0F0F] border-r border-[#2A2A2A]",
           "transform transition-transform duration-300 ease-in-out",
           // 모바일: isOpen에 따라 표시/숨김
-          "max-lg:translate-x-0 max-lg:data-[closed]:(-translate-x-full)",
-          isOpen ? "max-lg:translate-x-0" : "max-lg:-translate-x-full",
-          // 데스크톱: 항상 표시
+          isOpen ? "translate-x-0" : "-translate-x-full",
+          // 데스크톱(lg 이상): 항상 표시
           "lg:translate-x-0 lg:z-40"
         )}
       >
