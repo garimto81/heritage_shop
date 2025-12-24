@@ -236,5 +236,39 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_code) VALUES
     'VIPDVG5'
   );
 
--- Note: Admin users should be created via Supabase Auth
--- and then added to the admins table manually or via migration
+-- Admin User for E2E Testing
+-- Create auth user first (password: admin1234)
+INSERT INTO auth.users (
+  id,
+  instance_id,
+  email,
+  encrypted_password,
+  email_confirmed_at,
+  raw_app_meta_data,
+  raw_user_meta_data,
+  aud,
+  role,
+  created_at,
+  updated_at
+) VALUES (
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  '00000000-0000-0000-0000-000000000000',
+  'admin@ggpheritage.com',
+  crypt('admin1234', gen_salt('bf')),
+  NOW(),
+  '{"provider": "email", "providers": ["email"]}',
+  '{"name": "GGP Admin"}',
+  'authenticated',
+  'authenticated',
+  NOW(),
+  NOW()
+);
+
+-- Add to admins table
+INSERT INTO admins (id, user_id, email, name, is_active) VALUES (
+  'ad000000-0000-0000-0000-000000000001',
+  'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa',
+  'admin@ggpheritage.com',
+  'GGP Admin',
+  true
+);
