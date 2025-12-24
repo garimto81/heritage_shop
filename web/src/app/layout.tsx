@@ -18,8 +18,8 @@ const playfair = Playfair_Display({
 const commitHash = process.env.NEXT_PUBLIC_COMMIT_HASH || "dev";
 
 export const metadata: Metadata = {
-  title: `GGP Heritage Mall (${commitHash})`,
-  description: "Exclusive VIP shopping experience for GGP Heritage members",
+  title: `GG POKER (${commitHash})`,
+  description: "Exclusive VIP shopping experience for GG POKER members",
 };
 
 export default function RootLayout({

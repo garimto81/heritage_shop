@@ -25,6 +25,6 @@ export default async function InvalidInvitePage({
 }
 
 export const metadata = {
-  title: "유효하지 않은 초대 - GGP Heritage Mall",
+  title: "유효하지 않은 초대 - GG POKER",
   description: "초대 링크가 유효하지 않습니다.",
 };

@@ -13,6 +13,6 @@ export default function HomePage() {
  * 메타데이터
  */
 export const metadata = {
-  title: "GGP Heritage Mall - VIP Exclusive",
-  description: "GGP Heritage Mall - VIP 전용 프리미엄 쇼핑몰",
+  title: "GG POKER - VIP Exclusive",
+  description: "GG POKER - VIP 전용 프리미엄 쇼핑몰",
 };

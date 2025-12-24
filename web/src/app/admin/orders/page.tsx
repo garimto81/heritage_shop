@@ -2,7 +2,7 @@ import { OrdersClient } from "./orders-client";
 import { getOrderList } from "@/lib/api/admin-orders";
 
 export const metadata = {
-  title: "Order Management - GGP Heritage Mall Admin",
+  title: "Order Management - GG POKER Admin",
 };
 
 export default async function OrdersPage() {

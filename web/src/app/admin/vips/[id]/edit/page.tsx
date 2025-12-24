@@ -3,7 +3,7 @@ import { getVipById } from "@/lib/api/admin-vips";
 import { EditVipClient } from "./edit-client";
 
 export const metadata = {
-  title: "Edit VIP - GGP Heritage Mall Admin",
+  title: "Edit VIP - GG POKER Admin",
 };
 
 interface EditVipPageProps {

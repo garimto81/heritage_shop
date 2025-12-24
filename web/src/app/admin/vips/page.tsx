@@ -2,7 +2,7 @@ import { VipsClient } from "./vips-client";
 import { getVipList } from "@/lib/api/admin-vips";
 
 export const metadata = {
-  title: "VIP Management - GGP Heritage Mall Admin",
+  title: "VIP Management - GG POKER Admin",
 };
 
 export default async function VipsPage() {

@@ -19,6 +19,6 @@ export default async function InvitePage({ params }: InvitePageProps) {
  * 메타데이터
  */
 export const metadata = {
-  title: "VIP 초대 - GGP Heritage Mall",
-  description: "GGP Heritage Mall VIP 초대 페이지",
+  title: "VIP 초대 - GG POKER",
+  description: "GG POKER VIP 초대 페이지",
 };

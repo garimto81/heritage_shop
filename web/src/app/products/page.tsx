@@ -29,6 +29,6 @@ export default async function ProductsPage() {
  * 메타데이터
  */
 export const metadata = {
-  title: "Heritage Collection - GGP Heritage Mall",
+  title: "Exclusive Collection - GG POKER",
   description: "VIP 전용 프리미엄 컬렉션",
 };

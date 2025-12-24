@@ -62,7 +62,7 @@ export function Header() {
           GG
         </motion.div>
         <span className="font-heading text-[20px] font-semibold tracking-[2px] group-hover:text-[var(--color-gold)] transition-colors duration-300">
-          HERITAGE
+          POKER
         </span>
       </Link>
 

@@ -2,7 +2,7 @@ import { LoginForm } from "./login-form";
 import { Shield } from "lucide-react";
 
 export const metadata = {
-  title: "Admin Login - GGP Heritage Mall",
+  title: "Admin Login - GG POKER",
 };
 
 export default function AdminLoginPage() {
@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
             </div>
           </div>
           <h1 className="font-heading text-3xl bg-gradient-to-r from-[var(--color-gold)] via-[#E5C158] to-[var(--color-gold)] bg-clip-text text-transparent">
-            GGP Heritage Mall
+            GG POKER
           </h1>
           <div className="mt-3 flex items-center justify-center gap-2 text-[var(--color-text-secondary)]">
             <Shield className="w-4 h-4" />

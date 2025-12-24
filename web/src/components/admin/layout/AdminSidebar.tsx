@@ -51,7 +51,7 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
       >
         {/* 로고 & 닫기 버튼 */}
         <div className="flex h-16 items-center justify-between border-b border-[#2A2A2A] px-6">
-          <span className="text-xl font-bold text-[var(--color-gold)]">GGP Admin</span>
+          <span className="text-xl font-bold text-[var(--color-gold)]">GG POKER Admin</span>
           <button
             onClick={onClose}
             className="lg:hidden p-1 rounded-lg text-neutral-400 hover:text-white hover:bg-[#2A2A2A] transition-colors"

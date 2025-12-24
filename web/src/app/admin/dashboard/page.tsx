@@ -88,7 +88,7 @@ export default function DashboardPage() {
         <div className="relative">
           <h1 className="text-2xl lg:text-3xl font-bold text-white">Dashboard</h1>
           <p className="mt-2 text-sm lg:text-base text-neutral-400">
-            Welcome to GGP Heritage Mall Admin
+            Welcome to GG POKER Admin
           </p>
         </div>
       </div>

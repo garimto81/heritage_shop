@@ -3,7 +3,7 @@ import { getOrderById } from "@/lib/api/admin-orders";
 import { OrderDetailClient } from "./order-detail-client";
 
 export const metadata = {
-  title: "Order Details - GGP Heritage Mall Admin",
+  title: "Order Details - GG POKER Admin",
 };
 
 interface OrderDetailPageProps {

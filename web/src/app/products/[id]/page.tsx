@@ -34,12 +34,12 @@ export async function generateMetadata({ params }: ProductPageProps) {
 
   if (!product) {
     return {
-      title: "상품을 찾을 수 없습니다 - GGP Heritage Mall",
+      title: "상품을 찾을 수 없습니다 - GG POKER",
     };
   }
 
   return {
-    title: `${product.name} - GGP Heritage Mall`,
+    title: `${product.name} - GG POKER`,
     description: product.description,
   };
 }
