@@ -21,7 +21,7 @@ const vipData = [
     name: 'Gold VIP',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'aaaaaaaa-1111-1111-1111-111111111111',
+    invite_code: 'VIPE2G1',
     is_active: true,
   },
   {
@@ -30,7 +30,7 @@ const vipData = [
     name: 'Silver VIP',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'bbbbbbbb-2222-2222-2222-222222222222',
+    invite_code: 'VIPE2S1',
     is_active: true,
   },
   {
@@ -39,7 +39,7 @@ const vipData = [
     name: 'Inactive VIP',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'cccccccc-3333-3333-3333-333333333333',
+    invite_code: 'VIPNACT',
     is_active: false,
   },
   // Silver VIPs (5개)
@@ -49,7 +49,7 @@ const vipData = [
     name: 'Kim Silver',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000001',
+    invite_code: 'VIPDVS1',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000002',
@@ -57,7 +57,7 @@ const vipData = [
     name: 'Lee Silver',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000002',
+    invite_code: 'VIPDVS2',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000003',
@@ -65,7 +65,7 @@ const vipData = [
     name: 'Park Silver',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000003',
+    invite_code: 'VIPDVS3',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000004',
@@ -73,7 +73,7 @@ const vipData = [
     name: 'Choi Silver',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000004',
+    invite_code: 'VIPDVS4',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000005',
@@ -81,7 +81,7 @@ const vipData = [
     name: 'Jung Silver',
     tier: 'silver',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000005',
+    invite_code: 'VIPDVS5',
   },
   // Gold VIPs (5개)
   {
@@ -90,7 +90,7 @@ const vipData = [
     name: 'Kim Gold',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000006',
+    invite_code: 'VIPDVG1',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000007',
@@ -98,7 +98,7 @@ const vipData = [
     name: 'Lee Gold',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000007',
+    invite_code: 'VIPDVG2',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000008',
@@ -106,7 +106,7 @@ const vipData = [
     name: 'Park Gold',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000008',
+    invite_code: 'VIPDVG3',
   },
   {
     id: 'd1000000-0000-0000-0000-000000000009',
@@ -114,15 +114,15 @@ const vipData = [
     name: 'Choi Gold',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000009',
+    invite_code: 'VIPDVG4',
   },
   {
-    id: 'd1000000-0000-0000-0000-000000000010',
+    id: 'd1000000-0000-0000-0000-00000000000a',
     email: 'dev.gold5@ggp.test',
     name: 'Jung Gold',
     tier: 'gold',
     reg_type: 'email_invite',
-    invite_token: 'a1000000-0000-0000-0000-000000000010',
+    invite_code: 'VIPDVG5',
   },
 ];
 
