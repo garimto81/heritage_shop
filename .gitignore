@@ -1,4 +1,5 @@
 # dependencies
+node_modules/
 /node_modules
 /.pnp
 .pnp.*
@@ -47,3 +48,28 @@ next-env.d.ts
 .vscode
 *.swp
 *.swo
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# Screenshots (temporary)
+screenshot-*.png
+verify-*.png
+
+# Windows artifacts
+nul
+
+# Sensitive
+cookies.txt
+
+# Agent state
+.agent/
+.claude/
+
+# Temporary scripts
+extract-*.js

@@ -51,7 +51,7 @@ export default function VipDetailPage() {
   }, [id]);
 
   const handleRegenerateToken = async () => {
-    if (!confirm("Are you sure you want to regenerate the invite token?")) {
+    if (!confirm("Are you sure you want to regenerate the invite code?")) {
       return;
     }
 
@@ -61,7 +61,7 @@ export default function VipDetailPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to regenerate token");
+        throw new Error("Failed to regenerate code");
       }
 
       const data = await response.json();
@@ -69,14 +69,14 @@ export default function VipDetailPage() {
       if (vip) {
         setVip({
           ...vip,
-          invite_token: data.invite_token,
+          invite_code: data.invite_code,
         });
       }
 
-      alert("Invite token regenerated successfully");
+      alert("Invite code regenerated successfully");
     } catch (err) {
-      console.error("Regenerate token error:", err);
-      alert("Failed to regenerate token");
+      console.error("Regenerate code error:", err);
+      alert("Failed to regenerate code");
     }
   };
 

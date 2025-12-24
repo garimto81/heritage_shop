@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getAdminSession } from "@/lib/auth/admin-session";
-import { regenerateToken } from "@/lib/api/admin-vips";
+import { regenerateCode } from "@/lib/api/admin-vips";
 
 /**
- * 초대 토큰 재발급
+ * 초대 코드 재발급
  * POST /api/admin/vips/[id]/regenerate-token
  */
 export async function POST(
@@ -20,7 +20,7 @@ export async function POST(
 
   try {
     const { id } = await params;
-    const result = await regenerateToken(id);
+    const result = await regenerateCode(id);
 
     if (!result.success) {
       const statusCode = result.error === "not_found" ? 404 : 500;
@@ -29,7 +29,7 @@ export async function POST(
 
     return NextResponse.json(result);
   } catch (err) {
-    console.error("Regenerate token error:", err);
+    console.error("Regenerate code error:", err);
     return NextResponse.json(
       { success: false, error: "server_error" },
       { status: 500 }

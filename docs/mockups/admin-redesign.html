@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Redesign - Before/After</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-gold: #D4AF37;
+    }
+    body { font-family: 'Inter', sans-serif; }
+    .gold-gradient { background: linear-gradient(135deg, #D4AF37, #B8860B); }
+    .skeleton {
+      background: linear-gradient(90deg, #1A1A1A 25%, #252525 50%, #1A1A1A 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-8">
+  <div class="max-w-7xl mx-auto space-y-12">
+
+    <!-- 제목 -->
+    <div class="text-center">
+      <h1 class="text-3xl font-bold text-gray-900">Admin 페이지 리디자인</h1>
+      <p class="mt-2 text-gray-600">Before → After 비교</p>
+    </div>
+
+    <!-- 1. 사이드바 비교 -->
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm">1</span>
+        사이드바 개선
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div>
+          <div class="text-sm font-medium text-red-500 mb-2">BEFORE (문제점)</div>
+          <div class="border-2 border-red-200 rounded-xl overflow-hidden">
+            <div class="flex">
+              <!-- 사이드바 -->
+              <div class="w-60 bg-neutral-900 border-r border-neutral-800 p-4 shrink-0">
+                <div class="text-yellow-500 font-bold text-lg mb-6">GGP Admin</div>
+                <div class="space-y-2">
+                  <div class="flex items-center gap-3 bg-yellow-500/10 text-yellow-500 px-4 py-3 rounded-lg text-sm">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                    Dashboard
+                  </div>
+                  <div class="flex items-center gap-3 text-neutral-400 px-4 py-3 text-sm">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                    VIPs
+                  </div>
+                  <div class="flex items-center gap-3 text-neutral-400 px-4 py-3 text-sm">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                    Orders
+                  </div>
+                </div>
+              </div>
+              <!-- 컨텐츠 -->
+              <div class="flex-1 bg-neutral-950 p-4 min-h-[200px]">
+                <div class="text-white text-sm">컨텐츠 영역</div>
+              </div>
+            </div>
+          </div>
+          <ul class="mt-3 text-sm text-red-600 space-y-1">
+            <li>• 모바일에서 항상 표시 → 컨텐츠 가림</li>
+            <li>• 반응형 없음</li>
+            <li>• 닫기 버튼 없음</li>
+          </ul>
+        </div>
+
+        <!-- After -->
+        <div>
+          <div class="text-sm font-medium text-green-500 mb-2">AFTER (개선)</div>
+          <div class="border-2 border-green-200 rounded-xl overflow-hidden">
+            <div class="flex">
+              <!-- 사이드바 -->
+              <div class="w-64 bg-[#0F0F0F] border-r border-[#2A2A2A] p-4 shrink-0">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="text-[#D4AF37] font-bold text-lg">GGP Admin</span>
+                  <div class="w-6 h-6 rounded-lg bg-[#2A2A2A] flex items-center justify-center text-neutral-400 text-xs">✕</div>
+                </div>
+                <div class="space-y-1">
+                  <div class="flex items-center gap-3 bg-gradient-to-r from-[#D4AF37]/20 to-[#D4AF37]/5 text-[#D4AF37] px-4 py-3 rounded-xl text-sm font-medium shadow-lg shadow-[#D4AF37]/10">
+                    <div class="w-5 h-5 bg-current rounded" style="filter: drop-shadow(0 0 8px #D4AF37)"></div>
+                    Dashboard
+                  </div>
+                  <div class="flex items-center gap-3 text-neutral-400 hover:bg-[#1A1A1A] px-4 py-3 rounded-xl text-sm transition-all">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                    VIPs
+                  </div>
+                  <div class="flex items-center gap-3 text-neutral-400 hover:bg-[#1A1A1A] px-4 py-3 rounded-xl text-sm transition-all">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                    Orders
+                  </div>
+                </div>
+              </div>
+              <!-- 컨텐츠 -->
+              <div class="flex-1 bg-[#0A0A0A] p-4 min-h-[200px]">
+                <div class="text-white text-sm">컨텐츠 영역</div>
+              </div>
+            </div>
+          </div>
+          <ul class="mt-3 text-sm text-green-600 space-y-1">
+            <li>✓ 모바일에서 숨김 → 햄버거 메뉴로 토글</li>
+            <li>✓ 오버레이 + 닫기 버튼</li>
+            <li>✓ 그라데이션/glow 효과</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 모바일 헤더 -->
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm">2</span>
+        모바일 헤더 (햄버거 메뉴 추가)
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div>
+          <div class="text-sm font-medium text-red-500 mb-2">BEFORE</div>
+          <div class="border-2 border-red-200 rounded-xl overflow-hidden">
+            <div class="bg-neutral-950 border-b border-neutral-800 px-4 h-16 flex items-center justify-end">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-500 text-sm">A</div>
+                <span class="text-neutral-400 text-sm">admin@ggp.com</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-red-600">• 모바일에서 메뉴 접근 불가</p>
+        </div>
+
+        <!-- After -->
+        <div>
+          <div class="text-sm font-medium text-green-500 mb-2">AFTER</div>
+          <div class="border-2 border-green-200 rounded-xl overflow-hidden">
+            <div class="bg-[#0A0A0A]/95 backdrop-blur border-b border-[#2A2A2A] px-4 h-16 flex items-center justify-between">
+              <div class="w-10 h-10 rounded-xl bg-[#1A1A1A] flex items-center justify-center text-neutral-400">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full gold-gradient flex items-center justify-center text-black font-semibold text-sm shadow-lg shadow-[#D4AF37]/20">A</div>
+                <div class="text-right">
+                  <p class="text-white text-sm font-medium">Admin</p>
+                  <p class="text-neutral-500 text-xs">Administrator</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-green-600">✓ 햄버거 메뉴 버튼 + 개선된 프로필</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 로딩 스켈레톤 -->
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm">3</span>
+        로딩 UI (스켈레톤)
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div>
+          <div class="text-sm font-medium text-red-500 mb-2">BEFORE</div>
+          <div class="border-2 border-red-200 rounded-xl overflow-hidden">
+            <div class="bg-neutral-950 p-8 h-48 flex items-center justify-center">
+              <span class="text-neutral-400">Loading...</span>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-red-600">• 단순 텍스트 → 느리게 느껴짐</p>
+        </div>
+
+        <!-- After -->
+        <div>
+          <div class="text-sm font-medium text-green-500 mb-2">AFTER</div>
+          <div class="border-2 border-green-200 rounded-xl overflow-hidden">
+            <div class="bg-[#0A0A0A] p-6">
+              <!-- 스켈레톤 카드들 -->
+              <div class="grid grid-cols-2 gap-4 mb-4">
+                <div class="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-4">
+                  <div class="flex justify-between items-start">
+                    <div class="skeleton h-4 w-20 rounded"></div>
+                    <div class="skeleton h-10 w-10 rounded-xl"></div>
+                  </div>
+                  <div class="skeleton h-6 w-12 rounded mt-3"></div>
+                  <div class="skeleton h-3 w-16 rounded mt-2"></div>
+                </div>
+                <div class="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-4">
+                  <div class="flex justify-between items-start">
+                    <div class="skeleton h-4 w-20 rounded"></div>
+                    <div class="skeleton h-10 w-10 rounded-xl"></div>
+                  </div>
+                  <div class="skeleton h-6 w-12 rounded mt-3"></div>
+                  <div class="skeleton h-3 w-16 rounded mt-2"></div>
+                </div>
+              </div>
+              <!-- 스켈레톤 리스트 -->
+              <div class="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-4">
+                <div class="skeleton h-5 w-24 rounded mb-3"></div>
+                <div class="space-y-2">
+                  <div class="skeleton h-4 w-full rounded"></div>
+                  <div class="skeleton h-4 w-3/4 rounded"></div>
+                  <div class="skeleton h-4 w-5/6 rounded"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-green-600">✓ 애니메이션 스켈레톤 → 빠르게 느껴짐</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Stats Card -->
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm">4</span>
+        통계 카드 디자인
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Before -->
+        <div>
+          <div class="text-sm font-medium text-red-500 mb-2">BEFORE</div>
+          <div class="border-2 border-red-200 rounded-xl overflow-hidden p-4 bg-neutral-950">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
+                <div class="flex justify-between">
+                  <div>
+                    <p class="text-sm text-neutral-400">Total VIPs</p>
+                    <p class="text-2xl font-bold text-white mt-1">24</p>
+                    <p class="text-xs text-neutral-500 mt-1">20 active</p>
+                  </div>
+                  <div class="bg-blue-500/10 text-blue-500 rounded-lg p-3 h-fit">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-4">
+                <div class="flex justify-between">
+                  <div>
+                    <p class="text-sm text-neutral-400">Gold VIPs</p>
+                    <p class="text-2xl font-bold text-white mt-1">8</p>
+                  </div>
+                  <div class="bg-yellow-500/10 text-yellow-500 rounded-lg p-3 h-fit">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- After -->
+        <div>
+          <div class="text-sm font-medium text-green-500 mb-2">AFTER</div>
+          <div class="border-2 border-green-200 rounded-xl overflow-hidden p-4 bg-[#0A0A0A]">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="group relative overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-5 transition-all hover:border-[#3A3A3A] hover:shadow-lg">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent"></div>
+                <div class="relative flex justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-neutral-400">Total VIPs</p>
+                    <p class="text-2xl font-bold text-white mt-2 tracking-tight">24</p>
+                    <p class="text-xs text-neutral-500 mt-1.5">20 active</p>
+                  </div>
+                  <div class="rounded-xl p-2.5 bg-gradient-to-br from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20 transition-transform group-hover:scale-110">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="group relative overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-5 transition-all hover:border-[#3A3A3A] hover:shadow-lg">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent"></div>
+                <div class="relative flex justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-neutral-400">Gold VIPs</p>
+                    <p class="text-2xl font-bold text-white mt-2 tracking-tight">8</p>
+                  </div>
+                  <div class="rounded-xl p-2.5 gold-gradient text-black shadow-lg shadow-[#D4AF37]/20 transition-transform group-hover:scale-110">
+                    <div class="w-5 h-5 bg-current rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="mt-3 text-sm text-green-600 space-y-1">
+            <li>✓ 그라데이션 아이콘</li>
+            <li>✓ Hover 시 아이콘 확대</li>
+            <li>✓ 미묘한 배경 그라데이션</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 반응형 테이블 -->
+    <section class="bg-white rounded-2xl p-6 shadow-lg">
+      <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm">5</span>
+        반응형 테이블 (모바일 → 카드)
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Before (테이블) -->
+        <div>
+          <div class="text-sm font-medium text-red-500 mb-2">BEFORE (모바일에서도 테이블)</div>
+          <div class="border-2 border-red-200 rounded-xl overflow-hidden">
+            <div class="bg-neutral-950 p-4 overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b border-neutral-800">
+                    <th class="text-left py-2 text-neutral-500 text-xs">Email</th>
+                    <th class="text-left py-2 text-neutral-500 text-xs">Name</th>
+                    <th class="text-left py-2 text-neutral-500 text-xs">Tier</th>
+                    <th class="text-left py-2 text-neutral-500 text-xs">Status</th>
+                    <th class="text-right py-2 text-neutral-500 text-xs">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b border-neutral-800">
+                    <td class="py-3 text-white whitespace-nowrap">user@example.com</td>
+                    <td class="py-3 text-neutral-400 whitespace-nowrap">John Doe</td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-500 text-xs">Gold</span></td>
+                    <td class="py-3"><span class="px-2 py-0.5 rounded-full bg-green-500/10 text-green-500 text-xs">Active</span></td>
+                    <td class="py-3 text-right text-neutral-400">...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-red-600">• 모바일에서 가로 스크롤 필요</p>
+        </div>
+
+        <!-- After (카드) -->
+        <div>
+          <div class="text-sm font-medium text-green-500 mb-2">AFTER (모바일: 카드 레이아웃)</div>
+          <div class="border-2 border-green-200 rounded-xl overflow-hidden">
+            <div class="bg-[#0A0A0A] p-4 space-y-3">
+              <!-- 카드 1 -->
+              <div class="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center text-white font-medium">J</div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-white font-medium">John Doe</span>
+                        <span class="px-2 py-0.5 rounded-full border border-[#D4AF37]/20 bg-[#D4AF37]/10 text-[#D4AF37] text-xs">Gold</span>
+                      </div>
+                      <p class="text-sm text-neutral-500">user@example.com</p>
+                    </div>
+                  </div>
+                  <div class="w-10 h-5 rounded-full bg-green-500"></div>
+                </div>
+                <div class="mt-4 flex items-center justify-between pt-3 border-t border-[#2A2A2A]">
+                  <span class="text-xs text-neutral-500">Created Jan 15, 2024</span>
+                  <div class="flex gap-1">
+                    <div class="w-9 h-9 rounded-xl bg-[#1A1A1A] flex items-center justify-center text-neutral-400">✎</div>
+                    <div class="w-9 h-9 rounded-xl bg-[#1A1A1A] flex items-center justify-center text-[#D4AF37]">🔗</div>
+                    <div class="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center text-red-400">🗑</div>
+                  </div>
+                </div>
+              </div>
+              <!-- 카드 2 -->
+              <div class="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neutral-700 to-neutral-800 flex items-center justify-center text-white font-medium">S</div>
+                    <div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-white font-medium">Sarah Kim</span>
+                        <span class="px-2 py-0.5 rounded-full border border-neutral-500/20 bg-neutral-500/10 text-neutral-400 text-xs">Silver</span>
+                      </div>
+                      <p class="text-sm text-neutral-500">sarah@example.com</p>
+                    </div>
+                  </div>
+                  <div class="w-10 h-5 rounded-full bg-neutral-600"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="mt-3 text-sm text-green-600 space-y-1">
+            <li>✓ 모바일: 카드 레이아웃</li>
+            <li>✓ 데스크톱: 테이블 레이아웃</li>
+            <li>✓ 터치 친화적 버튼</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 요약 -->
+    <section class="bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl p-6 text-white">
+      <h2 class="text-xl font-bold mb-4">개선 요약</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+          <div class="text-2xl mb-2">📱</div>
+          <div class="font-semibold">반응형 디자인</div>
+          <p class="text-sm text-white/70 mt-1">모바일/태블릿/데스크톱 대응</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+          <div class="text-2xl mb-2">⚡</div>
+          <div class="font-semibold">스켈레톤 UI</div>
+          <p class="text-sm text-white/70 mt-1">로딩 시 시각적 피드백</p>
+        </div>
+        <div class="bg-white/10 backdrop-blur rounded-xl p-4">
+          <div class="text-2xl mb-2">✨</div>
+          <div class="font-semibold">모던 디자인</div>
+          <p class="text-sm text-white/70 mt-1">그라데이션, glow, 트랜지션</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>

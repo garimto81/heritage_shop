@@ -52,17 +52,26 @@ GGP Heritage Mall은 VIP 고객만을 위한 프리미엄 이커머스 플랫폼
 #### 2.1.1 초대 링크 접속
 
 **사용자 스토리**
-> VIP 고객으로서 초대 링크(`/invite/[token]`)를 통해 별도의 회원가입 없이 즉시 쇼핑을 시작할 수 있다.
+> VIP 고객으로서 초대 링크(`/invite/[code]`)를 통해 별도의 회원가입 없이 즉시 쇼핑을 시작할 수 있다.
 
 **기능 설명**
-- 초대 토큰(UUID)으로 VIP 조회
+- 초대 코드(7자리 영숫자, 예: `VIP7K3M`)로 VIP 조회
 - JWT 쿠키 기반 세션 생성 (유효 기간: 7일)
 - 자동으로 `/products` 페이지로 리다이렉트
 
+**초대 코드 형식**
+| 항목 | 값 |
+|------|-----|
+| 형식 | `VIP` + 4자리 영숫자 |
+| 길이 | 7자 |
+| 예시 | `VIP7K3M`, `VIPXA9B` |
+| 문자셋 | A-Z (I, O 제외), 2-9 (0, 1 제외) |
+
 **구현 상태**
 - ✅ `web/src/app/invite/[token]/page.tsx`
-- ✅ `web/src/lib/api/vip.ts` - `getVipByToken()` 함수
+- ✅ `web/src/lib/api/vip.ts` - `getVipByCode()` 함수
 - ✅ `web/src/lib/auth/vip-session.ts` - JWT 세션 관리
+- ✅ `web/src/lib/invite-code.ts` - 코드 생성 유틸리티
 
 #### 2.1.2 VIP 티어 시스템
 
@@ -83,7 +92,7 @@ GGP Heritage Mall은 VIP 고객만을 위한 프리미엄 이커머스 플랫폼
 
 | 에러 유형 | 메시지 | UI |
 |----------|--------|-----|
-| `not_found` | 초대 토큰이 존재하지 않음 | `InvalidInvite` 컴포넌트 |
+| `not_found` | 초대 코드가 존재하지 않음 | `InvalidInvite` 컴포넌트 |
 | `inactive` | 비활성화된 VIP | 동일 |
 | `database_error` | 서버 오류 | 동일 |
 
@@ -169,7 +178,7 @@ Response: {
     tier: 'silver' | 'gold';
     is_active: boolean;
     created_at: string;
-    invite_token: string;
+    invite_code: string;
   }>;
   total: number;
   page: number;
@@ -200,7 +209,7 @@ Response: {
 | Registration Type | select | ✅ | Email Invite / QR Code |
 
 **생성 후 동작**
-1. `invite_token` (UUID) 자동 생성
+1. `invite_code` (UUID) 자동 생성
 2. 초대 링크 표시: `https://ggp-mall.com/invite/{token}`
 3. 클립보드 복사 버튼
 4. 이메일 전송 버튼 (선택)
@@ -226,7 +235,7 @@ Response: {
     email: string;
     name: string;
     tier: string;
-    invite_token: string;
+    invite_code: string;
     invite_url: string;  // 전체 URL
   }
 } | { success: false; error: string; details?: string }
@@ -234,8 +243,9 @@ Response: {
 
 **데이터베이스**
 ```sql
-INSERT INTO vips (email, name, tier, reg_type, invite_token, is_active)
-VALUES ($1, $2, $3, $4, uuid_generate_v4(), true)
+-- invite_code는 애플리케이션에서 generateUniqueInviteCode()로 생성
+INSERT INTO vips (email, name, tier, reg_type, invite_code, is_active)
+VALUES ($1, $2, $3, $4, $5, true)  -- $5: 7자리 코드 (예: VIP7K3M)
 RETURNING *;
 ```
 
@@ -248,7 +258,7 @@ RETURNING *;
 **우선순위**: P1
 
 **사용자 스토리**
-> 관리자로서 기존 VIP의 정보를 수정하고, 필요시 초대 토큰을 재발급할 수 있다.
+> 관리자로서 기존 VIP의 정보를 수정하고, 필요시 초대 코드을 재발급할 수 있다.
 
 **UI 요구사항**
 
@@ -685,7 +695,7 @@ VALUES ...;
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ 초대 토큰 재발급                                    [✕]      │
+│ 초대 코드 재발급                                    [✕]      │
 ├─────────────────────────────────────────────────────────────┤
 │ 기존 초대 링크가 무효화됩니다.                               │
 │ 새 링크를 VIP에게 다시 전송해야 합니다.                     │
@@ -773,7 +783,7 @@ Response 200:
     tier: 'silver' | 'gold';
     is_active: boolean;
     created_at: string;
-    invite_token: string;
+    invite_code: string;
   }>;
   total: number;
   page: number;
@@ -799,7 +809,7 @@ Response 200:
     name: string;
     tier: 'silver' | 'gold';
     reg_type: 'email_invite' | 'qr_code';
-    invite_token: string;
+    invite_code: string;
     shipping_address: object | null;
     is_active: boolean;
     created_at: string;
@@ -840,7 +850,7 @@ Response 201:
     email: string;
     name: string;
     tier: string;
-    invite_token: string;
+    invite_code: string;
     invite_url: string;  // https://ggp-mall.com/invite/{token}
   }
 }
@@ -890,7 +900,7 @@ Error 400:
 
 ---
 
-**5) 초대 토큰 재발급**
+**5) 초대 코드 재발급**
 
 ```typescript
 POST /api/admin/vips/[id]/regenerate-token
@@ -1022,7 +1032,7 @@ Response 200:
 │ user_id (UK) │       │ email (UK)   │       │ name         │
 │ email        │       │ name         │       │ slug (UK)    │
 │ is_active    │       │ tier         │       └──────────────┘
-└──────────────┘       │ invite_token │              │
+└──────────────┘       │ invite_code │              │
                        │ is_active    │              │
                        │ reg_type     │              │
                        └──────┬───────┘              │
@@ -1066,7 +1076,7 @@ CREATE TABLE vips (
     name VARCHAR(255),
     tier vip_tier NOT NULL DEFAULT 'silver',  -- ENUM: silver, gold
     reg_type registration_type NOT NULL DEFAULT 'email_invite',
-    invite_token UUID UNIQUE NOT NULL DEFAULT uuid_generate_v4(),
+    invite_code VARCHAR(8) UNIQUE NOT NULL,  -- 7자리 초대 코드 (예: VIP7K3M)
     shipping_address JSONB,
     is_active BOOLEAN NOT NULL DEFAULT true,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
@@ -1074,7 +1084,7 @@ CREATE TABLE vips (
 );
 
 CREATE INDEX idx_vips_email ON vips(email);
-CREATE INDEX idx_vips_invite_token ON vips(invite_token);
+CREATE INDEX idx_vips_invite_code ON vips(invite_code);
 CREATE INDEX idx_vips_tier ON vips(tier);
 ```
 
@@ -1082,7 +1092,7 @@ CREATE INDEX idx_vips_tier ON vips(tier);
 
 | 컬럼 | 타입 | 설명 |
 |------|------|------|
-| `invite_token` | UUID | 초대 링크용 고유 토큰 |
+| `invite_code` | UUID | 초대 링크용 고유 토큰 |
 | `tier` | ENUM | VIP 등급 (silver=3개, gold=5개) |
 | `reg_type` | ENUM | 등록 방식 (email_invite, qr_code) |
 | `is_active` | BOOLEAN | 활성 상태 (Soft Delete용) |
@@ -1416,7 +1426,7 @@ USING (
 ### 9.3 확장성
 
 **1) 데이터베이스**
-- 인덱스 최적화 (email, invite_token, tier)
+- 인덱스 최적화 (email, invite_code, tier)
 - 페이지네이션으로 대량 데이터 처리
 
 **2) 캐싱**
@@ -1536,7 +1546,7 @@ USING (
     "email": "john@example.com",
     "name": "John Smith",
     "tier": "gold",
-    "invite_token": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "invite_code": "VIP7K3M",
     "is_active": true,
     "created_at": "2025-12-01T10:00:00Z"
   },
@@ -1545,7 +1555,7 @@ USING (
     "email": "jane@example.com",
     "name": "Jane Doe",
     "tier": "silver",
-    "invite_token": "b2c3d4e5-f6a7-8901-bcde-f2345678901a",
+    "invite_code": "VIPXA9B",
     "is_active": true,
     "created_at": "2025-12-05T14:30:00Z"
   }
@@ -1697,7 +1707,7 @@ SELECT
   tier,
   is_active,
   created_at,
-  invite_token
+  invite_code
 FROM vips
 WHERE
   ($1::vip_tier IS NULL OR tier = $1)           -- 티어 필터

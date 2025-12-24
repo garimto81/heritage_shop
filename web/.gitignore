@@ -1,0 +1,8 @@
+.vercel
+.next/
+coverage/
+playwright-report/
+test-results/
+screenshot-*.png
+verify-*.png
+nul

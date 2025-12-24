@@ -42,7 +42,7 @@ const statusColors: Record<string, string> = {
 export function VipDetail({ vip, orders, onRegenerateToken }: VipDetailProps) {
   const [copied, setCopied] = useState(false);
 
-  const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/invite/${vip.invite_token}`;
+  const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/invite/${vip.invite_code}`;
 
   const copyToClipboard = async () => {
     try {

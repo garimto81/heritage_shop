@@ -61,8 +61,8 @@ export interface AdminVip {
   tier: VipTier;
   /** 등록 타입 */
   reg_type: RegistrationType;
-  /** 초대 토큰 */
-  invite_token: string;
+  /** 초대 코드 (7자리: VIP + 4자리 영숫자, 예: VIP7K3M) */
+  invite_code: string;
   /** 활성 상태 */
   is_active: boolean;
   /** 배송지 정보 */
@@ -171,18 +171,21 @@ export type DeleteVipResult =
     };
 
 /**
- * 초대 토큰 재발급 결과
+ * 초대 코드 재발급 결과
  */
-export type RegenerateTokenResult =
+export type RegenerateCodeResult =
   | {
       success: true;
-      invite_token: string;
+      invite_code: string;
       invite_url: string;
     }
   | {
       success: false;
       error: "not_found" | "database_error";
     };
+
+/** @deprecated Use RegenerateCodeResult instead */
+export type RegenerateTokenResult = RegenerateCodeResult;
 
 /**
  * 주문 아이템 정보

@@ -8,7 +8,7 @@ export interface VipRecord {
   id: string;
   name: string;
   tier: VipTier;
-  invite_token: string;
+  invite_code: string;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -22,20 +22,20 @@ export type GetVipResult =
   | { success: false; error: "not_found" | "inactive" | "database_error" };
 
 /**
- * 초대 토큰으로 VIP 조회
+ * 초대 코드로 VIP 조회
  * Admin 클라이언트를 사용하여 RLS를 우회합니다.
  *
- * @param token - 초대 토큰 (UUID)
+ * @param code - 초대 코드 (7자리: VIP + 4자리 영숫자, 예: VIP7K3M)
  * @returns VIP 정보 또는 에러
  */
-export async function getVipByToken(token: string): Promise<GetVipResult> {
+export async function getVipByCode(code: string): Promise<GetVipResult> {
   try {
     const supabase = createAdminClient();
 
     const { data, error } = await supabase
       .from("vips")
       .select("*")
-      .eq("invite_token", token)
+      .eq("invite_code", code)
       .single();
 
     if (error) {
@@ -61,3 +61,6 @@ export async function getVipByToken(token: string): Promise<GetVipResult> {
     return { success: false, error: "database_error" };
   }
 }
+
+/** @deprecated Use getVipByCode instead */
+export const getVipByToken = getVipByCode;

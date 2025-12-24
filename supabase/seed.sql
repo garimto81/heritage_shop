@@ -101,15 +101,15 @@ INSERT INTO inventory (product_id, size, quantity) VALUES
   ('faaaaaaa-0000-0000-0000-000000000008', 'ONE SIZE', 15);
 
 -- Sample VIP Users (for testing)
--- UUID format: bXXXXXXX for VIP id, eXXXXXXX for invite_token
-INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
+-- invite_code: 7자리 코드 (VIP + 4자리 영숫자)
+INSERT INTO vips (id, email, name, tier, reg_type, invite_code) VALUES
   (
     'b1000000-0000-0000-0000-000000000001',
     'silver.vip@test.com',
     'Silver VIP Test',
     'silver',
     'email_invite',
-    'e1000000-0000-0000-0000-000000000001'
+    'VIPSLV1'
   ),
   (
     'b1000000-0000-0000-0000-000000000002',
@@ -117,18 +117,18 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Gold VIP Test',
     'gold',
     'email_invite',
-    'e1000000-0000-0000-0000-000000000002'
+    'VIPGLD1'
   );
 
 -- E2E Test VIP Users (Playwright 테스트용)
-INSERT INTO vips (id, email, name, tier, reg_type, invite_token, is_active) VALUES
+INSERT INTO vips (id, email, name, tier, reg_type, invite_code, is_active) VALUES
   (
     '11111111-1111-1111-1111-111111111111',
     'gold@test.ggp.com',
     'Gold VIP',
     'gold',
     'email_invite',
-    'aaaaaaaa-1111-1111-1111-111111111111',
+    'VIPE2G1',
     true
   ),
   (
@@ -137,7 +137,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token, is_active) VALU
     'Silver VIP',
     'silver',
     'email_invite',
-    'bbbbbbbb-2222-2222-2222-222222222222',
+    'VIPE2S1',
     true
   ),
   (
@@ -146,13 +146,13 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token, is_active) VALU
     'Inactive VIP',
     'silver',
     'email_invite',
-    'cccccccc-3333-3333-3333-333333333333',
+    'VIPNACT',
     false
   );
 
 -- Development Test VIP Users (10개 추가)
 -- 5 Silver + 5 Gold for development testing
-INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
+INSERT INTO vips (id, email, name, tier, reg_type, invite_code) VALUES
   -- Silver VIPs (5개)
   (
     'd1000000-0000-0000-0000-000000000001',
@@ -160,7 +160,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Kim Silver',
     'silver',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000001'
+    'VIPDVS1'
   ),
   (
     'd1000000-0000-0000-0000-000000000002',
@@ -168,7 +168,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Lee Silver',
     'silver',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000002'
+    'VIPDVS2'
   ),
   (
     'd1000000-0000-0000-0000-000000000003',
@@ -176,7 +176,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Park Silver',
     'silver',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000003'
+    'VIPDVS3'
   ),
   (
     'd1000000-0000-0000-0000-000000000004',
@@ -184,7 +184,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Choi Silver',
     'silver',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000004'
+    'VIPDVS4'
   ),
   (
     'd1000000-0000-0000-0000-000000000005',
@@ -192,7 +192,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Jung Silver',
     'silver',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000005'
+    'VIPDVS5'
   ),
   -- Gold VIPs (5개)
   (
@@ -201,7 +201,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Kim Gold',
     'gold',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000006'
+    'VIPDVG1'
   ),
   (
     'd1000000-0000-0000-0000-000000000007',
@@ -209,7 +209,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Lee Gold',
     'gold',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000007'
+    'VIPDVG2'
   ),
   (
     'd1000000-0000-0000-0000-000000000008',
@@ -217,7 +217,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Park Gold',
     'gold',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000008'
+    'VIPDVG3'
   ),
   (
     'd1000000-0000-0000-0000-000000000009',
@@ -225,7 +225,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Choi Gold',
     'gold',
     'email_invite',
-    'a1000000-0000-0000-0000-000000000009'
+    'VIPDVG4'
   ),
   (
     'd1000000-0000-0000-0000-00000000000a',
@@ -233,7 +233,7 @@ INSERT INTO vips (id, email, name, tier, reg_type, invite_token) VALUES
     'Jung Gold',
     'gold',
     'email_invite',
-    'a1000000-0000-0000-0000-00000000000a'
+    'VIPDVG5'
   );
 
 -- Note: Admin users should be created via Supabase Auth

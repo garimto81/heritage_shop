@@ -12,7 +12,7 @@ interface VipsTableProps {
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onStatusChange: (id: string, isActive: boolean) => void;
-  onCopyLink: (token: string) => void;
+  onCopyLink: (code: string) => void;
 }
 
 export function VipsTable({
@@ -83,7 +83,7 @@ export function VipsTable({
                   <Edit className="h-4 w-4" />
                 </button>
                 <button
-                  onClick={() => onCopyLink(vip.invite_token)}
+                  onClick={() => onCopyLink(vip.invite_code)}
                   className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-neutral-400 hover:bg-[#1A1A1A] hover:text-[var(--color-gold)] transition-colors"
                   aria-label="Copy invite link"
                 >
@@ -165,7 +165,7 @@ export function VipsTable({
                         <Edit className="h-4 w-4" />
                       </button>
                       <button
-                        onClick={() => onCopyLink(vip.invite_token)}
+                        onClick={() => onCopyLink(vip.invite_code)}
                         className={cn(
                           "inline-flex h-9 w-9 items-center justify-center rounded-xl transition-colors",
                           "text-neutral-400 hover:bg-[#2A2A2A] hover:text-[var(--color-gold)]"

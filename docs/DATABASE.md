@@ -21,7 +21,7 @@ VIP 회원 정보
 | name | text | 이름 |
 | tier | vip_tier | silver / gold |
 | reg_type | registration_type | 가입 방식 |
-| invite_token | text | 초대 토큰 |
+| invite_code | varchar(8) | 초대 코드 (예: VIP7K3M) |
 | shipping_address | jsonb | 배송 주소 |
 | is_active | boolean | 활성 상태 |
 

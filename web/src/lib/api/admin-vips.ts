@@ -1,4 +1,5 @@
 import { createAdminClient } from "@/lib/supabase/admin";
+import { generateUniqueInviteCode } from "@/lib/invite-code";
 import type {
   AdminVip,
   VipListResponse,
@@ -8,7 +9,7 @@ import type {
   UpdateVipInput,
   UpdateVipResult,
   DeleteVipResult,
-  RegenerateTokenResult,
+  RegenerateCodeResult,
 } from "@/types/admin";
 
 /**
@@ -72,8 +73,8 @@ export async function getVipById(id: string): Promise<AdminVip | null> {
 export async function createVip(input: CreateVipInput): Promise<CreateVipResult> {
   const supabase = createAdminClient();
 
-  // UUID 기반 초대 토큰 생성
-  const invite_token = crypto.randomUUID();
+  // 7자리 영숫자 초대 코드 생성 (예: VIP7K3M)
+  const invite_code = await generateUniqueInviteCode(supabase);
 
   const { data, error } = await supabase
     .from("vips")
@@ -82,7 +83,7 @@ export async function createVip(input: CreateVipInput): Promise<CreateVipResult>
       name: input.name || null,
       tier: input.tier,
       reg_type: input.reg_type,
-      invite_token,
+      invite_code,
       is_active: true,
     })
     .select()
@@ -96,7 +97,7 @@ export async function createVip(input: CreateVipInput): Promise<CreateVipResult>
   }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const invite_url = `${appUrl}/invite/${invite_token}`;
+  const invite_url = `${appUrl}/invite/${invite_code}`;
 
   return {
     success: true,
@@ -186,16 +187,16 @@ export async function deleteVip(id: string, hard: boolean = false): Promise<Dele
 }
 
 /**
- * 초대 토큰 재발급
+ * 초대 코드 재발급
  */
-export async function regenerateToken(id: string): Promise<RegenerateTokenResult> {
+export async function regenerateCode(id: string): Promise<RegenerateCodeResult> {
   const supabase = createAdminClient();
 
-  const invite_token = crypto.randomUUID();
+  const invite_code = await generateUniqueInviteCode(supabase);
 
   const { error } = await supabase
     .from("vips")
-    .update({ invite_token, updated_at: new Date().toISOString() })
+    .update({ invite_code, updated_at: new Date().toISOString() })
     .eq("id", id);
 
   if (error) {
@@ -206,7 +207,10 @@ export async function regenerateToken(id: string): Promise<RegenerateTokenResult
   }
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-  const invite_url = `${appUrl}/invite/${invite_token}`;
+  const invite_url = `${appUrl}/invite/${invite_code}`;
 
-  return { success: true, invite_token, invite_url };
+  return { success: true, invite_code, invite_url };
 }
+
+/** @deprecated Use regenerateCode instead */
+export const regenerateToken = regenerateCode;
