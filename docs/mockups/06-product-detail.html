@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Product Detail (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --platinum: #F5F5F7;
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: #fff;
+    }
+
+    /* Banner */
+    .banner {
+      background: var(--luxury-black);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .banner span {
+      color: var(--gold);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--luxury-black);
+    }
+
+    .cart-btn {
+      position: relative;
+    }
+
+    .cart-btn .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 14px;
+      height: 14px;
+      background: var(--luxury-black);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Main Content */
+    .main {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    /* Image Gallery */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .main-image {
+      aspect-ratio: 1;
+      background: var(--stone-light);
+      overflow: hidden;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .thumbnails {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .thumbnail {
+      aspect-ratio: 1;
+      background: var(--stone-light);
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .thumbnail:hover,
+    .thumbnail.active {
+      opacity: 1;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Product Info */
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .breadcrumb {
+      font-size: 9px;
+      color: #9ca3af;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .breadcrumb span {
+      color: var(--luxury-black);
+    }
+
+    .product-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .signature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      color: #9ca3af;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .signature-line {
+      width: 20px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .product-description {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-style: italic;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* Platinum Badge */
+    .platinum-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: var(--platinum);
+      border-left: 3px solid var(--gold);
+    }
+
+    .platinum-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .platinum-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .platinum-text h4 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .platinum-text p {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* Size Selection */
+    .size-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .size-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .size-options {
+      display: flex;
+      gap: 10px;
+    }
+
+    .size-option {
+      width: 60px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e5e5e5;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .size-option:hover {
+      border-color: var(--luxury-black);
+    }
+
+    .size-option.selected {
+      background: var(--luxury-black);
+      color: #fff;
+      border-color: var(--luxury-black);
+    }
+
+    .size-option.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Add to Bag Button */
+    .add-btn {
+      width: 100%;
+      padding: 18px;
+      background: var(--luxury-black);
+      color: #fff;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .add-btn:hover {
+      background: var(--gold);
+    }
+
+    /* Details Accordion */
+    .details-section {
+      border-top: 1px solid #e5e5e5;
+      padding-top: 20px;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f1f1f1;
+      cursor: pointer;
+    }
+
+    .detail-item span {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .detail-item .material-symbols-outlined {
+      font-size: 16px;
+      color: #9ca3af;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Banner -->
+    <div class="banner">
+      Private Viewing • <span>Platinum Tier Access Only</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+      <span class="logo">PRIVE</span>
+      <div class="header-actions">
+        <button><span class="material-symbols-outlined">search</span></button>
+        <button class="cart-btn">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="badge">2</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Image Gallery -->
+      <div class="gallery">
+        <div class="main-image">
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500" alt="Product">
+        </div>
+        <div class="thumbnails">
+          <div class="thumbnail active">
+            <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200" alt="Thumbnail 1">
+          </div>
+          <div class="thumbnail">
+            <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=200" alt="Thumbnail 2">
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-info">
+        <nav class="breadcrumb">
+          Collections / Leather Goods / <span>Tote</span>
+        </nav>
+
+        <h1 class="product-title">The Obsidian Tote</h1>
+
+        <div class="signature">
+          <span class="signature-line"></span>
+          Signature Collection
+        </div>
+
+        <p class="product-description">
+          A testament to the art of leather craftsmanship, the Obsidian Tote is meticulously handcrafted from the finest Italian calfskin.
+        </p>
+
+        <!-- Platinum Badge -->
+        <div class="platinum-badge">
+          <div class="platinum-icon">
+            <span class="material-symbols-outlined">workspace_premium</span>
+          </div>
+          <div class="platinum-text">
+            <h4>Platinum Privilege</h4>
+            <p>Your tier grants complimentary access</p>
+          </div>
+        </div>
+
+        <!-- Size Selection -->
+        <div class="size-section">
+          <span class="size-label">Select Size</span>
+          <div class="size-options">
+            <div class="size-option disabled">Small</div>
+            <div class="size-option selected">Medium</div>
+            <div class="size-option">Large</div>
+          </div>
+        </div>
+
+        <!-- Add to Bag Button -->
+        <button class="add-btn">Add to Bag (Complimentary)</button>
+
+        <!-- Details Accordion -->
+        <div class="details-section">
+          <div class="detail-item">
+            <span>Composition & Care</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <div class="detail-item">
+            <span>Delivery & Returns</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+          <div class="detail-item">
+            <span>Authenticity</span>
+            <span class="material-symbols-outlined">expand_more</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - VIP Lounge (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Manrope', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: #fff;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f1f1f1;
+      background: rgba(255,255,255,0.95);
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .logo-icon .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    .logo-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-text span {
+      font-size: 8px;
+      letter-spacing: 0.3em;
+      color: #9ca3af;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 16px;
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .nav a {
+      color: #9ca3af;
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--luxury-black);
+      border-bottom: 1px solid var(--luxury-black);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cart-btn {
+      position: relative;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--luxury-black);
+    }
+
+    .cart-btn .badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 14px;
+      height: 14px;
+      background: var(--luxury-black);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 16px;
+      border-left: 1px solid #e5e5e5;
+    }
+
+    .user-info-text {
+      text-align: right;
+    }
+
+    .user-tier {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .user-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 2px solid #f1f1f1;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 320px;
+      background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600') right center/cover;
+      margin: 24px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,0.95), rgba(255,255,255,0.4));
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 40px;
+      max-width: 320px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 16px;
+    }
+
+    .hero-label-line {
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      font-style: italic;
+      font-weight: 300;
+      color: #6b7280;
+    }
+
+    .hero-description {
+      font-size: 13px;
+      color: #6b7280;
+      font-weight: 300;
+      line-height: 1.6;
+      padding-left: 16px;
+      border-left: 2px solid var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      padding: 12px 20px;
+      background: var(--luxury-black);
+      color: #fff;
+      border: none;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      padding: 12px 20px;
+      background: transparent;
+      color: var(--luxury-black);
+      border: 1px solid var(--luxury-black);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+    }
+
+    /* Stats Section */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid #f1f1f1;
+      border-bottom: 1px solid #f1f1f1;
+      margin: 0 24px;
+      padding: 20px 0;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .stat-item:not(:last-child) {
+      border-right: 1px solid #e5e5e5;
+    }
+
+    .stat-label {
+      font-size: 9px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-value .material-symbols-outlined {
+      font-size: 20px;
+      color: var(--gold);
+    }
+
+    .stat-value span {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+    }
+
+    .stat-value span.italic {
+      font-style: italic;
+    }
+
+    .progress-ring {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      padding: 24px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      border-bottom: 1px solid #f1f1f1;
+      margin: 0 24px;
+    }
+
+    .categories button {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      padding-bottom: 8px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .categories button.active {
+      color: var(--luxury-black);
+      border-bottom-color: var(--luxury-black);
+    }
+
+    /* Products Grid */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      text-align: center;
+      padding: 32px 24px 24px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      padding: 0 24px 32px;
+    }
+
+    .product-card {
+      cursor: pointer;
+    }
+
+    .product-image {
+      position: relative;
+      aspect-ratio: 3/4;
+      background: #f1f1f1;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1s;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.05);
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.9);
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .product-category {
+      font-size: 9px;
+      color: #9ca3af;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <span class="material-symbols-outlined">diamond</span>
+        </div>
+        <div class="logo-text">
+          <h2>VIP Lounge</h2>
+          <span>By Invitation Only</span>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">Collections</a>
+        <a href="#">Atelier</a>
+        <a href="#">Concierge</a>
+      </nav>
+      <div class="header-right">
+        <button class="cart-btn">
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="badge">2</span>
+        </button>
+        <div class="user-info">
+          <div class="user-info-text">
+            <p class="user-tier">Diamond Tier</p>
+            <p class="user-name">Alexander V.</p>
+          </div>
+          <div class="user-avatar"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <p class="hero-label">
+          <span class="hero-label-line"></span>
+          Exclusive Access
+        </p>
+        <h1>The Diamond <br><span>Collection</span></h1>
+        <p class="hero-description">Welcome, Alexander. Your tier grants you complimentary access to our most exquisite selections.</p>
+        <div class="hero-buttons">
+          <button class="btn-primary">View Allowance</button>
+          <button class="btn-secondary">Contact Concierge</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="stat-item">
+        <div>
+          <p class="stat-label">Current Status</p>
+          <div class="stat-value">
+            <span class="material-symbols-outlined">verified</span>
+            <span>Diamond Member</span>
+          </div>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div>
+          <p class="stat-label">Complimentary Gifts</p>
+          <div class="stat-value">
+            <span>2 of 3</span>
+          </div>
+        </div>
+        <svg class="progress-ring" viewBox="0 0 36 36">
+          <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e5e5e5" stroke-width="1.5" style="transform: rotate(-90deg); transform-origin: center;"></path>
+          <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#C5A059" stroke-dasharray="66, 100" stroke-width="1.5" style="transform: rotate(-90deg); transform-origin: center;"></path>
+        </svg>
+      </div>
+      <div class="stat-item">
+        <div>
+          <p class="stat-label">Renewal Date</p>
+          <div class="stat-value">
+            <span class="material-symbols-outlined" style="color: #9ca3af;">calendar_month</span>
+            <span class="italic">November 12, 2024</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Title -->
+    <h3 class="section-title">Curated Selections</h3>
+
+    <!-- Categories -->
+    <nav class="categories">
+      <button class="active">All Collections</button>
+      <button>Leather Goods</button>
+      <button>Fragrance</button>
+      <button>Timepieces</button>
+    </nav>
+
+    <!-- Products Grid -->
+    <section class="products-grid">
+      <div class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400" alt="Bag">
+          <span class="product-badge">Limited Edition</span>
+        </div>
+        <p class="product-category">Leather Goods</p>
+        <p class="product-name">The Obsidian Tote</p>
+      </div>
+      <div class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?w=400" alt="Perfume">
+        </div>
+        <p class="product-category">Fragrance</p>
+        <p class="product-name">Noir Oud Cologne</p>
+      </div>
+      <div class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400" alt="Watch">
+        </div>
+        <p class="product-category">Timepieces</p>
+        <p class="product-name">Chronograph GT</p>
+      </div>
+      <div class="product-card">
+        <div class="product-image">
+          <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Wallet">
+        </div>
+        <p class="product-category">Leather Goods</p>
+        <p class="product-name">Monogram Wallet</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Edit VIP (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-charcoal);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: var(--stone-light);
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 24px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      color: #9ca3af;
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--luxury-black);
+      border-bottom: 1px solid var(--luxury-black);
+      padding-bottom: 2px;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 32px 24px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .breadcrumb span {
+      color: #9ca3af;
+    }
+
+    .breadcrumb span.active {
+      color: var(--luxury-black);
+    }
+
+    /* Title Section */
+    .title-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-bottom: 24px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .vip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--luxury-black);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .vip-badge .material-symbols-outlined {
+      font-size: 10px;
+      color: var(--gold);
+    }
+
+    .ref-code {
+      font-family: monospace;
+      font-size: 9px;
+      color: #9ca3af;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-left: 12px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .discard-btn {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #6b7280;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      padding: 14px 28px;
+      background: var(--luxury-black);
+      color: #fff;
+      border: none;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    /* Content Grid */
+    .content-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 24px;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: #fff;
+      padding: 32px;
+      box-shadow: var(--shadow-pristine);
+      border: 1px solid #fafafa;
+    }
+
+    .form-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .form-group {
+      position: relative;
+    }
+
+    .form-label {
+      position: absolute;
+      top: -10px;
+      left: 0;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      background: #fff;
+      padding-right: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      background: transparent;
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-bottom-color: var(--gold);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 12px 0;
+      border: none;
+      border-bottom: 1px solid #e5e5e5;
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      background: transparent;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    /* Tier Section */
+    .tier-section {
+      margin-top: 32px;
+    }
+
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .status-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-label {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .toggle {
+      width: 36px;
+      height: 18px;
+      background: var(--luxury-black);
+      border-radius: 9px;
+      position: relative;
+    }
+
+    .toggle::after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      top: 2px;
+      right: 2px;
+    }
+
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .tier-option {
+      padding: 16px;
+      border: 1px solid #e5e5e5;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .tier-option.selected {
+      border-color: var(--gold);
+      background: rgba(250, 250, 250, 1);
+    }
+
+    .tier-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .tier-name.gold {
+      color: var(--gold);
+    }
+
+    .tier-name.platinum {
+      color: #6b7280;
+    }
+
+    .tier-allowance {
+      font-size: 9px;
+      color: #9ca3af;
+    }
+
+    /* Sidebar Card */
+    .sidebar-card {
+      background: #fff;
+      padding: 24px;
+      box-shadow: var(--shadow-pristine);
+      border: 1px solid #fafafa;
+    }
+
+    .sidebar-card h4 {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .access-key {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: var(--stone-light);
+      border: 1px solid #e5e5e5;
+      margin-bottom: 24px;
+    }
+
+    .access-key code {
+      font-family: monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+    }
+
+    .access-key button {
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .activity-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .activity-label {
+      font-size: 10px;
+      color: #6b7280;
+    }
+
+    .activity-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 12px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <header class="header">
+      <span class="logo-text">GGP Heritage</span>
+      <nav class="nav">
+        <a href="#">Atelier</a>
+        <a href="#" class="active">Clientele</a>
+        <a href="#">Inventory</a>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb">
+        <span>Clientele</span>
+        <span>/</span>
+        <span>Directory</span>
+        <span>/</span>
+        <span class="active">Edit Profile</span>
+      </nav>
+
+      <!-- Title Section -->
+      <div class="title-section">
+        <div>
+          <h1>Eleanor Pena</h1>
+          <div style="display: flex; align-items: center;">
+            <span class="vip-badge">
+              <span class="material-symbols-outlined">star</span>
+              GOLD PREMIUM
+            </span>
+            <span class="ref-code">REF: 9942-VIP</span>
+          </div>
+        </div>
+        <div class="action-buttons">
+          <button class="discard-btn">Discard</button>
+          <button class="save-btn">Save Changes</button>
+        </div>
+      </div>
+
+      <!-- Content Grid -->
+      <div class="content-grid">
+        <!-- Left Column -->
+        <div>
+          <!-- Personal Information -->
+          <div class="form-card">
+            <h3>Personal Information</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <span class="form-label">Full Name</span>
+                <input type="text" class="form-input" value="Eleanor Pena">
+              </div>
+              <div class="form-group">
+                <span class="form-label">Email Address</span>
+                <input type="email" class="form-input" value="eleanor.pena@ggp.com">
+              </div>
+              <div class="form-group">
+                <span class="form-label">Phone Number</span>
+                <input type="tel" class="form-input" value="+1 (555) 000-0000">
+              </div>
+              <div class="form-group">
+                <span class="form-label">Region</span>
+                <select class="form-select">
+                  <option>North America</option>
+                  <option>Europe</option>
+                  <option>Asia Pacific</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Membership Tier -->
+            <div class="tier-section">
+              <div class="tier-header">
+                <h3 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 400;">Membership Tier</h3>
+                <div class="status-toggle">
+                  <span class="status-label">Status Active</span>
+                  <div class="toggle"></div>
+                </div>
+              </div>
+              <div class="tier-grid">
+                <div class="tier-option">
+                  <p class="tier-name">Silver</p>
+                  <p class="tier-allowance">3 gifts / season</p>
+                </div>
+                <div class="tier-option selected">
+                  <p class="tier-name gold">Gold</p>
+                  <p class="tier-allowance">5 gifts / season</p>
+                </div>
+                <div class="tier-option">
+                  <p class="tier-name platinum">Platinum</p>
+                  <p class="tier-allowance">Unlimited</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column (Sidebar) -->
+        <div>
+          <div class="sidebar-card">
+            <h4>Access Key</h4>
+            <div class="access-key">
+              <code>VIP-9942-GOLD-EP</code>
+              <button><span class="material-symbols-outlined">content_copy</span></button>
+            </div>
+
+            <h4>Client Activity</h4>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="activity-label">Last Access</span>
+                <span class="activity-value">2 hours ago</span>
+              </div>
+              <div class="activity-item">
+                <span class="activity-label">Total Gifts</span>
+                <span class="activity-value">12 items</span>
+              </div>
+              <div class="activity-item">
+                <span class="activity-label">Joined</span>
+                <span class="activity-value">Jan 15, 2024</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

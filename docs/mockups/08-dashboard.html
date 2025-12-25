@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Admin Dashboard (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #FCFCFC;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: #FCFCFC;
+      min-height: 700px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: rgba(255,255,255,0.95);
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav a {
+      color: #9ca3af;
+      text-decoration: none;
+    }
+
+    .nav a.active {
+      color: var(--luxury-black);
+      border-bottom: 1px solid var(--luxury-black);
+      padding-bottom: 2px;
+    }
+
+    .admin-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    }
+
+    /* Main */
+    .main {
+      padding: 32px 24px;
+    }
+
+    /* Title */
+    .title-section {
+      margin-bottom: 32px;
+    }
+
+    .title-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .title-line {
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .title-text {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 400;
+    }
+
+    h1 span {
+      font-style: italic;
+      font-weight: 300;
+      color: #9ca3af;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      position: relative;
+      background: #fff;
+      padding: 24px 16px;
+      text-align: center;
+      box-shadow: var(--shadow-pristine);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--luxury-black);
+      transform: scaleX(0);
+      transition: transform 0.7s;
+    }
+
+    .stat-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-card:nth-child(2)::before {
+      background: var(--gold);
+    }
+
+    .stat-card:nth-child(3)::before {
+      background: #22c55e;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .stat-icon.members { background: #f3f4f6; color: var(--luxury-black); }
+    .stat-icon.gold { background: #fef3c7; color: var(--gold); }
+    .stat-icon.orders { background: #dcfce7; color: #22c55e; }
+    .stat-icon.pending { background: #fee2e2; color: #ef4444; }
+
+    .stat-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--luxury-black);
+    }
+
+    .stat-meta {
+      font-size: 9px;
+      color: #9ca3af;
+      margin-top: 6px;
+    }
+
+    .stat-meta strong {
+      color: #22c55e;
+    }
+
+    /* Recent Section */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+    }
+
+    .section-title span {
+      font-style: italic;
+      color: #9ca3af;
+    }
+
+    .view-all {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Recent Grid */
+    .recent-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .recent-card {
+      background: #fff;
+      padding: 16px;
+      box-shadow: var(--shadow-pristine);
+    }
+
+    .recent-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .recent-card-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    /* VIP List */
+    .vip-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+    }
+
+    .vip-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #e5e5e5;
+      overflow: hidden;
+    }
+
+    .vip-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vip-info {
+      flex: 1;
+    }
+
+    .vip-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+    }
+
+    .vip-email {
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    .tier-badge {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid;
+    }
+
+    .tier-badge.gold {
+      border-color: #E8DCC4;
+      color: var(--gold);
+    }
+
+    .tier-badge.silver {
+      border-color: #e5e5e5;
+      color: #6b7280;
+    }
+
+    /* Order Item */
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #fafafa;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-id {
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    .order-vip {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    .order-status {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .order-status.pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .order-status.processing {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .order-status.shipped {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="1"></path>
+            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1"></path>
+            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1"></path>
+          </svg>
+        </div>
+        <span class="logo-text">GGP Heritage</span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="active">Dashboard</a>
+        <a href="#">VIP List</a>
+        <a href="#">Orders</a>
+      </nav>
+      <div class="admin-avatar"></div>
+    </header>
+
+    <!-- Main -->
+    <main class="main">
+      <!-- Title -->
+      <div class="title-section">
+        <div class="title-label">
+          <div class="title-line"></div>
+          <span class="title-text">Admin Console</span>
+        </div>
+        <h1>Heritage <span>Dashboard</span></h1>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon members">
+            <span class="material-symbols-outlined">group</span>
+          </div>
+          <p class="stat-label">Total VIPs</p>
+          <p class="stat-value">1,240</p>
+          <p class="stat-meta"><strong>+12%</strong> this month</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon gold">
+            <span class="material-symbols-outlined">diamond</span>
+          </div>
+          <p class="stat-label">Gold Tier</p>
+          <p class="stat-value">485</p>
+          <p class="stat-meta">39% of total</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orders">
+            <span class="material-symbols-outlined">shopping_bag</span>
+          </div>
+          <p class="stat-label">Orders</p>
+          <p class="stat-value">328</p>
+          <p class="stat-meta"><strong>+8%</strong> this week</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon pending">
+            <span class="material-symbols-outlined">pending_actions</span>
+          </div>
+          <p class="stat-label">Pending</p>
+          <p class="stat-value">24</p>
+          <p class="stat-meta">Requires action</p>
+        </div>
+      </div>
+
+      <!-- Recent Sections -->
+      <div class="recent-grid">
+        <!-- Recent VIPs -->
+        <div class="recent-card">
+          <div class="recent-card-header">
+            <span class="recent-card-title">Recent VIPs</span>
+            <a href="#" class="view-all">View All <span class="material-symbols-outlined" style="font-size: 14px;">east</span></a>
+          </div>
+          <div class="vip-item">
+            <div class="vip-avatar">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80" alt="">
+            </div>
+            <div class="vip-info">
+              <p class="vip-name">Eleanor Pena</p>
+              <p class="vip-email">eleanor@ggp.com</p>
+            </div>
+            <span class="tier-badge gold">Gold</span>
+          </div>
+          <div class="vip-item">
+            <div class="vip-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80" alt="">
+            </div>
+            <div class="vip-info">
+              <p class="vip-name">Wade Warren</p>
+              <p class="vip-email">wade@ggp.com</p>
+            </div>
+            <span class="tier-badge silver">Silver</span>
+          </div>
+          <div class="vip-item">
+            <div class="vip-avatar">
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80" alt="">
+            </div>
+            <div class="vip-info">
+              <p class="vip-name">Jane Cooper</p>
+              <p class="vip-email">jane@ggp.com</p>
+            </div>
+            <span class="tier-badge gold">Gold</span>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="recent-card">
+          <div class="recent-card-header">
+            <span class="recent-card-title">Recent Orders</span>
+            <a href="#" class="view-all">View All <span class="material-symbols-outlined" style="font-size: 14px;">east</span></a>
+          </div>
+          <div class="order-item">
+            <div>
+              <p class="order-id">ORD-2024-0156</p>
+              <p class="order-vip">Eleanor Pena</p>
+            </div>
+            <span class="order-status pending">Pending</span>
+          </div>
+          <div class="order-item">
+            <div>
+              <p class="order-id">ORD-2024-0155</p>
+              <p class="order-vip">Wade Warren</p>
+            </div>
+            <span class="order-status processing">Processing</span>
+          </div>
+          <div class="order-item">
+            <div>
+              <p class="order-id">ORD-2024-0154</p>
+              <p class="order-vip">Jane Cooper</p>
+            </div>
+            <span class="order-status shipped">Shipped</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

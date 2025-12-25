@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Checkout (New Design)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --gold-dark: #947638;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: var(--stone-light);
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: var(--stone-light);
+      min-height: 900px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      background: #fff;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      text-decoration: none;
+    }
+
+    .back-link .material-symbols-outlined {
+      font-size: 16px;
+    }
+
+    /* Progress Steps */
+    .progress {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 24px;
+      background: #fff;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #d1d5db;
+    }
+
+    .step.active {
+      color: var(--luxury-black);
+    }
+
+    .step.completed {
+      color: var(--gold);
+    }
+
+    .step-number {
+      width: 24px;
+      height: 24px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .step.completed .step-number {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #fff;
+    }
+
+    /* Main Content */
+    .main {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+
+    /* Form Section */
+    .form-section {
+      background: #fff;
+      padding: 32px;
+      box-shadow: var(--shadow-pristine);
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .section-title h3 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .verified-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      color: #22c55e;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .verified-badge .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #e5e5e5;
+      font-size: 14px;
+      font-weight: 300;
+      background: var(--stone-light);
+      outline: none;
+    }
+
+    .form-input:focus {
+      border-color: var(--gold);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Shipping Method */
+    .shipping-method {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--stone-light);
+      border: 1px solid var(--gold);
+      margin-top: 24px;
+    }
+
+    .shipping-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .shipping-icon .material-symbols-outlined {
+      font-size: 20px;
+    }
+
+    .shipping-info h4 {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .shipping-info p {
+      font-size: 11px;
+      color: #6b7280;
+    }
+
+    /* Order Summary */
+    .summary-section {
+      background: #fff;
+      padding: 32px;
+      box-shadow: var(--shadow-pristine);
+      height: fit-content;
+    }
+
+    .summary-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .product-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .product-image {
+      width: 80px;
+      height: 100px;
+      background: var(--stone-light);
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .product-details {
+      flex: 1;
+    }
+
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .product-meta {
+      font-size: 10px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .product-tier {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .product-tier .material-symbols-outlined {
+      font-size: 12px;
+    }
+
+    /* Price Breakdown */
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+
+    .price-row.subtotal {
+      color: #9ca3af;
+      text-decoration: line-through;
+    }
+
+    .price-row.benefit {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .price-row.shipping {
+      color: #6b7280;
+    }
+
+    .price-row.total {
+      font-size: 16px;
+      font-weight: 700;
+      padding-top: 16px;
+      margin-top: 16px;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    /* Confirm Button */
+    .confirm-btn {
+      width: 100%;
+      padding: 18px;
+      background: var(--luxury-black);
+      color: #fff;
+      border: none;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.3s;
+    }
+
+    .confirm-btn:hover {
+      background: var(--gold);
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <header class="header">
+      <span class="logo">GGP Heritage</span>
+      <a href="#" class="back-link">
+        <span class="material-symbols-outlined">arrow_back</span>
+        Continue Shopping
+      </a>
+    </header>
+
+    <!-- Progress Steps -->
+    <nav class="progress">
+      <div class="step completed">
+        <span class="step-number">1</span>
+        Selection
+      </div>
+      <div class="step active">
+        <span class="step-number">2</span>
+        Details
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        Confirmation
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Form Section -->
+      <div class="form-section">
+        <!-- Contact -->
+        <div class="section-title">
+          <h3>Contact</h3>
+          <span class="verified-badge">
+            <span class="material-symbols-outlined">verified</span>
+            Verified
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" value="alexander.v@ggp.com" disabled>
+        </div>
+
+        <!-- Shipping Address -->
+        <div class="section-title" style="margin-top: 32px;">
+          <h3>Shipping Address</h3>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" value="Alexander">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" value="Volkov">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Address</label>
+          <input type="text" class="form-input" value="1234 Fifth Avenue, Apt 42">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">City</label>
+            <input type="text" class="form-input" value="New York">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Postal Code</label>
+            <input type="text" class="form-input" value="10001">
+          </div>
+        </div>
+
+        <!-- Shipping Method -->
+        <div class="shipping-method">
+          <div class="shipping-icon">
+            <span class="material-symbols-outlined">local_shipping</span>
+          </div>
+          <div class="shipping-info">
+            <h4>White Glove Concierge Delivery</h4>
+            <p>Complimentary priority shipping for VIP members</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="summary-section">
+        <h3 class="summary-title">Order Summary</h3>
+
+        <!-- Product Item -->
+        <div class="product-item">
+          <div class="product-image">
+            <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=200" alt="Product">
+          </div>
+          <div class="product-details">
+            <p class="product-name">The Obsidian Tote</p>
+            <p class="product-meta">Medium • Black</p>
+            <span class="product-tier">
+              <span class="material-symbols-outlined">diamond</span>
+              VIP Complimentary
+            </span>
+          </div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="price-row subtotal">
+          <span>Subtotal Value</span>
+          <span>$3,450.00</span>
+        </div>
+        <div class="price-row benefit">
+          <span>VIP Benefit Applied</span>
+          <span>-$3,450.00</span>
+        </div>
+        <div class="price-row shipping">
+          <span>Shipping</span>
+          <span>Free Priority</span>
+        </div>
+        <div class="price-row total">
+          <span>Total Due</span>
+          <span>$0.00</span>
+        </div>
+
+        <!-- Confirm Button -->
+        <button class="confirm-btn">Confirm Order</button>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
