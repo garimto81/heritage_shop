@@ -228,16 +228,11 @@ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 
 ## 7. 신규 기능
 
-### 7.1 Platinum 티어
-- Silver/Gold 외에 Platinum 등급 추가
-- 배경색: `#F5F5F7`
-- 전용 배지 및 상품 접근 권한
-
-### 7.2 White Glove Concierge
+### 7.1 White Glove Concierge
 - 프리미엄 배송 서비스 표시
 - 체크아웃 페이지에서 강조
 
-### 7.3 대리석 배경 패턴
+### 7.2 대리석 배경 패턴
 - Invite VIP 페이지에 대리석 무늬 오버레이
 - 럭셔리 느낌 강화
 
@@ -273,8 +268,7 @@ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 - [ ] Checkout White Glove 배송
 
 ### Phase 6: 신규 기능
-- [ ] Platinum 티어 추가 (DB enum, UI)
-- [ ] 티어별 배지 컴포넌트
+- [ ] 티어별 배지 컴포넌트 (Silver/Gold)
 - [ ] 대리석 배경 패턴 CSS
 
 ---
@@ -297,6 +291,10 @@ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 ## 10. 새 디자인 목업 (Light Mode)
 
 아래는 새로운 Light Mode 디자인 목업입니다.
+
+> **주의**: 목업 이미지는 `stitch/` 프로젝트에서 생성된 디자인 참조용입니다.
+> 목업의 브랜드명(VIP LOUNGE, GGP Heritage), 티어명(Diamond/Platinum), 상품 카테고리(Leather Goods 등)는 **무시**하세요.
+> 실제 구현 시: **GG POKER**, **Silver/Gold 티어**, **Accessories/Apparel/Electronics/Lifestyle** 사용
 
 ### 10.1 Login Page (신규)
 ![Login Page Mockup](./images/mockups/01-login-page.png)
@@ -325,7 +323,11 @@ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 
 | 파일 | 용도 |
 |------|------|
-| `stitch/index.html` | 새 Tailwind 설정 |
-| `stitch/pages/*.tsx` | 페이지별 디자인 패턴 |
+| `stitch/pages/*.tsx` | 페이지별 디자인 패턴 **(디자인만 참조)** |
 | `web/src/app/globals.css` | 현재 CSS 변수 |
-| `docs/DESIGN_TOKENS.md` | 새 디자인 토큰 상세 |
+| `docs/DESIGN_TOKENS.md` | 디자인 토큰 상세 |
+
+> **stitch 폴더 참조 시 주의**:
+> stitch는 Google AI Studio로 생성된 별도 프로젝트입니다.
+> **레이아웃, 컴포넌트 스타일, 색상만 참조**하고,
+> 브랜드명, 티어명, 상품 카테고리는 무시하세요.

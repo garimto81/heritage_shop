@@ -1,6 +1,6 @@
-# PRD-0001: GGP Heritage Mall 디자인 마이그레이션
+# PRD-0001: GG POKER Heritage Mall 디자인 마이그레이션
 
-**Version**: 1.0.0
+**Version**: 1.1.0
 **Date**: 2025-12-25
 **Status**: Draft
 **Priority**: P1
@@ -12,7 +12,11 @@
 
 ### 1.1 프로젝트 목표
 
-GGP Heritage Mall의 전체 디자인 시스템을 **Dark Mode에서 Light Mode**로 전환하고, **럭셔리 부티크** 스타일의 UI/UX를 적용합니다.
+GG POKER Heritage Mall의 전체 디자인 시스템을 **Dark Mode에서 Light Mode**로 전환하고, **럭셔리 부티크** 스타일의 UI/UX를 적용합니다.
+
+**브랜드**: GG POKER (유지)
+**VIP 티어**: Silver, Gold (유지)
+**상품 카테고리**: Accessories, Apparel, Electronics, Lifestyle (유지)
 
 ### 1.2 범위
 
@@ -130,10 +134,10 @@ transform: scaleX(0) → scaleX(1); /* 호버 시 */
 
 | 페이지 | 주요 변경 |
 |--------|----------|
-| Login | 좌우 분할 레이아웃 (이미지 + 폼) |
+| Login | 좌우 분할 레이아웃 (이미지 + 폼), GG POKER 브랜딩 |
 | Dashboard | 통계 카드 상단 라인 애니메이션 |
-| VIP List | 테이블 호버 효과, 프로필 컬러화 |
-| VIP New | Floating Label 입력, 티어 카드 선택 |
+| VIP List | 테이블 호버 효과, 프로필 컬러화, Silver/Gold 배지 |
+| VIP New | Floating Label 입력, 티어 카드 선택 (Silver/Gold) |
 | VIP Edit | 멤버십 티어 시각화, 활동 통계 |
 | Orders | 상태 배지 리디자인 |
 
@@ -141,8 +145,8 @@ transform: scaleX(0) → scaleX(1); /* 호버 시 */
 
 | 페이지 | 주요 변경 |
 |--------|----------|
-| Products (Lounge) | 히어로 배너 + 카테고리 탭 |
-| Product Detail | 갤러리 + 티어 권한 배지 |
+| Products (Heritage Collection) | 히어로 배너 + 카테고리 탭, Silver/Gold 티어 표시 |
+| Product Detail | 갤러리 + 티어 권한 배지 (Silver/Gold) |
 | Checkout | 단계 표시 + VIP Benefit 강조 |
 | Complete | 확인 애니메이션 |
 | Orders | 주문 카드 리디자인 |
@@ -151,32 +155,32 @@ transform: scaleX(0) → scaleX(1); /* 호버 시 */
 
 ## 5. 마이그레이션 계획
 
-### Phase 1: 디자인 토큰 (Week 1)
+### Phase 1: 디자인 토큰
 
 - [ ] `globals.css` CSS 변수 업데이트
 - [ ] Tailwind 설정에 커스텀 토큰 추가
 - [ ] 폰트 추가 (Montserrat, Cormorant Garamond)
 
-### Phase 2: 공통 컴포넌트 (Week 2)
+### Phase 2: 공통 컴포넌트
 
 - [ ] `FloatingInput` 컴포넌트 생성
 - [ ] `LuxuryCard` 컴포넌트 생성
 - [ ] `Button` luxury variant 추가
 - [ ] `Badge` 리디자인
 
-### Phase 3: Admin 페이지 (Week 3-4)
+### Phase 3: Admin 페이지
 
 - [ ] Login 페이지 레이아웃 변경
 - [ ] Dashboard 통계 카드
 - [ ] VIP 관리 페이지들
 
-### Phase 4: VIP 고객 페이지 (Week 5-6)
+### Phase 4: VIP 고객 페이지
 
-- [ ] Products (Lounge) 페이지
+- [ ] Products (Heritage Collection) 페이지
 - [ ] Product Detail
 - [ ] Checkout 플로우
 
-### Phase 5: QA & 최적화 (Week 7)
+### Phase 5: QA & 최적화
 
 - [ ] 반응형 테스트
 - [ ] 접근성 검증
@@ -221,22 +225,27 @@ transform: scaleX(0) → scaleX(1); /* 호버 시 */
 |----------|------|------|
 | `FloatingInput` | `components/ui/FloatingInput.tsx` | 밑줄 + 라벨 애니메이션 |
 | `LuxuryCard` | `components/ui/LuxuryCard.tsx` | 상단 라인 애니메이션 |
-| `TierBadge` | `components/ui/TierBadge.tsx` | Silver/Gold/Platinum 배지 |
+| `TierBadge` | `components/ui/TierBadge.tsx` | Silver/Gold 배지 |
 | `StepIndicator` | `components/ui/StepIndicator.tsx` | 체크아웃 단계 표시 |
 
 ---
 
 ## 7. 목업 이미지
 
+> **주의**: 목업 이미지는 `stitch/` 프로젝트에서 생성된 디자인 참조용입니다.
+> 목업의 브랜드명(VIP LOUNGE, GGP Heritage), 티어명(Diamond), 상품 카테고리는 무시하고,
+> **레이아웃, 컴포넌트 스타일, 색상만 참조**하세요.
+> 실제 구현 시: **GG POKER**, **Silver/Gold 티어**, **Accessories/Apparel/Electronics/Lifestyle** 사용
+
 ### 7.1 Admin 페이지
 
-| 페이지 | 현재 | 신규 목업 |
+| 페이지 | 현재 | 신규 목업 (디자인 참조) |
 |--------|------|----------|
 | Login | ![Current](../../docs/screenshots/admin-login.png) | ![New](../../docs/images/mockups/01-login-page.png) |
 
 ### 7.2 VIP 고객 페이지
 
-| 페이지 | 현재 | 신규 목업 |
+| 페이지 | 현재 | 신규 목업 (디자인 참조) |
 |--------|------|----------|
 | Products | ![Current](../../docs/screenshots/products.png) | ![New](../../docs/images/mockups/05-vip-lounge.png) |
 
@@ -268,6 +277,7 @@ transform: scaleX(0) → scaleX(1); /* 호버 시 */
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
 | 1.0.0 | 2025-12-25 | 초기 PRD 작성 |
+| 1.1.0 | 2025-12-25 | 브랜드(GG POKER), 티어(Silver/Gold) 명확화, 목업 참조 주의사항 추가 |
 
 ---
 

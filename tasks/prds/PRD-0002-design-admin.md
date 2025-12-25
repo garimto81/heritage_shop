@@ -1,6 +1,6 @@
 # PRD-0002: Admin 페이지 디자인 상세
 
-**Version**: 1.0.0
+**Version**: 1.1.0
 **Date**: 2025-12-25
 **Status**: Draft
 **Priority**: P1
@@ -12,16 +12,20 @@
 
 Admin 영역의 6개 페이지에 대한 디자인 변경 상세 명세입니다.
 
+> **주의**: 목업 이미지는 디자인 참조용입니다.
+> 목업의 브랜드명(GGP Heritage), 티어명(Diamond/Platinum)은 무시하고,
+> 실제 구현 시: **GG POKER**, **Silver/Gold 티어** 사용
+
 ### 1.1 대상 페이지
 
 | 경로 | 페이지명 | 목업 |
 |------|---------|------|
 | `/admin/auth/login` | 관리자 로그인 | 01-login-page |
-| `/admin/dashboard` | 대시보드 | - |
+| `/admin/dashboard` | 대시보드 | 08-dashboard |
 | `/admin/vips` | VIP 목록 | 02-vip-management |
 | `/admin/vips/new` | VIP 생성 | 03-invite-vip |
 | `/admin/vips/[id]/edit` | VIP 수정 | 04-edit-vip |
-| `/admin/orders` | 주문 목록 | - |
+| `/admin/orders` | 주문 목록 | 09-admin-orders |
 
 ---
 
@@ -45,7 +49,7 @@ Admin 영역의 6개 페이지에 대한 디자인 변경 상세 명세입니다
 - 좌우 50:50 분할 레이아웃
 - 좌측: 럭셔리 이미지 + 명언
 - 우측: 로그인 폼
-- GGP Heritage 브랜딩
+- **GG POKER 브랜딩 유지**
 
 ### 2.3 상세 변경 사항
 
@@ -53,7 +57,7 @@ Admin 영역의 6개 페이지에 대한 디자인 변경 상세 명세입니다
 |------|------|------|
 | **레이아웃** | 중앙 정렬 | 좌우 분할 (이미지 + 폼) |
 | **배경** | `#050505` (다크) | `#FFFFFF` (라이트) |
-| **로고** | GG POKER 아이콘 | GGP Heritage 다이아몬드 |
+| **로고** | GG POKER 아이콘 | GG POKER 아이콘 (유지) |
 | **입력 필드** | 테두리 박스 | Floating Label + 밑줄 |
 | **버튼** | "Sign in" (회색) | "ENTER PORTAL" (블랙, 대문자) |
 | **추가 요소** | 없음 | 명언 인용구, 시스템 상태 배지 |
@@ -257,7 +261,6 @@ Admin 영역의 6개 페이지에 대한 디자인 변경 상세 명세입니다
 const tierStyles = {
   gold: 'border-amber-200 text-gold',
   silver: 'border-gray-200 text-gray-500',
-  platinum: 'border-slate-300 text-slate-600 bg-slate-50',
 };
 
 <span className={`
@@ -297,7 +300,7 @@ const tierStyles = {
     tier="silver"
     title="Silver"
     subtitle="STANDARD PRIVILEGES"
-    description="Access to seasonal collections and standard complimentary offerings."
+    description="Access to seasonal collections and standard complimentary offerings. Up to 3 items per season."
     selected={selectedTier === 'silver'}
     onClick={() => setSelectedTier('silver')}
   />
@@ -306,7 +309,7 @@ const tierStyles = {
     tier="gold"
     title="Gold"
     subtitle="PRIORITY ACCESS"
-    description="Early access to limited editions, concierge service, and exclusive gifts."
+    description="Early access to limited editions, concierge service, and exclusive gifts. Up to 5 items per season."
     selected={selectedTier === 'gold'}
     onClick={() => setSelectedTier('gold')}
   />
@@ -327,7 +330,7 @@ const tierStyles = {
 |------|------|------|
 | **헤더** | 이메일만 | 이름 + 배지 + REF 코드 |
 | **섹션** | 단일 폼 | Personal / Membership / Access Key 분리 |
-| **티어 표시** | 라디오 | 3개 카드 (Silver/Gold/Platinum) |
+| **티어 표시** | 라디오 | 2개 카드 (Silver/Gold) |
 | **활동 정보** | 없음 | Last Access, Total Gifts, Joined 표시 |
 
 ### 6.3 레이아웃 구조
@@ -351,10 +354,9 @@ const tierStyles = {
         <Toggle checked={isActive} label="ACTIVE" />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <TierCard tier="silver" limit="3 gifts / season" />
         <TierCard tier="gold" limit="5 gifts / season" selected />
-        <TierCard tier="platinum" limit="Unlimited" />
       </div>
     </Section>
   </div>
@@ -408,7 +410,7 @@ VIP 목록과 동일한 디자인 패턴 적용
       <div className="flex items-center gap-3">
         <Logo />
         <span className="font-playfair text-sm tracking-wide">
-          GGP HERITAGE
+          GG POKER
         </span>
       </div>
 
@@ -437,14 +439,14 @@ VIP 목록과 동일한 디자인 패턴 적용
 
 ## 9. 구현 우선순위
 
-| 순서 | 페이지 | 난이도 | 예상 시간 |
-|------|--------|-------|----------|
-| 1 | Login | 중 | 4h |
-| 2 | VIP 목록 | 상 | 6h |
-| 3 | VIP 생성 | 중 | 4h |
-| 4 | VIP 수정 | 중 | 4h |
-| 5 | Dashboard | 저 | 2h |
-| 6 | 주문 목록 | 저 | 2h |
+| 순서 | 페이지 | 난이도 |
+|------|--------|-------|
+| 1 | Login | 중 |
+| 2 | VIP 목록 | 상 |
+| 3 | VIP 생성 | 중 |
+| 4 | VIP 수정 | 중 |
+| 5 | Dashboard | 저 |
+| 6 | 주문 목록 | 저 |
 
 ---
 
@@ -453,6 +455,7 @@ VIP 목록과 동일한 디자인 패턴 적용
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
 | 1.0.0 | 2025-12-25 | 초기 PRD 작성 |
+| 1.1.0 | 2025-12-25 | 브랜드(GG POKER) 명확화, Platinum 티어 제거, 목업 참조 주의사항 추가 |
 
 ---
 
