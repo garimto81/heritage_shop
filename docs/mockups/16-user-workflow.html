@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>User Workflow Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --stone-light: #FAFAFA;
+      --admin-blue: #3B82F6;
+      --success-green: #22C55E;
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--luxury-black);
+    }
+
+    #capture-target {
+      padding: 24px;
+      background: #fff;
+    }
+
+    .diagram-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    /* Workflow Section */
+    .workflow-section {
+      margin-bottom: 32px;
+    }
+
+    .workflow-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid;
+    }
+
+    .workflow-header.admin {
+      border-color: var(--admin-blue);
+    }
+
+    .workflow-header.vip {
+      border-color: var(--gold);
+    }
+
+    .workflow-header-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .workflow-header.admin .workflow-header-icon {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--admin-blue);
+    }
+
+    .workflow-header.vip .workflow-header-icon {
+      background: rgba(197, 160, 89, 0.1);
+      color: var(--gold);
+    }
+
+    .workflow-header-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .workflow-header h2 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .workflow-header span {
+      font-size: 11px;
+      color: #6b7280;
+      margin-left: auto;
+    }
+
+    /* Flow Steps */
+    .flow-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #6b7280;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border-left: 3px solid #e5e5e5;
+    }
+
+    .step-content.admin { border-left-color: var(--admin-blue); }
+    .step-content.vip { border-left-color: var(--gold); }
+    .step-content.success { border-left-color: var(--success-green); }
+
+    .step-icon {
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step-icon .material-symbols-outlined {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .step-content.admin .step-icon .material-symbols-outlined { color: var(--admin-blue); }
+    .step-content.vip .step-icon .material-symbols-outlined { color: var(--gold); }
+    .step-content.success .step-icon .material-symbols-outlined { color: var(--success-green); }
+
+    .step-text {
+      flex: 1;
+    }
+
+    .step-text h3 {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .step-text p {
+      font-size: 10px;
+      color: #6b7280;
+    }
+
+    .step-page {
+      font-size: 9px;
+      font-family: monospace;
+      color: #9ca3af;
+      background: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    /* Flow Arrow */
+    .flow-arrow {
+      display: flex;
+      justify-content: center;
+      padding: 4px 0;
+      padding-left: 40px;
+    }
+
+    .flow-arrow .material-symbols-outlined {
+      font-size: 16px;
+      color: #d1d5db;
+    }
+
+    /* Decision Box */
+    .decision-box {
+      margin: 16px 0;
+      padding: 16px;
+      background: #fff;
+      border: 2px dashed #e5e5e5;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .decision-box p {
+      font-size: 11px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    .decision-options {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .decision-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .decision-option.yes { color: var(--success-green); }
+    .decision-option.no { color: #EF4444; }
+
+    /* Tier Limits */
+    .tier-limits {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(197, 160, 89, 0.05);
+      border-radius: 8px;
+    }
+
+    .tier-limit {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      background: #fff;
+      border-radius: 6px;
+    }
+
+    .tier-limit h4 {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .tier-limit.silver h4 { color: #6b7280; }
+    .tier-limit.gold h4 { color: var(--gold); }
+
+    .tier-limit p {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .tier-limit span {
+      font-size: 9px;
+      color: #9ca3af;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <h1 class="diagram-title">사용자 워크플로우</h1>
+
+    <!-- Admin Workflow -->
+    <div class="workflow-section">
+      <div class="workflow-header admin">
+        <div class="workflow-header-icon">
+          <span class="material-symbols-outlined">admin_panel_settings</span>
+        </div>
+        <h2>Admin: VIP 초대 워크플로우</h2>
+        <span>관리자</span>
+      </div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="step-number">1</div>
+          <div class="step-content admin">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">login</span>
+            </div>
+            <div class="step-text">
+              <h3>관리자 로그인</h3>
+              <p>Supabase Auth 인증</p>
+            </div>
+            <span class="step-page">/admin/auth/login</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">2</div>
+          <div class="step-content admin">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <div class="step-text">
+              <h3>VIP 생성</h3>
+              <p>이메일, 이름, 티어 입력</p>
+            </div>
+            <span class="step-page">/admin/vips/new</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">3</div>
+          <div class="step-content success">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">link</span>
+            </div>
+            <div class="step-text">
+              <h3>초대 링크 생성</h3>
+              <p>7자리 코드 (예: VIP7K3M)</p>
+            </div>
+            <span class="step-page">클립보드 복사</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIP Workflow -->
+    <div class="workflow-section">
+      <div class="workflow-header vip">
+        <div class="workflow-header-icon">
+          <span class="material-symbols-outlined">diamond</span>
+        </div>
+        <h2>VIP: 쇼핑 워크플로우</h2>
+        <span>VIP 고객</span>
+      </div>
+
+      <div class="flow-container">
+        <div class="flow-step">
+          <div class="step-number">1</div>
+          <div class="step-content vip">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">link</span>
+            </div>
+            <div class="step-text">
+              <h3>초대 링크 접속</h3>
+              <p>JWT 세션 생성 (7일)</p>
+            </div>
+            <span class="step-page">/invite/[code]</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">2</div>
+          <div class="step-content vip">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">storefront</span>
+            </div>
+            <div class="step-text">
+              <h3>상품 목록 탐색</h3>
+              <p>카테고리별 필터링</p>
+            </div>
+            <span class="step-page">/products</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">3</div>
+          <div class="step-content vip">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">add_shopping_cart</span>
+            </div>
+            <div class="step-text">
+              <h3>상품 상세 & 장바구니</h3>
+              <p>사이즈 선택, 재고 확인</p>
+            </div>
+            <span class="step-page">/products/[id]</span>
+          </div>
+        </div>
+
+        <!-- Tier Limits -->
+        <div class="tier-limits">
+          <div class="tier-limit silver">
+            <h4>Silver</h4>
+            <p>3<span>개 제한</span></p>
+          </div>
+          <div class="tier-limit gold">
+            <h4>Gold</h4>
+            <p>5<span>개 제한</span></p>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">4</div>
+          <div class="step-content vip">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">local_shipping</span>
+            </div>
+            <div class="step-text">
+              <h3>체크아웃</h3>
+              <p>배송 정보 입력 (무료 배송)</p>
+            </div>
+            <span class="step-page">/checkout</span>
+          </div>
+        </div>
+
+        <div class="flow-arrow">
+          <span class="material-symbols-outlined">south</span>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">5</div>
+          <div class="step-content success">
+            <div class="step-icon">
+              <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <div class="step-text">
+              <h3>주문 완료</h3>
+              <p>재고 차감, 주문 번호 발급</p>
+            </div>
+            <span class="step-page">/checkout/complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision Box -->
+    <div class="decision-box">
+      <p>❌ 결제 단계 없음 - VIP Complimentary 모델</p>
+      <div class="decision-options">
+        <div class="decision-option yes">
+          <span class="material-symbols-outlined" style="font-size: 14px;">diamond</span>
+          무료 증정
+        </div>
+        <div class="decision-option yes">
+          <span class="material-symbols-outlined" style="font-size: 14px;">local_shipping</span>
+          무료 배송
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

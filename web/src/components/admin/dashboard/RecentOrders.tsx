@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
-import { ko } from "date-fns/locale";
 import { ArrowRight, ShoppingBag } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface RecentOrder {
   id: string;
@@ -14,83 +13,65 @@ interface RecentOrdersProps {
   orders: RecentOrder[];
 }
 
-const statusLabels: Record<string, string> = {
-  pending: "대기",
-  processing: "처리중",
-  shipped: "배송중",
-  delivered: "배송완료",
-  cancelled: "취소",
-};
+type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
 
-const statusColors: Record<string, string> = {
-  pending: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-  processing: "bg-blue-500/10 text-blue-400 border-blue-500/20",
-  shipped: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-  delivered: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-  cancelled: "bg-red-500/10 text-red-400 border-red-500/20",
+const statusLabels: Record<OrderStatus, string> = {
+  pending: "Pending",
+  processing: "Processing",
+  shipped: "Shipped",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
 };
 
 export function RecentOrders({ orders }: RecentOrdersProps) {
   return (
-    <div className="rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] overflow-hidden">
-      <div className="flex items-center justify-between border-b border-[#2A2A2A] px-5 py-4 lg:px-6">
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
-            <ShoppingBag className="h-4 w-4 text-emerald-400" />
-          </div>
-          <h2 className="text-base font-semibold text-white">Recent Orders</h2>
-        </div>
+    <div className="bg-[var(--color-surface)] shadow-pristine">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-3">
+        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-text-muted)]">
+          Recent Orders
+        </span>
         <Link
           href="/admin/orders"
-          className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-[var(--color-gold)] transition-colors"
+          className="flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--color-gold)] transition-colors hover:text-[var(--color-gold-dark)]"
         >
           View All
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
 
-      <div className="divide-y divide-[#2A2A2A]">
+      {/* Content */}
+      <div className="p-4">
         {orders.length === 0 ? (
-          <div className="p-8 text-center">
-            <ShoppingBag className="h-10 w-10 mx-auto text-neutral-600 mb-3" />
-            <p className="text-neutral-500">No recent orders</p>
+          <div className="py-8 text-center">
+            <ShoppingBag className="mx-auto mb-3 h-10 w-10 text-[var(--color-border)]" />
+            <p className="text-sm text-[var(--color-text-muted)]">No recent orders</p>
           </div>
         ) : (
-          orders.map((order) => (
-            <Link
-              key={order.id}
-              href={`/admin/orders/${order.id}`}
-              className="block px-5 py-4 lg:px-6 transition-all duration-200 hover:bg-[#1A1A1A]"
-            >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-mono text-sm text-neutral-300">
-                      #{order.id.slice(0, 8)}
-                    </span>
-                    <span
-                      className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${
-                        statusColors[order.status] || statusColors.pending
-                      }`}
-                    >
-                      {statusLabels[order.status] || order.status}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm text-neutral-400 truncate">
+          <div className="space-y-0">
+            {orders.map((order) => (
+              <Link
+                key={order.id}
+                href={`/admin/orders/${order.id}`}
+                className="flex items-center justify-between border-b border-[var(--color-background)] py-2.5 last:border-b-0 transition-colors hover:bg-[var(--color-background)]"
+              >
+                {/* Order Info */}
+                <div>
+                  <p className="font-mono text-[11px] text-[var(--color-luxury-black)]">
+                    ORD-{order.id.slice(0, 8).toUpperCase()}
+                  </p>
+                  <p className="text-[11px] text-[var(--color-text-muted)]">
                     {order.vip_name}
                   </p>
                 </div>
-                <div className="text-right flex-shrink-0">
-                  <p className="text-xs text-neutral-500">
-                    {formatDistanceToNow(new Date(order.created_at), {
-                      addSuffix: true,
-                      locale: ko,
-                    })}
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))
+
+                {/* Status Badge */}
+                <Badge variant={order.status as OrderStatus}>
+                  {statusLabels[order.status as OrderStatus] || order.status}
+                </Badge>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
     </div>

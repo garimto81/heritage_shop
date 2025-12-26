@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { FloatingInput } from "@/components/ui/floating-input";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 export function LoginForm() {
   const router = useRouter();
@@ -13,6 +12,7 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,51 +49,77 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* 에러 메시지 */}
+    <form onSubmit={handleSubmit} className="space-y-0">
+      {/* Error Message */}
       {error && (
-        <div className="rounded-lg bg-red-500/10 p-4 text-sm text-red-400">
+        <div className="mb-6 border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
           {error}
         </div>
       )}
 
-      {/* 이메일 */}
-      <div className="space-y-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="admin@example.com"
-          required
-          disabled={isLoading}
-        />
+      {/* Email */}
+      <FloatingInput
+        id="email"
+        type="email"
+        label="Email Address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        disabled={isLoading}
+        autoComplete="email"
+      />
+
+      {/* Password */}
+      <FloatingInput
+        id="password"
+        type="password"
+        label="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        required
+        disabled={isLoading}
+        autoComplete="current-password"
+      />
+
+      {/* Remember Me / Forgot Password Row */}
+      <div className="flex items-center justify-between pb-6 pt-2">
+        <label className="flex cursor-pointer items-center gap-2.5">
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="h-3.5 w-3.5 cursor-pointer border border-[var(--color-border)] bg-transparent accent-[var(--color-gold)]"
+          />
+          <span className="text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-muted)]">
+            Remember Me
+          </span>
+        </label>
+        <button
+          type="button"
+          className="border-b border-transparent text-[10px] uppercase tracking-[0.1em] text-[var(--color-text-muted)] transition-colors hover:border-[var(--color-gold-dark)] hover:text-[var(--color-gold-dark)]"
+        >
+          Forgot Password?
+        </button>
       </div>
 
-      {/* 비밀번호 */}
-      <div className="space-y-2">
-        <Label htmlFor="password">Password</Label>
-        <Input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
-          required
-          disabled={isLoading}
-        />
-      </div>
-
-      {/* 로그인 버튼 */}
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      {/* Submit Button */}
+      <Button
+        type="submit"
+        variant="luxury"
+        size="luxury"
+        className="w-full"
+        disabled={isLoading}
+      >
         {isLoading ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Signing in...
+            Authenticating...
           </>
         ) : (
-          "Sign in"
+          <>
+            Enter Portal
+            <ArrowRight className="ml-3 h-4 w-4" />
+          </>
         )}
       </Button>
     </form>

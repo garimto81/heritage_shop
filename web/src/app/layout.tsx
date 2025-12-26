@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Montserrat, Cormorant_Garamond, Manrope } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import "./globals.css";
@@ -12,6 +12,25 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  weight: ["200", "300", "400", "500", "600"],
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-manrope",
+  weight: ["300", "400", "500", "600"],
 });
 
 // 버전 정보 (빌드 타임에 결정)
@@ -28,7 +47,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${montserrat.variable} ${cormorant.variable} ${manrope.variable}`}>
       <body className="antialiased">
         <SmoothScrollProvider>
           {children}

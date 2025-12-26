@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Site Navigation Diagram</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --stone-light: #FAFAFA;
+      --admin-blue: #3B82F6;
+      --vip-gold: #C5A059;
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--luxury-black);
+    }
+
+    #capture-target {
+      padding: 24px;
+      background: #fff;
+    }
+
+    .diagram-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .diagram-subtitle {
+      font-size: 11px;
+      color: #6b7280;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.admin { background: var(--admin-blue); }
+    .legend-dot.vip { background: var(--vip-gold); }
+    .legend-dot.public { background: #9CA3AF; }
+
+    /* Site Structure */
+    .site-structure {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section {
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .section-header.admin {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--admin-blue);
+      border-bottom: 2px solid var(--admin-blue);
+    }
+
+    .section-header.vip {
+      background: rgba(197, 160, 89, 0.1);
+      color: var(--vip-gold);
+      border-bottom: 2px solid var(--vip-gold);
+    }
+
+    .section-header.public {
+      background: #f9fafb;
+      color: #6b7280;
+      border-bottom: 2px solid #9CA3AF;
+    }
+
+    .section-header .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: #e5e5e5;
+    }
+
+    .page-item {
+      background: #fff;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .page-icon {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 8px;
+      background: #f9fafb;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-icon .material-symbols-outlined {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .page-item.admin .page-icon {
+      background: rgba(59, 130, 246, 0.1);
+    }
+    .page-item.admin .page-icon .material-symbols-outlined {
+      color: var(--admin-blue);
+    }
+
+    .page-item.vip .page-icon {
+      background: rgba(197, 160, 89, 0.1);
+    }
+    .page-item.vip .page-icon .material-symbols-outlined {
+      color: var(--vip-gold);
+    }
+
+    .page-name {
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .page-path {
+      font-size: 9px;
+      color: #9ca3af;
+      font-family: monospace;
+    }
+
+    /* Arrows */
+    .flow-arrow {
+      display: flex;
+      justify-content: center;
+      padding: 8px 0;
+    }
+
+    .flow-arrow .material-symbols-outlined {
+      font-size: 20px;
+      color: #d1d5db;
+    }
+
+    /* Notes */
+    .notes {
+      margin-top: 20px;
+      padding: 16px;
+      background: #f9fafb;
+      border-radius: 8px;
+    }
+
+    .notes-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .notes ul {
+      font-size: 11px;
+      color: #4b5563;
+      padding-left: 16px;
+    }
+
+    .notes li {
+      margin-bottom: 4px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <h1 class="diagram-title">GGP Heritage Mall - Site Navigation</h1>
+    <p class="diagram-subtitle">전체 페이지 구조 및 접근 권한</p>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot admin"></div>
+        <span>Admin Only</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot vip"></div>
+        <span>VIP Only</span>
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot public"></div>
+        <span>Public</span>
+      </div>
+    </div>
+
+    <div class="site-structure">
+      <!-- Public Section -->
+      <div class="section">
+        <div class="section-header public">
+          <span class="material-symbols-outlined">public</span>
+          Public Pages
+        </div>
+        <div class="page-grid">
+          <div class="page-item">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">home</span>
+            </div>
+            <p class="page-name">Home</p>
+            <p class="page-path">/</p>
+          </div>
+          <div class="page-item">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">link</span>
+            </div>
+            <p class="page-name">Invite</p>
+            <p class="page-path">/invite/[code]</p>
+          </div>
+          <div class="page-item">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">error</span>
+            </div>
+            <p class="page-name">Invalid Invite</p>
+            <p class="page-path">/invite/error</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-arrow">
+        <span class="material-symbols-outlined">south</span>
+      </div>
+
+      <!-- VIP Section -->
+      <div class="section">
+        <div class="section-header vip">
+          <span class="material-symbols-outlined">diamond</span>
+          VIP Pages (Invite Required)
+        </div>
+        <div class="page-grid">
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">storefront</span>
+            </div>
+            <p class="page-name">Products</p>
+            <p class="page-path">/products</p>
+          </div>
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">visibility</span>
+            </div>
+            <p class="page-name">Product Detail</p>
+            <p class="page-path">/products/[id]</p>
+          </div>
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">shopping_cart</span>
+            </div>
+            <p class="page-name">Checkout</p>
+            <p class="page-path">/checkout</p>
+          </div>
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">check_circle</span>
+            </div>
+            <p class="page-name">Order Complete</p>
+            <p class="page-path">/checkout/complete</p>
+          </div>
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">receipt_long</span>
+            </div>
+            <p class="page-name">My Orders</p>
+            <p class="page-path">/orders</p>
+          </div>
+          <div class="page-item vip">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">package_2</span>
+            </div>
+            <p class="page-name">Order Detail</p>
+            <p class="page-path">/orders/[id]</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Section -->
+      <div class="section">
+        <div class="section-header admin">
+          <span class="material-symbols-outlined">admin_panel_settings</span>
+          Admin Pages (Auth Required)
+        </div>
+        <div class="page-grid">
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">login</span>
+            </div>
+            <p class="page-name">Login</p>
+            <p class="page-path">/admin/auth/login</p>
+          </div>
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">dashboard</span>
+            </div>
+            <p class="page-name">Dashboard</p>
+            <p class="page-path">/admin/dashboard</p>
+          </div>
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">group</span>
+            </div>
+            <p class="page-name">VIP List</p>
+            <p class="page-path">/admin/vips</p>
+          </div>
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <p class="page-name">Create VIP</p>
+            <p class="page-path">/admin/vips/new</p>
+          </div>
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">edit</span>
+            </div>
+            <p class="page-name">Edit VIP</p>
+            <p class="page-path">/admin/vips/[id]</p>
+          </div>
+          <div class="page-item admin">
+            <div class="page-icon">
+              <span class="material-symbols-outlined">list_alt</span>
+            </div>
+            <p class="page-name">Orders</p>
+            <p class="page-path">/admin/orders</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="notes">
+      <p class="notes-title">접근 제어</p>
+      <ul>
+        <li><strong>Public</strong>: 모든 사용자 접근 가능</li>
+        <li><strong>VIP</strong>: 초대 코드로 인증 후 접근 (JWT 쿠키)</li>
+        <li><strong>Admin</strong>: Supabase Auth + admins 테이블 검증</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

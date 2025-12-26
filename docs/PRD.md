@@ -1,7 +1,7 @@
 # GGP Heritage Mall - Product Requirements Document
 
-**Version**: 1.2.0
-**Date**: 2025-12-24
+**Version**: 1.3.0
+**Date**: 2025-12-26
 **Status**: In Progress
 **Author**: Product Team
 
@@ -543,9 +543,41 @@ VALUES ...;
 
 ---
 
-## 3. 관리자 페이지 상세 설계
+## 3. 시스템 개요
 
-### 3.1 페이지 구조
+### 3.1 전체 네비게이션 구조
+
+![Site Navigation](images/mockups/15-site-navigation.png)
+
+> 목업 원본: [15-site-navigation.html](mockups/15-site-navigation.html)
+
+**접근 권한**
+
+| 영역 | 접근 조건 | 인증 방식 |
+|------|----------|----------|
+| **Public** | 모든 사용자 | 없음 |
+| **VIP** | 초대 코드 필요 | JWT 쿠키 (7일) |
+| **Admin** | 관리자 계정 필요 | Supabase Auth + admins 테이블 |
+
+---
+
+### 3.2 사용자 워크플로우
+
+![User Workflow](images/mockups/16-user-workflow.png)
+
+> 목업 원본: [16-user-workflow.html](mockups/16-user-workflow.html)
+
+**핵심 플로우**
+
+1. **Admin → VIP 초대**: 관리자가 VIP 생성 → 초대 코드(7자리) 발급
+2. **VIP → 쇼핑**: 초대 링크 접속 → 상품 탐색 → 장바구니 → 체크아웃 → 주문 완료
+3. **티어별 제한**: Silver 3개, Gold 5개
+
+---
+
+## 4. 관리자 페이지 상세 설계
+
+### 4.1 페이지 구조
 
 ```
 /admin
@@ -562,9 +594,9 @@ VALUES ...;
 
 ---
 
-### 3.2 화면별 상세 명세
+### 4.2 화면별 상세 명세
 
-#### 3.2.0 관리자 로그인 화면 (`/admin/auth/login`)
+#### 4.2.1 관리자 로그인 화면 (`/admin/auth/login`)
 
 **레이아웃**
 
@@ -586,7 +618,7 @@ VALUES ...;
 
 ---
 
-#### 3.2.1 VIP 목록 화면 (`/admin/vips`)
+#### 4.2.2 VIP 목록 화면 (`/admin/vips`)
 
 **레이아웃**
 
@@ -613,7 +645,7 @@ VALUES ...;
 
 ---
 
-#### 3.2.2 VIP 생성 화면 (`/admin/vips/new`)
+#### 4.2.3 VIP 생성 화면 (`/admin/vips/new`)
 
 **레이아웃**
 
@@ -648,7 +680,7 @@ VALUES ...;
 
 ---
 
-#### 3.2.3 VIP 수정 화면 (`/admin/vips/[id]/edit`)
+#### 4.2.4 VIP 수정 화면 (`/admin/vips/[id]/edit`)
 
 **레이아웃**
 
@@ -664,7 +696,7 @@ VALUES ...;
 
 ---
 
-#### 3.2.4 VIP 삭제 확인 모달
+#### 4.2.5 VIP 삭제 확인 모달
 
 ![VIP 삭제 모달](images/mockups/13-vip-delete-modal.png)
 
@@ -676,7 +708,7 @@ VALUES ...;
 
 ---
 
-### 3.3 UI 컴포넌트 라이브러리
+### 4.3 UI 컴포넌트 라이브러리
 
 **사용 기술**
 - Tailwind CSS 4
@@ -696,9 +728,128 @@ VALUES ...;
 
 ---
 
-## 4. API 명세
+## 5. 고객(VIP) 페이지 상세 설계
 
-### 4.1 Admin API
+### 5.1 페이지 구조
+
+```
+/invite/[code]           # 초대 링크 접속
+├── /products            # 상품 목록 (VIP Lounge)
+│   └── /[id]            # 상품 상세
+├── /checkout            # 체크아웃
+│   └── /complete        # 주문 완료
+└── /orders              # 주문 내역
+    └── /[id]            # 주문 상세
+```
+
+---
+
+### 5.2 화면별 상세 명세
+
+#### 5.2.1 VIP Lounge - 상품 목록 (`/products`)
+
+**레이아웃**
+
+![VIP Lounge](images/mockups/05-vip-lounge.png)
+
+> 목업 원본: [05-vip-lounge.html](mockups/05-vip-lounge.html)
+
+**기능**
+- 헤더: 로고, 네비게이션, 장바구니, VIP 정보 표시
+- 히어로 섹션: 환영 메시지, VIP 티어별 안내
+- 티어 현황: 현재 상태, 선택 가능 개수, 갱신일
+- 카테고리 필터: All, Leather Goods, Fragrance, Timepieces
+- 상품 그리드: 2열 레이아웃, 이미지 hover zoom 효과
+
+**컴포넌트 구조**
+```tsx
+<VipHeader>
+  <Logo />
+  <Navigation />
+  <CartButton badge={count} />
+  <VipInfo tier={tier} name={name} />
+</VipHeader>
+
+<HeroSection tier={tier} />
+<TierStatusBar />
+<CategoryFilter />
+<ProductGrid products={products} />
+```
+
+---
+
+#### 5.2.2 상품 상세 (`/products/[id]`)
+
+**레이아웃**
+
+![Product Detail](images/mockups/06-product-detail.png)
+
+> 목업 원본: [06-product-detail.html](mockups/06-product-detail.html)
+
+**기능**
+- 티어 전용 배너: "Platinum Tier Access Only"
+- 이미지 갤러리: 메인 이미지 + 썸네일 그리드
+- 상품 정보: 브레드크럼, 제목, 설명
+- VIP 혜택 표시: "Platinum Privilege - Complimentary Access"
+- 사이즈 선택: Small/Medium/Large (재고 없으면 disabled)
+- 장바구니 버튼: "Add to Bag (Complimentary)"
+- 상세 정보 아코디언: 소재, 배송, 인증
+
+**재고 확인**
+- `inventory` 테이블에서 사이즈별 재고 조회
+- 재고 0인 사이즈는 선택 불가 (시각적으로 비활성화)
+
+---
+
+#### 5.2.3 체크아웃 (`/checkout`)
+
+**레이아웃**
+
+![Checkout](images/mockups/07-checkout.png)
+
+> 목업 원본: [07-checkout.html](mockups/07-checkout.html)
+
+**진행 단계**
+1. Selection (완료) → 2. Details (현재) → 3. Confirmation
+
+**폼 필드**
+- Contact: 이메일 (VIP 정보에서 자동 입력, 수정 불가)
+- Shipping Address:
+  - First Name, Last Name
+  - Address
+  - City, Postal Code
+- Shipping Method: "White Glove Concierge Delivery" (무료)
+
+**주문 요약**
+- 상품 이미지, 이름, 사이즈
+- Subtotal Value: 원래 가격 (취소선)
+- VIP Benefit Applied: 할인 금액
+- Shipping: Free Priority
+- Total Due: $0.00
+
+---
+
+#### 5.2.4 주문 완료 (`/checkout/complete`)
+
+**레이아웃**
+
+![Checkout Complete](images/mockups/10-checkout-complete.png)
+
+> 목업 원본: [10-checkout-complete.html](mockups/10-checkout-complete.html)
+
+**표시 정보**
+- 성공 아이콘 (체크마크 + 골드 글로우)
+- "Order Confirmed" 헤딩
+- 주문 설명: 컨시어지 24시간 내 연락 안내
+- 주문 번호: `ORD-2024-XXXX`
+- 배송 정보: "White-Glove Delivery · 3-5 Business Days"
+- 버튼: View Order, Continue Browsing
+
+---
+
+## 6. API 명세
+
+### 6.1 Admin API
 
 **Base URL**: `/api/admin`
 
@@ -708,7 +859,7 @@ VALUES ...;
 
 ---
 
-#### 4.1.1 VIP 관리 API
+#### 6.1.1 VIP 관리 API
 
 **1) VIP 목록 조회**
 
@@ -892,7 +1043,7 @@ Error 404:
 
 ---
 
-### 4.2 주문 API (관리자용)
+### 6.2 주문 API (관리자용)
 
 **1) 주문 목록 조회**
 
@@ -968,9 +1119,9 @@ Response 200:
 
 ---
 
-## 5. 데이터베이스 스키마
+## 7. 데이터베이스 스키마
 
-### 5.1 전체 ERD
+### 7.1 전체 ERD
 
 **시각화 다이어그램**
 
@@ -1021,9 +1172,9 @@ Response 200:
 
 ---
 
-### 5.2 테이블 상세
+### 7.2 테이블 상세
 
-#### 5.2.1 `vips` 테이블
+#### 7.2.1 `vips` 테이블
 
 ```sql
 CREATE TABLE vips (
@@ -1055,7 +1206,7 @@ CREATE INDEX idx_vips_tier ON vips(tier);
 
 ---
 
-#### 5.2.2 `admins` 테이블
+#### 7.2.2 `admins` 테이블
 
 ```sql
 CREATE TABLE admins (
@@ -1075,7 +1226,7 @@ CREATE TABLE admins (
 
 ---
 
-#### 5.2.3 `orders` 테이블
+#### 7.2.3 `orders` 테이블
 
 ```sql
 CREATE TABLE orders (
@@ -1100,7 +1251,7 @@ CREATE INDEX idx_orders_status ON orders(status);
 
 ---
 
-#### 5.2.4 `order_items` 테이블
+#### 7.2.4 `order_items` 테이블
 
 ```sql
 CREATE TABLE order_items (
@@ -1117,7 +1268,7 @@ CREATE INDEX idx_order_items_order_id ON order_items(order_id);
 
 ---
 
-#### 5.2.5 `products` 테이블
+#### 7.2.5 `products` 테이블
 
 ```sql
 CREATE TABLE products (
@@ -1142,7 +1293,7 @@ CREATE INDEX idx_products_tier_required ON products(tier_required);
 
 ---
 
-#### 5.2.6 `inventory` 테이블
+#### 7.2.6 `inventory` 테이블
 
 ```sql
 CREATE TABLE inventory (
@@ -1172,7 +1323,7 @@ COMMIT;
 
 ---
 
-### 5.3 Row Level Security (RLS)
+### 7.3 Row Level Security (RLS)
 
 **현재 상태**
 - `supabase/migrations/002_rls_policies.sql`에 정의됨
@@ -1199,9 +1350,9 @@ USING (
 
 ---
 
-## 6. 기술 스택
+## 8. 기술 스택
 
-### 6.1 프론트엔드
+### 8.1 프론트엔드
 
 | 기술 | 버전 | 용도 |
 |------|------|------|
@@ -1217,11 +1368,11 @@ USING (
 
 ---
 
-### 6.2 디자인 시스템 (v1.2.0)
+### 8.2 디자인 시스템 (v1.2.0)
 
 > **Note**: stitch 프로젝트 기반 디자인 개선 (2025-12-24)
 
-#### 6.2.1 테마 모드
+#### 8.2.1 테마 모드
 
 | 항목 | 값 |
 |------|-----|
@@ -1230,7 +1381,7 @@ USING (
 | 표면색 | `#FFFFFF` |
 | 텍스트 | `#0A0A0A` (주), `#333333` (부), `#666666` (뮤트) |
 
-#### 6.2.2 골드 팔레트
+#### 8.2.2 골드 팔레트
 
 | 토큰 | 값 | 용도 |
 |------|-----|------|
@@ -1238,7 +1389,7 @@ USING (
 | `--color-gold-light` | `#E0C895` | 호버, 하이라이트 |
 | `--color-gold-dark` | `#947638` | 강조, 포커스 |
 
-#### 6.2.3 Shadow 시스템
+#### 8.2.3 Shadow 시스템
 
 | 토큰 | 값 | 용도 |
 |------|-----|------|
@@ -1247,7 +1398,7 @@ USING (
 | `--shadow-elegant` | `0 2px 15px rgba(0,0,0,0.02)` | 부드러운 그림자 |
 | `--shadow-pristine` | `0 20px 40px -10px rgba(0, 0, 0, 0.05)` | 카드 그림자 |
 
-#### 6.2.4 Letter Spacing
+#### 8.2.4 Letter Spacing
 
 | 토큰 | 값 | 용도 |
 |------|-----|------|
@@ -1255,7 +1406,7 @@ USING (
 | `--tracking-widest-2xl` | `0.35em` | 브랜드 로고 |
 | `--tracking-widest-luxury` | `0.2em` | 럭셔리 라벨 |
 
-#### 6.2.5 UI 패턴
+#### 8.2.5 UI 패턴
 
 **1) Floating Label Input**
 - 라벨이 입력 시 위로 이동
@@ -1276,7 +1427,7 @@ USING (
 - 기본: `#d4d4d4`
 - 호버: `#C5A059` (골드)
 
-#### 6.2.6 Typography
+#### 8.2.6 Typography
 
 | 용도 | 폰트 | 웨이트 |
 |------|------|--------|
@@ -1285,7 +1436,7 @@ USING (
 
 ---
 
-### 6.3 백엔드
+### 8.3 백엔드
 
 | 기술 | 용도 |
 |------|------|
@@ -1304,7 +1455,7 @@ USING (
 
 ---
 
-### 6.4 인증
+### 8.4 인증
 
 **VIP 인증**
 - JWT 기반 쿠키 세션
@@ -1318,7 +1469,7 @@ USING (
 
 ---
 
-### 6.5 개발 도구
+### 8.5 개발 도구
 
 | 도구 | 용도 |
 |------|------|
@@ -1329,7 +1480,7 @@ USING (
 
 ---
 
-## 7. 마일스톤
+## 9. 마일스톤
 
 ### Phase 1: 관리자 VIP 관리 기능 (P0) [완료 ✅]
 
@@ -1449,7 +1600,7 @@ USING (
 
 ---
 
-## 8. 우선순위 정의
+## 10. 우선순위 정의
 
 | 우선순위 | 설명 | 기능 |
 |---------|------|------|
@@ -1460,9 +1611,9 @@ USING (
 
 ---
 
-## 9. 비기능 요구사항
+## 11. 비기능 요구사항
 
-### 9.1 성능
+### 11.1 성능
 
 | 메트릭 | 목표 |
 |--------|------|
@@ -1472,7 +1623,7 @@ USING (
 
 ---
 
-### 9.2 보안
+### 11.2 보안
 
 **1) VIP 세션**
 - HttpOnly 쿠키
@@ -1489,7 +1640,7 @@ USING (
 
 ---
 
-### 9.3 확장성
+### 11.3 확장성
 
 **1) 데이터베이스**
 - 인덱스 최적화 (email, invite_code, tier)
@@ -1501,7 +1652,7 @@ USING (
 
 ---
 
-### 9.4 접근성 (Accessibility)
+### 11.4 접근성 (Accessibility)
 
 - ARIA 레이블 (버튼, 입력 필드)
 - 키보드 내비게이션 지원
@@ -1509,7 +1660,7 @@ USING (
 
 ---
 
-### 9.5 국제화 (i18n)
+### 11.5 국제화 (i18n)
 
 **현재**: 한글 전용
 
@@ -1520,9 +1671,9 @@ USING (
 
 ---
 
-## 10. 테스트 계획
+## 12. 테스트 계획
 
-### 10.1 단위 테스트 (Vitest)
+### 12.1 단위 테스트 (Vitest)
 
 **대상**
 - `lib/api/vip.ts` - `getVipByToken()`, `createVip()` 등
@@ -1533,7 +1684,7 @@ USING (
 
 ---
 
-### 10.2 통합 테스트
+### 12.2 통합 테스트
 
 **시나리오**
 1. VIP 생성 → 초대 링크 접속 → 세션 검증
@@ -1542,7 +1693,7 @@ USING (
 
 ---
 
-### 10.3 E2E 테스트 (Playwright)
+### 12.3 E2E 테스트 (Playwright)
 
 **크리티컬 플로우**
 1. **VIP 초대 플로우**
@@ -1565,7 +1716,7 @@ USING (
 
 ---
 
-## 11. 용어 사전
+## 13. 용어 사전
 
 | 용어 | 설명 |
 |------|------|
@@ -1580,7 +1731,7 @@ USING (
 
 ---
 
-## 12. 참조 문서
+## 14. 참조 문서
 
 | 문서 | 경로 |
 |------|------|
@@ -1592,13 +1743,14 @@ USING (
 
 ---
 
-## 13. 변경 이력
+## 15. 변경 이력
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
 | 1.0.0 | 2025-12-20 | 초기 PRD 작성 (관리자 VIP 관리 중심) |
 | 1.1.0 | 2025-12-21 | 비즈니스 모델 명확화 (VIP Complimentary), 결제 시스템 해당 없음 반영, 마일스톤 완료 상태 업데이트 |
 | 1.2.0 | 2025-12-24 | 디자인 시스템 섹션 추가 (6.2), stitch 프로젝트 기반 라이트 모드 전환 및 럭셔리 UI 패턴, Phase 5 마일스톤 추가 |
+| 1.3.0 | 2025-12-26 | 시스템 개요 섹션 추가 (네비게이션 다이어그램, 워크플로우 다이어그램), 고객(VIP) 페이지 상세 설계 섹션 추가 (VIP Lounge, 상품 상세, 체크아웃, 주문 완료 목업 연결) |
 
 ---
 

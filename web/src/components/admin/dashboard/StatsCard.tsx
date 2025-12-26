@@ -6,25 +6,25 @@ interface StatsCardProps {
   value: number | string;
   icon: LucideIcon;
   description?: string;
-  color?: "gold" | "green" | "blue" | "purple";
+  color?: "default" | "gold" | "green" | "red";
 }
 
 const colorStyles = {
+  default: {
+    icon: "bg-[#f3f4f6] text-[var(--color-luxury-black)]",
+    line: "bg-[var(--color-luxury-black)]",
+  },
   gold: {
-    icon: "bg-gradient-to-br from-[var(--color-gold)] to-[#B8860B] text-black",
-    glow: "shadow-[var(--color-gold)]/20",
+    icon: "bg-amber-50 text-[var(--color-gold)]",
+    line: "bg-[var(--color-gold)]",
   },
   green: {
-    icon: "bg-gradient-to-br from-emerald-500 to-emerald-600 text-white",
-    glow: "shadow-emerald-500/20",
+    icon: "bg-green-50 text-green-600",
+    line: "bg-green-500",
   },
-  blue: {
-    icon: "bg-gradient-to-br from-blue-500 to-blue-600 text-white",
-    glow: "shadow-blue-500/20",
-  },
-  purple: {
-    icon: "bg-gradient-to-br from-purple-500 to-purple-600 text-white",
-    glow: "shadow-purple-500/20",
+  red: {
+    icon: "bg-red-50 text-red-500",
+    line: "bg-red-500",
   },
 };
 
@@ -33,35 +33,52 @@ export function StatsCard({
   value,
   icon: Icon,
   description,
-  color = "blue",
+  color = "default",
 }: StatsCardProps) {
   const styles = colorStyles[color];
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-[#2A2A2A] bg-[#0F0F0F] p-5 lg:p-6 transition-all duration-300 hover:border-[#3A3A3A] hover:shadow-lg">
-      {/* 배경 그라데이션 */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent" />
+    <div className="luxury-card group p-6 text-center">
+      {/* Override line color based on variant */}
+      <style jsx>{`
+        .luxury-card::before {
+          background: ${color === "gold" ? "var(--color-gold)" : color === "green" ? "#22c55e" : color === "red" ? "#ef4444" : "var(--color-luxury-black)"} !important;
+        }
+      `}</style>
 
-      <div className="relative flex items-start justify-between">
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-neutral-400">{title}</p>
-          <p className="mt-2 text-2xl lg:text-3xl font-bold text-white tracking-tight">
-            {typeof value === "number" ? value.toLocaleString() : value}
-          </p>
-          {description && (
-            <p className="mt-1.5 text-xs text-neutral-500">{description}</p>
-          )}
-        </div>
-        <div
-          className={cn(
-            "flex-shrink-0 rounded-xl p-2.5 lg:p-3 shadow-lg transition-transform duration-300 group-hover:scale-110",
-            styles.icon,
-            styles.glow
-          )}
-        >
-          <Icon className="h-5 w-5 lg:h-6 lg:w-6" />
-        </div>
+      {/* Icon */}
+      <div
+        className={cn(
+          "mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full",
+          styles.icon
+        )}
+      >
+        <Icon className="h-5 w-5" />
       </div>
+
+      {/* Label */}
+      <p className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+        {title}
+      </p>
+
+      {/* Value */}
+      <p className="font-[var(--font-playfair)] text-3xl text-[var(--color-luxury-black)]">
+        {typeof value === "number" ? value.toLocaleString() : value}
+      </p>
+
+      {/* Description */}
+      {description && (
+        <p className="mt-1.5 text-[9px] text-[var(--color-text-muted)]">
+          {description.includes("+") ? (
+            <>
+              <strong className="text-green-600">{description.split(" ")[0]}</strong>{" "}
+              {description.split(" ").slice(1).join(" ")}
+            </>
+          ) : (
+            description
+          )}
+        </p>
+      )}
     </div>
   );
 }

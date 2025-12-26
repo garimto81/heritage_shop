@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
-  { href: "/admin/vips", icon: Users, label: "VIPs" },
+  { href: "/admin/vips", icon: Users, label: "VIP List" },
   { href: "/admin/orders", icon: ShoppingBag, label: "Orders" },
 ];
 
@@ -30,38 +30,45 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
 
   return (
     <>
-      {/* 모바일 오버레이 */}
+      {/* Mobile overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
 
-      {/* 사이드바 */}
+      {/* Sidebar */}
       <aside
         className={cn(
-          "fixed left-0 top-0 z-50 h-screen w-64 bg-[#0F0F0F] border-r border-[#2A2A2A]",
-          "transform transition-transform duration-300 ease-in-out",
-          // 모바일: isOpen에 따라 표시/숨김
+          "fixed left-0 top-0 z-50 h-screen w-64 transform border-r border-[var(--color-border)] bg-[var(--color-surface)] transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "-translate-x-full",
-          // 데스크톱(lg 이상): 항상 표시
-          "lg:translate-x-0 lg:z-40"
+          "lg:z-40 lg:translate-x-0"
         )}
       >
-        {/* 로고 & 닫기 버튼 */}
-        <div className="flex h-16 items-center justify-between border-b border-[#2A2A2A] px-6">
-          <span className="text-xl font-bold text-[var(--color-gold)]">GG POKER Admin</span>
+        {/* Logo & close button */}
+        <div className="flex h-14 items-center justify-between border-b border-[var(--color-border)] px-5">
+          <div className="flex items-center gap-2">
+            {/* Logo icon */}
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" strokeWidth="1" />
+              <path d="M2 17L12 22L22 17" stroke="currentColor" strokeWidth="1" />
+              <path d="M2 12L12 17L22 12" stroke="currentColor" strokeWidth="1" />
+            </svg>
+            <span className="font-[var(--font-playfair)] text-sm font-medium uppercase tracking-[0.15em] text-[var(--color-luxury-black)]">
+              GGP Heritage
+            </span>
+          </div>
           <button
             onClick={onClose}
-            className="lg:hidden p-1 rounded-lg text-neutral-400 hover:text-white hover:bg-[#2A2A2A] transition-colors"
+            className="rounded-lg p-1 text-[var(--color-text-muted)] transition-colors hover:bg-[var(--color-background)] hover:text-[var(--color-luxury-black)] lg:hidden"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* 네비게이션 */}
-        <nav className="flex flex-col gap-1 p-4">
+        {/* Navigation */}
+        <nav className="flex flex-col gap-0.5 p-3">
           {navItems.map((item) => {
             const isActive = pathname.startsWith(item.href);
             return (
@@ -70,26 +77,26 @@ export function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
                 href={item.href}
                 onClick={handleNavClick}
                 className={cn(
-                  "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200",
+                  "flex items-center gap-3 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] transition-all duration-200",
                   isActive
-                    ? "bg-gradient-to-r from-[var(--color-gold)]/20 to-[var(--color-gold)]/5 text-[var(--color-gold)] shadow-lg shadow-[var(--color-gold)]/10"
-                    : "text-neutral-400 hover:bg-[#1A1A1A] hover:text-white"
+                    ? "border-b border-[var(--color-luxury-black)] text-[var(--color-luxury-black)]"
+                    : "text-[var(--color-text-muted)] hover:text-[var(--color-luxury-black)]"
                 )}
               >
-                <item.icon className={cn("h-5 w-5", isActive && "drop-shadow-[0_0_8px_var(--color-gold)]")} />
+                <item.icon className="h-4 w-4" />
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* 로그아웃 버튼 (하단 고정) */}
-        <div className="absolute bottom-0 left-0 right-0 border-t border-[#2A2A2A] p-4">
+        {/* Logout button (fixed at bottom) */}
+        <div className="absolute bottom-0 left-0 right-0 border-t border-[var(--color-border)] p-3">
           <button
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-neutral-400 transition-all duration-200 hover:bg-red-500/10 hover:text-red-400"
+            className="flex w-full items-center gap-3 px-4 py-2.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[var(--color-text-muted)] transition-all duration-200 hover:text-red-500"
           >
-            <LogOut className="h-5 w-5" />
+            <LogOut className="h-4 w-4" />
             Logout
           </button>
         </div>
