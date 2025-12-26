@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - VIP Delete Confirmation Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --danger: #DC2626;
+      --danger-light: #FEE2E2;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* min-height removed for capture */
+      padding: 40px 24px;
+    }
+
+    #capture-target {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: var(--shadow-pristine);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .danger-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FCA5A5, var(--danger));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .danger-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .title-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--luxury-black);
+    }
+
+    /* Body */
+    .modal-body {
+      padding: 28px 24px;
+    }
+
+    .vip-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+      background: var(--stone-light);
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #ddd;
+      border: 2px solid #f1f1f1;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      flex: 1;
+    }
+
+    .profile-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .profile-email {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: rgba(197, 160, 89, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .description {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    /* Checkbox Option */
+    .checkbox-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: var(--danger-light);
+      border: 1px solid #FECACA;
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--danger);
+      border-radius: 3px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+    }
+
+    .checkbox.checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 0px;
+      width: 6px;
+      height: 10px;
+      border: solid var(--danger);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .checkbox-text {
+      font-size: 13px;
+      color: #991B1B;
+      line-height: 1.5;
+    }
+
+    .checkbox-text strong {
+      font-weight: 600;
+    }
+
+    /* Warning Banner */
+    .warning-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px;
+      background: #FEF3C7;
+      border: 1px solid #FDE68A;
+      border-radius: 4px;
+    }
+
+    .warning-banner .material-symbols-outlined {
+      color: #D97706;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .warning-text {
+      font-size: 12px;
+      color: #92400E;
+      line-height: 1.5;
+    }
+
+    /* Footer */
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid #f1f1f1;
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: var(--stone-light);
+      color: var(--luxury-charcoal);
+      border: 1px solid #e5e5e5;
+    }
+
+    .btn-deactivate {
+      background: var(--luxury-charcoal);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <div class="danger-icon">
+          <span class="material-symbols-outlined">delete</span>
+        </div>
+        <span class="title-text">Delete VIP</span>
+      </div>
+      <button class="close-btn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <!-- VIP Profile -->
+      <div class="vip-profile">
+        <div class="avatar">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80" alt="">
+        </div>
+        <div class="profile-info">
+          <p class="profile-name">John Smith</p>
+          <p class="profile-email">john@example.com</p>
+        </div>
+        <span class="tier-badge">Gold</span>
+      </div>
+
+      <p class="description">
+        Are you sure you want to remove this VIP from the system?
+      </p>
+
+      <!-- Hard Delete Option -->
+      <div class="checkbox-option">
+        <div class="checkbox checked"></div>
+        <div class="checkbox-text">
+          <strong>Permanent deletion</strong><br>
+          Cannot be recovered. All data will be erased.
+        </div>
+      </div>
+
+      <!-- Warning Banner -->
+      <div class="warning-banner">
+        <span class="material-symbols-outlined">warning</span>
+        <span class="warning-text">
+          This VIP has <strong>2 orders</strong>. Hard delete is disabled to preserve order history.
+        </span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn btn-secondary">
+        Cancel
+      </button>
+      <button class="btn btn-deactivate">
+        <span class="material-symbols-outlined">visibility_off</span>
+        Deactivate Only
+      </button>
+    </div>
+  </div>
+</body>
+</html>

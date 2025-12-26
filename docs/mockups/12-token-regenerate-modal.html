@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Token Regenerate Confirmation Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --warning: #F59E0B;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+      padding: 40px 24px;
+    }
+
+    #capture-target {
+      width: 100%;
+      max-width: 420px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: var(--shadow-pristine);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .warning-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FDE68A, var(--warning));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .warning-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .title-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--luxury-black);
+    }
+
+    /* Body */
+    .modal-body {
+      padding: 28px 24px;
+    }
+
+    .warning-banner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+
+    .warning-banner .material-symbols-outlined {
+      color: var(--warning);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .warning-text {
+      font-size: 13px;
+      color: #92400E;
+      line-height: 1.5;
+    }
+
+    .warning-text strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .description ul {
+      margin-top: 12px;
+      padding-left: 20px;
+    }
+
+    .description li {
+      margin-bottom: 6px;
+    }
+
+    /* Footer */
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid #f1f1f1;
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: var(--stone-light);
+      color: var(--luxury-charcoal);
+      border: 1px solid #e5e5e5;
+    }
+
+    .btn-warning {
+      background: var(--warning);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <div class="warning-icon">
+          <span class="material-symbols-outlined">refresh</span>
+        </div>
+        <span class="title-text">Regenerate Token</span>
+      </div>
+      <button class="close-btn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <div class="warning-banner">
+        <span class="material-symbols-outlined">warning</span>
+        <div class="warning-text">
+          <strong>This action cannot be undone</strong>
+          The existing invite link will be permanently invalidated.
+        </div>
+      </div>
+
+      <p class="description">
+        Regenerating the access token will:
+        <ul>
+          <li>Invalidate the current invitation link</li>
+          <li>Create a new unique access code</li>
+          <li>Require you to share the new link with the VIP</li>
+        </ul>
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn btn-secondary">
+        Cancel
+      </button>
+      <button class="btn btn-warning">
+        <span class="material-symbols-outlined">refresh</span>
+        Regenerate
+      </button>
+    </div>
+  </div>
+</body>
+</html>

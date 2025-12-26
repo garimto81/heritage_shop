@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - VIP Created Success Modal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --shadow-pristine: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* min-height removed for capture */
+      padding: 40px 24px;
+    }
+
+    #capture-target {
+      width: 100%;
+      max-width: 440px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: var(--shadow-pristine);
+      overflow: hidden;
+    }
+
+    /* Header */
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .modal-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .success-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .success-icon .material-symbols-outlined {
+      font-size: 18px;
+    }
+
+    .title-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .close-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: #9ca3af;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      color: var(--luxury-black);
+    }
+
+    /* Body */
+    .modal-body {
+      padding: 28px 24px;
+    }
+
+    .subtitle {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #6b7280;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Invite Link Section */
+    .invite-section {
+      background: var(--stone-light);
+      border: 1px solid #e5e5e5;
+      border-radius: 4px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .invite-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .invite-url {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 2px;
+      padding: 12px;
+    }
+
+    .invite-url code {
+      flex: 1;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--luxury-charcoal);
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      padding: 8px;
+      background: none;
+      border: none;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      color: var(--luxury-black);
+    }
+
+    /* VIP Info */
+    .vip-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .info-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #9ca3af;
+    }
+
+    .info-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--luxury-black);
+    }
+
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      background: rgba(197, 160, 89, 0.1);
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* Footer */
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      padding: 20px 24px;
+      border-top: 1px solid #f1f1f1;
+    }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .btn-secondary {
+      background: var(--stone-light);
+      color: var(--luxury-charcoal);
+      border: 1px solid #e5e5e5;
+    }
+
+    .btn-primary {
+      background: var(--luxury-black);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn .material-symbols-outlined {
+      font-size: 14px;
+    }
+
+    .btn-primary .material-symbols-outlined {
+      color: var(--gold);
+    }
+
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Header -->
+    <div class="modal-header">
+      <div class="modal-title">
+        <div class="success-icon">
+          <span class="material-symbols-outlined">check</span>
+        </div>
+        <span class="title-text">VIP Created</span>
+      </div>
+      <button class="close-btn">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="modal-body">
+      <p class="subtitle">Invitation Generated</p>
+      <p class="description">
+        The VIP invitation has been successfully created. Share the link below with the recipient to grant them exclusive access.
+      </p>
+
+      <!-- Invite Link -->
+      <div class="invite-section">
+        <p class="invite-label">Access Link</p>
+        <div class="invite-url">
+          <code>https://ggp-mall.com/invite/VIP7K3M</code>
+          <button class="copy-btn">
+            <span class="material-symbols-outlined">content_copy</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- VIP Info -->
+      <div class="vip-info">
+        <div class="info-item">
+          <span class="info-label">Recipient</span>
+          <span class="info-value">john@example.com</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Tier Level</span>
+          <span class="tier-badge">
+            <span class="material-symbols-outlined" style="font-size: 12px;">diamond</span>
+            Gold
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <button class="btn btn-secondary">
+        <span class="material-symbols-outlined">content_copy</span>
+        Copy Link
+      </button>
+      <button class="btn btn-primary">
+        <span class="material-symbols-outlined">mail</span>
+        Send Email
+      </button>
+    </div>
+  </div>
+</body>
+</html>

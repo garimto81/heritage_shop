@@ -125,6 +125,29 @@ type verification_status = "pending" | "approved" | "rejected"
 
 핵심 테이블: `vips`, `products`, `orders`, `categories`, `inventory`, `verification_codes`
 
+## 문서 작성 규칙
+
+### 화면 목업 (PRD, 설계 문서)
+
+| 규칙 | 값 |
+|------|-----|
+| ASCII 목업 사용 | 금지 |
+| HTML 목업 위치 | `docs/mockups/*.html` |
+| 이미지 캡처 위치 | `docs/images/mockups/*.png` |
+| 가로 너비 | 540px |
+| 캡처 대상 | `#capture-target` |
+
+**워크플로우**:
+1. HTML 목업 작성 (`docs/mockups/[feature].html`)
+2. Playwright로 캡처 (`--selector="#capture-target"`)
+3. 문서에 이미지 삽입 + HTML 링크 추가
+
+```powershell
+npx playwright screenshot docs/mockups/feature.html docs/images/mockups/feature.png --selector="#capture-target"
+```
+
+**참조**: `D:\AI\claude01\docs\HTML_MOCKUP_GUIDE.md`
+
 ## References
 
 | 문서 | 내용 |

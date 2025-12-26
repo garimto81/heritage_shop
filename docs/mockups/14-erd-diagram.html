@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=540">
+  <title>Mockup - Entity Relationship Diagram</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #C5A059;
+      --gold-light: #E0C895;
+      --luxury-black: #0A0A0A;
+      --luxury-charcoal: #333333;
+      --stone-light: #FAFAFA;
+      --primary: #3B82F6;
+      --success: #10B981;
+    }
+
+    body {
+      width: 540px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      background: #fff;
+      color: var(--luxury-black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #capture-target {
+      background: #fff;
+      padding: 24px;
+    }
+
+    /* Title */
+    .title-section {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .title-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--luxury-black);
+    }
+
+    /* ERD Container */
+    .erd-container {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    /* Entity Table */
+    .entity {
+      background: #fff;
+      border: 2px solid #e5e5e5;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .entity-header {
+      padding: 10px 14px;
+      background: var(--luxury-black);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .entity-header.gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--luxury-black);
+    }
+
+    .entity-body {
+      padding: 8px 0;
+    }
+
+    .entity-row {
+      display: flex;
+      align-items: center;
+      padding: 6px 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+    }
+
+    .entity-row:hover {
+      background: var(--stone-light);
+    }
+
+    .col-name {
+      flex: 1;
+      color: var(--luxury-charcoal);
+    }
+
+    .col-type {
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    .key-badge {
+      font-size: 8px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+
+    .key-pk {
+      background: #DBEAFE;
+      color: #1D4ED8;
+    }
+
+    .key-fk {
+      background: #D1FAE5;
+      color: #047857;
+    }
+
+    .key-uk {
+      background: #FEF3C7;
+      color: #D97706;
+    }
+
+    /* Layout Grid */
+    .erd-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .erd-row {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .erd-row .entity {
+      width: 150px;
+    }
+
+    .erd-center {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
+    }
+
+    .erd-center .entity {
+      width: 160px;
+    }
+
+    .erd-bottom {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .erd-bottom .entity {
+      width: 150px;
+    }
+
+    /* Relationship Lines (SVG) */
+    .erd-lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: #6b7280;
+    }
+
+    .legend-badge {
+      font-size: 8px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div id="capture-target">
+    <!-- Title -->
+    <div class="title-section">
+      <p class="title-label">Database Schema</p>
+      <h1>Entity Relationship Diagram</h1>
+    </div>
+
+    <!-- ERD -->
+    <div class="erd-container">
+      <!-- Top Row: admins, vips, categories -->
+      <div class="erd-row">
+        <!-- admins -->
+        <div class="entity">
+          <div class="entity-header">admins</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-uk">UK</span>
+              <span class="col-name">user_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">email</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">is_active</span>
+              <span class="col-type">bool</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- vips -->
+        <div class="entity">
+          <div class="entity-header gold">vips</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-uk">UK</span>
+              <span class="col-name">email</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">name</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">tier</span>
+              <span class="col-type">enum</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-uk">UK</span>
+              <span class="col-name">invite_code</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">is_active</span>
+              <span class="col-type">bool</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- categories -->
+        <div class="entity">
+          <div class="entity-header">categories</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">name</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-uk">UK</span>
+              <span class="col-name">slug</span>
+              <span class="col-type">varchar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Middle Row: orders, products -->
+      <div class="erd-center">
+        <!-- orders -->
+        <div class="entity">
+          <div class="entity-header">orders</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-fk">FK</span>
+              <span class="col-name">vip_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">status</span>
+              <span class="col-type">enum</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">shipping_*</span>
+              <span class="col-type">jsonb</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- products -->
+        <div class="entity">
+          <div class="entity-header">products</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">name</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-fk">FK</span>
+              <span class="col-name">category_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">tier_required</span>
+              <span class="col-type">enum</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">images</span>
+              <span class="col-type">jsonb[]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Row: order_items, inventory -->
+      <div class="erd-bottom">
+        <!-- order_items -->
+        <div class="entity">
+          <div class="entity-header">order_items</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-fk">FK</span>
+              <span class="col-name">order_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-fk">FK</span>
+              <span class="col-name">product_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">size</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">quantity</span>
+              <span class="col-type">int</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- inventory -->
+        <div class="entity">
+          <div class="entity-header">inventory</div>
+          <div class="entity-body">
+            <div class="entity-row">
+              <span class="key-badge key-pk">PK</span>
+              <span class="col-name">id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="key-badge key-fk">FK</span>
+              <span class="col-name">product_id</span>
+              <span class="col-type">uuid</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">size</span>
+              <span class="col-type">varchar</span>
+            </div>
+            <div class="entity-row">
+              <span class="col-name" style="margin-left: 30px;">quantity</span>
+              <span class="col-type">int</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-badge key-pk">PK</span>
+        <span>Primary Key</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-badge key-fk">FK</span>
+        <span>Foreign Key</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-badge key-uk">UK</span>
+        <span>Unique Key</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
